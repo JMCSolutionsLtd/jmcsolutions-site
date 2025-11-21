@@ -20,7 +20,8 @@ import {
   MessageSquarePlus,
   Send,
   MessageCircle,
-  Check
+  Check,
+  Building2
 } from 'lucide-react';
 
 const JMCWebsite = () => {
@@ -126,11 +127,14 @@ const JMCWebsite = () => {
     }
   ];
 
-// --- Gemini API Integration ---
+  // --- Gemini API Integration ---
+  // Note: Using placeholder for key as per instructions. 
+  // In a real Vite app, use import.meta.env.VITE_GEMINI_API_KEY
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-  
+
   const callGemini = async (prompt, systemPrompt) => {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;    
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+    
     const payload = {
       contents: [{ parts: [{ text: prompt }] }],
       systemInstruction: { parts: [{ text: systemPrompt }] }
@@ -259,8 +263,20 @@ const JMCWebsite = () => {
     }
   };
 
+  // Ticker Animation Styles
+  const tickerStyles = `
+    @keyframes infinite-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-100%); }
+    }
+    .animate-infinite-scroll {
+      animation: infinite-scroll 40s linear infinite;
+    }
+  `;
+
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900 selection:bg-blue-100">
+      <style>{tickerStyles}</style>
       
       {/* Navigation */}
       <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-4' : 'bg-slate-50 py-6'}`}>
@@ -330,23 +346,12 @@ const JMCWebsite = () => {
         <div className="absolute top-20 right-10 w-64 h-64 bg-blue-50 rounded-full blur-3xl -z-10 opacity-60" />
         <div className="absolute bottom-20 left-10 w-96 h-96 bg-slate-50 rounded-full blur-3xl -z-10" />
 
-        {/* Hero Image with Gradient Overlay */}
-        <div className="absolute inset-y-0 right-0 w-full md:w-3/5 lg:w-3/5 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1573496359142-b8d877341ace?q=80&w=2670&auto=format&fit=crop" 
-            alt="Consultants in a meeting reviewing data" 
-            className="w-full h-full object-cover object-left-top opacity-90" 
-          />
-          {/* Gradient Overlay: White (Left) -> Transparent (Right) */}
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent sm:via-white/40"></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-transparent to-transparent md:hidden"></div>
-        </div>
+        {/* Technical Grid Background */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] -z-10"></div>
 
-        <div className="max-w-7xl mx-auto px-6 relative z-10"> {/* Ensure content is above the image */}
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-900 text-xs font-bold uppercase tracking-wider mb-6 border border-blue-100 shadow-sm bg-white/80 backdrop-blur-sm">
-              Enterprise AI Consulting
-            </div>
+            {/* Enterprise Badge Removed */}
             <h1 className="text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-slate-900 mb-8 drop-shadow-sm">
               Practical AI for <br className="hidden lg:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-blue-600">
@@ -371,6 +376,40 @@ const JMCWebsite = () => {
                 AI Readiness Audit
               </button>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* NEW: Trusted By Ticker (Social Proof) */}
+      <section className="py-6 border-y border-slate-100 bg-slate-50/50 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6">
+          <p className="text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Trusted by leaders at</p>
+          
+          <div className="w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
+            <ul className="flex items-center justify-center md:justify-start [&_li]:mx-8 animate-infinite-scroll">
+               {[
+                 'Kubrick Group', 'Lloyds Banking Group', 'Schroders Personal Wealth', 
+                 'Ascot Insurance', 'Millennium Management', 'Zoopla',
+                 'DHL', 'Essjay Solutions', 'DC Media Advisory', 'Anglo American', 'Accenture',
+                 'Wilko', 'Engage Digital Partners'
+               ].map((company, idx) => (
+                 <li key={idx} className="flex items-center gap-2 font-bold text-lg text-slate-600 whitespace-nowrap opacity-60 grayscale hover:grayscale-0 transition-all">
+                   <Building2 size={20}/> {company}
+                 </li>
+               ))}
+            </ul>
+            <ul className="flex items-center justify-center md:justify-start [&_li]:mx-8 animate-infinite-scroll" aria-hidden="true">
+               {[
+                 'Kubrick Group', 'Lloyds Banking Group', 'Schroders Personal Wealth', 
+                 'Ascot Insurance', 'Millennium Management', 'Zoopla',
+                 'DHL', 'Essjay Solutions', 'DC Media Advisory', 'Anglo American', 'Accenture',
+                 'Wilko', 'Engage Digital Partners'
+               ].map((company, idx) => (
+                 <li key={idx} className="flex items-center gap-2 font-bold text-lg text-slate-600 whitespace-nowrap opacity-60 grayscale hover:grayscale-0 transition-all">
+                   <Building2 size={20}/> {company}
+                 </li>
+               ))}
+            </ul>
           </div>
         </div>
       </section>
@@ -508,77 +547,51 @@ const JMCWebsite = () => {
 
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Fin */}
-            <div className="group relative bg-white border border-slate-100 p-8 hover:border-blue-200 transition-all duration-300 shadow-sm hover:shadow-xl">
+            <div className="group bg-white border border-slate-200 p-8 hover:border-blue-300 transition-all duration-300 shadow-sm hover:shadow-xl rounded-xl overflow-hidden relative">
               <div className="absolute top-0 left-0 w-full h-1 bg-blue-900 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center text-xl font-bold text-slate-400">F</div>
-                <div>
-                  <h4 className="text-2xl font-bold text-slate-900">Fin</h4>
-                  <p className="text-blue-800 font-medium">Co-Founder</p>
+              <div className="flex flex-col gap-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center text-xl font-bold text-blue-900 border border-blue-100">F</div>
+                  <div>
+                    <h4 className="text-2xl font-bold text-slate-900">Fin</h4>
+                    <p className="text-blue-800 font-medium">Co-Founder | Technology & Data</p>
+                  </div>
                 </div>
-              </div>
-              <p className="text-slate-600 mb-6 leading-relaxed">
-                Six years of AI implementation and data automation experience. Delivered enterprise AI, analytics, and automation projects for high-profile clients.
-              </p>
-              
-              <div className="bg-slate-50 p-6 mb-6">
-                <h5 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Trusted By</h5>
-                <ul className="grid grid-cols-2 gap-3 text-sm font-medium text-slate-700">
-                  <li className="flex items-center gap-2"><Briefcase size={14} className="text-blue-900"/> Kubrick Group</li>
-                  <li className="flex items-center gap-2"><Briefcase size={14} className="text-blue-900"/> Schroders Personal Wealth</li>
-                  <li className="flex items-center gap-2"><Briefcase size={14} className="text-blue-900"/> Lloyds Banking Group</li>
-                  <li className="flex items-center gap-2"><Briefcase size={14} className="text-blue-900"/> Ascot Insurance</li>
-                  <li className="flex items-center gap-2"><Briefcase size={14} className="text-blue-900"/> Millennium Management</li>
-                  <li className="flex items-center gap-2"><Briefcase size={14} className="text-blue-900"/> Zoopla</li>
-                </ul>
-              </div>
-
-              <div className="space-y-2">
-                <h5 className="text-sm font-bold text-slate-900">Specialisation</h5>
-                <div className="flex flex-wrap gap-2">
-                  {['Microsoft AI Ecosystem', 'Copilot Deployment', 'Data Automation', 'Workflow Engineering'].map((tag) => (
-                    <span key={tag} className="text-xs bg-white border border-slate-200 px-2 py-1 rounded-sm text-slate-600">{tag}</span>
-                  ))}
+                <p className="text-slate-600 leading-relaxed">
+                  Six years of AI implementation and data automation experience. Delivered enterprise AI, analytics, and automation projects for high-profile clients including Schroders Personal Wealth, Lloyds Banking Group, and Ascot Insurance.
+                </p>
+                <div className="space-y-2 pt-4 border-t border-slate-100">
+                  <h5 className="text-sm font-bold text-slate-900">Specialisation</h5>
+                  <div className="flex flex-wrap gap-2">
+                    {['Microsoft AI Ecosystem', 'Copilot Deployment', 'Data Automation', 'Workflow Engineering'].map((tag) => (
+                      <span key={tag} className="text-xs bg-slate-50 border border-slate-200 px-2 py-1 rounded-sm text-slate-600">{tag}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Amit */}
-            <div className="group relative bg-white border border-slate-100 p-8 hover:border-blue-200 transition-all duration-300 shadow-sm hover:shadow-xl">
+            <div className="group bg-white border border-slate-200 p-8 hover:border-blue-300 transition-all duration-300 shadow-sm hover:shadow-xl rounded-xl overflow-hidden relative">
               <div className="absolute top-0 left-0 w-full h-1 bg-blue-900 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center text-xl font-bold text-slate-400">A</div>
-                <div>
-                  <h4 className="text-2xl font-bold text-slate-900">Amit</h4>
-                  <p className="text-blue-800 font-medium">Co-Founder</p>
+              <div className="flex flex-col gap-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center text-xl font-bold text-blue-900 border border-blue-100">A</div>
+                  <div>
+                    <h4 className="text-2xl font-bold text-slate-900">Amit</h4>
+                    <p className="text-blue-800 font-medium">Co-Founder | Strategy & Change</p>
+                  </div>
                 </div>
-              </div>
-              <p className="text-slate-600 mb-6 leading-relaxed">
-                Six years in digital transformation and organisational change. Expert in bridging the gap between technical capability and human adoption.
-              </p>
-              
-              <div className="bg-slate-50 p-6 mb-6">
-                <h5 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Experience</h5>
-                <ul className="space-y-3 text-sm font-medium text-slate-700">
-                  <li className="flex items-center gap-2 border-b border-slate-200 pb-2">
-                    <span className="font-bold text-blue-900">Accenture</span>
-                    <span className="text-slate-400">|</span> 
-                    3 Years Digital Transformation
-                  </li>
-                  <li className="flex items-center gap-2 pb-2">
-                    <span className="font-bold text-blue-900">Essjay Solutions</span>
-                    <span className="text-slate-400">|</span> 
-                    3 Years Change Management
-                  </li>
-                </ul>
-              </div>
-
-              <div className="space-y-2">
-                <h5 className="text-sm font-bold text-slate-900">Specialisation</h5>
-                <div className="flex flex-wrap gap-2">
-                  {['Digital Strategy', 'Process Redesign', 'Stakeholder Management', 'Adoption & Change'].map((tag) => (
-                    <span key={tag} className="text-xs bg-white border border-slate-200 px-2 py-1 rounded-sm text-slate-600">{tag}</span>
-                  ))}
+                <p className="text-slate-600 leading-relaxed">
+                  Six years in digital transformation and organisational change. Expert in bridging the gap between technical capability and human adoption, with extensive experience at Accenture and Essjay Solutions.
+                </p>
+                <div className="space-y-2 pt-4 border-t border-slate-100">
+                  <h5 className="text-sm font-bold text-slate-900">Specialisation</h5>
+                  <div className="flex flex-wrap gap-2">
+                    {['Digital Strategy', 'Process Redesign', 'Stakeholder Management', 'Adoption & Change'].map((tag) => (
+                      <span key={tag} className="text-xs bg-slate-50 border border-slate-200 px-2 py-1 rounded-sm text-slate-600">{tag}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -643,7 +656,7 @@ const JMCWebsite = () => {
             {/* Fork Label */}
              <div className="relative z-10 text-center mb-12">
                 <span className="bg-slate-100 text-slate-600 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider border border-slate-200 ring-4 ring-white">
-                  Step 2: Click To Add Your Modules
+                  Step 2: Select Your Modules
                 </span>
              </div>
 
@@ -769,33 +782,35 @@ const JMCWebsite = () => {
       <section id="contact" className="py-16 bg-white border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16">
-            <div className="flex flex-col h-full">
-              <h2 className="text-3xl font-bold text-slate-900 mb-6">Get in touch.</h2>
-              <p className="text-slate-600 mb-8">
-                Ready to transform your business operations? Fill out the form, or reach out directly to schedule your audit.
-              </p>
-              
-              <div className="space-y-6 mb-8">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-blue-50 flex items-center justify-center text-blue-900 rounded-full">
-                    <Briefcase size={20} />
+            <div className="flex flex-col h-full justify-between">
+              <div>
+                <h2 className="text-3xl font-bold text-slate-900 mb-6">Get in touch.</h2>
+                <p className="text-slate-600 mb-8">
+                  Ready to transform your business operations? Fill out the form, or reach out directly to schedule your audit.
+                </p>
+                
+                <div className="space-y-6 mb-8">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 bg-blue-50 flex items-center justify-center text-blue-900 rounded-full">
+                      <Briefcase size={20} />
+                    </div>
+                    <span className="text-slate-700">fin@jmcsolutions.ai</span>
                   </div>
-                  <span className="text-slate-700">fin@jmcsolutions.ai</span>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-blue-50 flex items-center justify-center text-blue-900 rounded-full">
-                    <Users size={20} />
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 bg-blue-50 flex items-center justify-center text-blue-900 rounded-full">
+                      <Users size={20} />
+                    </div>
+                    <span className="text-slate-700">+44 (0) 7827337189</span>
                   </div>
-                  <span className="text-slate-700">+44 (0) 7827337189</span>
                 </div>
               </div>
 
-              {/* Professional Image */}
-              <div className="mt-auto rounded-xl overflow-hidden relative w-full shadow-lg flex-grow h-32 lg:h-48">
+              {/* Professional Image - Expanded with flex-grow */}
+              <div className="mt-auto rounded-xl overflow-hidden relative w-full shadow-lg flex-grow min-h-[250px]">
                 <img 
                   src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=2070&auto=format&fit=crop" 
                   alt="Professional consultation" 
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                  className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 to-transparent flex items-end p-6">
                    <p className="text-white font-medium text-sm">"We partner with you to ensure sustainable adoption."</p>
@@ -803,7 +818,7 @@ const JMCWebsite = () => {
               </div>
             </div>
 
-            <form className="space-y-4 relative">
+            <form className="space-y-4 relative flex flex-col h-full">
               {/* Dynamic Selection Summary - Only shows if modules are selected */}
               {selectedModules.length > 0 && (
                 <div className="bg-blue-50 p-4 rounded-md border border-blue-100 mb-6 animate-in fade-in slide-in-from-top-2 duration-300">
@@ -842,7 +857,7 @@ const JMCWebsite = () => {
                 <label className="text-xs font-bold text-slate-500 uppercase">Company Name</label>
                 <input id="companyName" type="text" className="w-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors" />
               </div>
-              <div className="space-y-1 relative">
+              <div className="space-y-1 relative flex-grow">
                 <div className="flex justify-between items-center mb-1">
                   <label className="text-xs font-bold text-slate-500 uppercase">Message</label>
                   <button 
@@ -858,7 +873,7 @@ const JMCWebsite = () => {
                   rows={4} 
                   value={contactMessage}
                   onChange={(e) => setContactMessage(e.target.value)}
-                  className="w-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
+                  className="w-full h-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors min-h-[120px]"
                 ></textarea>
               </div>
               <button className="w-full py-4 bg-blue-900 text-white font-bold hover:bg-blue-800 transition-all mt-4 shadow-lg">
