@@ -390,7 +390,7 @@ const JMCWebsite = () => {
                {[
                  'Kubrick Group', 'Lloyds Banking Group', 'Schroders Personal Wealth', 
                  'Ascot Insurance', 'Millennium Management', 'Zoopla',
-                 'DHL', 'Essjay Solutions', 'DC Media Advisory', 'Anglo American', 'Accenture',
+                 'DHL', 'Essjay Solutions', 'DC Media Advisory', 'Anglo American', 'Accenture', 'State Street',
                  'Wilko', 'Engage Digital Partners'
                ].map((company, idx) => (
                  <li key={idx} className="flex items-center gap-2 font-bold text-lg text-slate-600 whitespace-nowrap opacity-60 grayscale hover:grayscale-0 transition-all">
