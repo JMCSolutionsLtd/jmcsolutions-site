@@ -21,7 +21,10 @@ import {
   Send,
   MessageCircle,
   Check,
-  Building2
+  Building2,
+  Globe,
+  Award,
+  TrendingUp
 } from 'lucide-react';
 
 const JMCWebsite = () => {
@@ -129,7 +132,6 @@ const JMCWebsite = () => {
 
   // --- Gemini API Integration ---
   // Note: Using placeholder for key as per instructions. 
-  // In a real Vite app, use import.meta.env.VITE_GEMINI_API_KEY
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
   const callGemini = async (prompt, systemPrompt) => {
@@ -351,15 +353,14 @@ const JMCWebsite = () => {
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="max-w-4xl">
-            {/* Enterprise Badge Removed */}
             <h1 className="text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-slate-900 mb-8 drop-shadow-sm">
-              Practical AI for <br className="hidden lg:block" />
+              Secure AI Implementation <br className="hidden lg:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-blue-600">
-                Real Businesses.
+                Across Your Business.
               </span>
             </h1>
             <p className="text-xl text-slate-600 max-w-2xl leading-relaxed mb-8 bg-white/60 backdrop-blur-sm md:bg-transparent p-2 md:p-0 rounded-lg">
-              We deploy secure, reliable AI systems that improve efficiency, automate your workflows, and deliver measurable value for every employee.
+              We modernise your organisation with smart automations and AI assistants that understand your business, your data, and how your teams work.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
@@ -368,12 +369,6 @@ const JMCWebsite = () => {
                 className="px-8 py-4 bg-blue-900 text-white font-medium hover:bg-blue-800 transition-all shadow-xl shadow-blue-900/20 flex items-center justify-center gap-2"
               >
                 Book a Discovery Call <ArrowRight size={18} />
-              </button>
-              <button 
-                onClick={() => scrollToSection('approach')}
-                className="px-8 py-4 bg-white text-slate-800 border border-slate-200 font-medium hover:border-blue-200 hover:bg-blue-50 transition-all flex items-center justify-center gap-2"
-              >
-                AI Readiness Audit
               </button>
             </div>
           </div>
@@ -390,8 +385,8 @@ const JMCWebsite = () => {
                {[
                  'Kubrick Group', 'Lloyds Banking Group', 'Schroders Personal Wealth', 
                  'Ascot Insurance', 'Millennium Management', 'Zoopla',
-                 'DHL', 'Essjay Solutions', 'DC Media Advisory', 'Anglo American', 'Accenture', 'State Street',
-                 'Wilko', 'Engage Digital Partners'
+                 'DHL', 'Essjay Solutions', 'DC Media Advisory', 'Anglo American', 'Accenture',
+                 'Wilko', 'Engage Digital Partners', 'State Street', 'Primark'
                ].map((company, idx) => (
                  <li key={idx} className="flex items-center gap-2 font-bold text-lg text-slate-600 whitespace-nowrap opacity-60 grayscale hover:grayscale-0 transition-all">
                    <Building2 size={20}/> {company}
@@ -403,7 +398,7 @@ const JMCWebsite = () => {
                  'Kubrick Group', 'Lloyds Banking Group', 'Schroders Personal Wealth', 
                  'Ascot Insurance', 'Millennium Management', 'Zoopla',
                  'DHL', 'Essjay Solutions', 'DC Media Advisory', 'Anglo American', 'Accenture',
-                 'Wilko', 'Engage Digital Partners'
+                 'Wilko', 'Engage Digital Partners', 'State Street', 'Primark'
                ].map((company, idx) => (
                  <li key={idx} className="flex items-center gap-2 font-bold text-lg text-slate-600 whitespace-nowrap opacity-60 grayscale hover:grayscale-0 transition-all">
                    <Building2 size={20}/> {company}
@@ -418,9 +413,11 @@ const JMCWebsite = () => {
       <section className="py-16 bg-white relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-900 via-blue-600 to-blue-900"></div>
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-900 text-xs font-bold uppercase tracking-wider mb-6 border border-blue-100">
+          <div className={`${(aiInsights || isGeneratingInsights) ? 'grid lg:grid-cols-2 gap-16' : 'max-w-3xl mx-auto text-center'} items-center transition-all duration-500`}>
+            
+            {/* Left Column - Input */}
+            <div className="w-full">
+              <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-900 text-xs font-bold uppercase tracking-wider mb-6 border border-blue-100 ${(aiInsights || isGeneratingInsights) ? '' : 'mx-auto'}`}>
                 <Sparkles size={14} className="fill-blue-900" /> Live AI Demo
               </div>
               <h2 className="text-3xl lg:text-5xl font-bold text-slate-900 mb-6">
@@ -428,10 +425,10 @@ const JMCWebsite = () => {
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-blue-600">For Your Industry.</span>
               </h2>
               <p className="text-lg text-slate-600 mb-8">
-                Not sure where to start? Enter your industry below, and our AI consultant will generate three high-impact use cases tailored specifically for you.
+                Not sure where to start? Enter your industry below, and our Gemini-powered consultant will generate three high-impact use cases tailored specifically for you.
               </p>
 
-              <div className="bg-slate-50 p-2 rounded-md border border-slate-200 flex flex-col sm:flex-row gap-2 shadow-sm max-w-md">
+              <div className={`bg-slate-50 p-2 rounded-md border border-slate-200 flex flex-col sm:flex-row gap-2 shadow-sm max-w-md ${(aiInsights || isGeneratingInsights) ? '' : 'mx-auto'}`}>
                 <input 
                   type="text" 
                   placeholder="e.g. Legal, Construction, Retail..." 
@@ -459,45 +456,41 @@ const JMCWebsite = () => {
               {insightError && <p className="text-red-500 text-sm mt-3">{insightError}</p>}
             </div>
 
-            <div className="bg-slate-50 border border-slate-100 p-8 min-h-[400px] relative rounded-xl">
-               {!aiInsights && !isGeneratingInsights && (
-                 <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400 text-center p-8">
-                   <Bot size={48} className="mb-4 opacity-20" />
-                   <p>Enter your industry to unlock tailored AI strategies.</p>
-                 </div>
-               )}
+            {/* Right Column - Results (Conditionally Rendered) */}
+            {(aiInsights || isGeneratingInsights) && (
+              <div className="bg-slate-50 border border-slate-100 p-8 min-h-[400px] relative rounded-xl animate-in fade-in slide-in-from-bottom-8 duration-700">
+                 {isGeneratingInsights && (
+                   <div className="absolute inset-0 flex flex-col items-center justify-center text-blue-900 p-8">
+                      <Loader2 size={48} className="animate-spin mb-4 text-blue-600" />
+                      <p className="font-medium animate-pulse">Consulting our knowledge base...</p>
+                   </div>
+                 )}
 
-               {isGeneratingInsights && (
-                 <div className="absolute inset-0 flex flex-col items-center justify-center text-blue-900 p-8">
-                    <Loader2 size={48} className="animate-spin mb-4 text-blue-600" />
-                    <p className="font-medium animate-pulse">Consulting our knowledge base...</p>
-                 </div>
-               )}
-
-               {aiInsights && (
-                 <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                    <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">Recommended Strategy for {industryInput}</h3>
-                    {aiInsights.map((insight, idx) => (
-                      <div key={idx} className="bg-white p-5 rounded-lg shadow-sm border border-slate-100 hover:border-blue-200 transition-colors">
-                        <div className="flex items-start gap-3">
-                          <div className="mt-1 w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-bold shrink-0">
-                            {idx + 1}
-                          </div>
-                          <div>
-                            <h4 className="font-bold text-slate-900 mb-1">{insight.title}</h4>
-                            <p className="text-sm text-slate-600 leading-relaxed">{insight.description}</p>
+                 {aiInsights && (
+                   <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                      <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">Recommended Strategy for {industryInput}</h3>
+                      {aiInsights.map((insight, idx) => (
+                        <div key={idx} className="bg-white p-5 rounded-lg shadow-sm border border-slate-100 hover:border-blue-200 transition-colors">
+                          <div className="flex items-start gap-3">
+                            <div className="mt-1 w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-bold shrink-0">
+                              {idx + 1}
+                            </div>
+                            <div>
+                              <h4 className="font-bold text-slate-900 mb-1">{insight.title}</h4>
+                              <p className="text-sm text-slate-600 leading-relaxed">{insight.description}</p>
+                            </div>
                           </div>
                         </div>
+                      ))}
+                      <div className="pt-4 text-center">
+                        <button onClick={() => scrollToSection('contact')} className="text-sm font-bold text-blue-900 hover:underline">
+                          Book a call to implement these ideas &rarr;
+                        </button>
                       </div>
-                    ))}
-                    <div className="pt-4 text-center">
-                      <button onClick={() => scrollToSection('contact')} className="text-sm font-bold text-blue-900 hover:underline">
-                        Book a call to implement these ideas &rarr;
-                      </button>
-                    </div>
-                 </div>
-               )}
-            </div>
+                   </div>
+                 )}
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -537,64 +530,50 @@ const JMCWebsite = () => {
         </div>
       </section>
 
-      {/* About Us */}
-      <section id="about" className="py-16 bg-white">
+      {/* About Us - REDESIGNED */}
+      <section id="about" className="py-16 bg-white relative overflow-hidden">
+        {/* Decorative Background Element */}
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-900 via-blue-600 to-blue-900"></div>
+        
         <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-16">
-            <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">Who We Are</h2>
-            <h3 className="text-3xl lg:text-4xl font-bold text-slate-900">Experienced AI consultants with deep industry expertise.</h3>
+          <div className="text-center max-w-3xl mx-auto mb-12">
+             <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">Who We Are</h2>
+             <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-6">We’re a specialist AI consulting team.</h3>
+             <p className="text-lg text-slate-600 leading-relaxed">
+               With almost two decades of experience in AI implementation, workflow automation, and digital transformation, we have delivered programmes for more than 15 global organisations. Now, we bring that enterprise expertise to you.
+             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Fin */}
-            <div className="group bg-white border border-slate-200 p-8 hover:border-blue-300 transition-all duration-300 shadow-sm hover:shadow-xl rounded-xl overflow-hidden relative">
-              <div className="absolute top-0 left-0 w-full h-1 bg-blue-900 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-              <div className="flex flex-col gap-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center text-xl font-bold text-blue-900 border border-blue-100">F</div>
-                  <div>
-                    <h4 className="text-2xl font-bold text-slate-900">Fin</h4>
-                    <p className="text-blue-800 font-medium">Co-Founder | Technology & Data</p>
-                  </div>
+          <div className="grid md:grid-cols-3 gap-6 relative z-10">
+             {/* Card 1 */}
+             <div className="group bg-white p-8 rounded-xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-300 transition-all flex flex-col items-center text-center">
+                <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform text-blue-900">
+                  <Award size={32} />
                 </div>
-                <p className="text-slate-600 leading-relaxed">
-                  Six years of AI implementation and data automation experience. Delivered enterprise AI, analytics, and automation projects for high-profile clients including Schroders Personal Wealth, Lloyds Banking Group, and Ascot Insurance.
-                </p>
-                <div className="space-y-2 pt-4 border-t border-slate-100">
-                  <h5 className="text-sm font-bold text-slate-900">Specialisation</h5>
-                  <div className="flex flex-wrap gap-2">
-                    {['Microsoft AI Ecosystem', 'Copilot Deployment', 'Data Automation', 'Workflow Engineering'].map((tag) => (
-                      <span key={tag} className="text-xs bg-slate-50 border border-slate-200 px-2 py-1 rounded-sm text-slate-600">{tag}</span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+                <h4 className="text-4xl font-bold text-blue-900 mb-2">20+</h4>
+                <p className="font-bold text-slate-900 mb-2">Years Experience</p>
+                <p className="text-sm text-slate-500">Deep industry knowledge in digital transformation, automation, and change management.</p>
+             </div>
 
-            {/* Amit */}
-            <div className="group bg-white border border-slate-200 p-8 hover:border-blue-300 transition-all duration-300 shadow-sm hover:shadow-xl rounded-xl overflow-hidden relative">
-              <div className="absolute top-0 left-0 w-full h-1 bg-blue-900 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-              <div className="flex flex-col gap-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center text-xl font-bold text-blue-900 border border-blue-100">A</div>
-                  <div>
-                    <h4 className="text-2xl font-bold text-slate-900">Amit</h4>
-                    <p className="text-blue-800 font-medium">Co-Founder | Strategy & Change</p>
-                  </div>
+             {/* Card 2 */}
+             <div className="group bg-white p-8 rounded-xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-300 transition-all flex flex-col items-center text-center">
+                <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform text-blue-900">
+                  <Globe size={32} />
                 </div>
-                <p className="text-slate-600 leading-relaxed">
-                  Six years in digital transformation and organisational change. Expert in bridging the gap between technical capability and human adoption, with extensive experience at Accenture and Essjay Solutions.
-                </p>
-                <div className="space-y-2 pt-4 border-t border-slate-100">
-                  <h5 className="text-sm font-bold text-slate-900">Specialisation</h5>
-                  <div className="flex flex-wrap gap-2">
-                    {['Digital Strategy', 'Process Redesign', 'Stakeholder Management', 'Adoption & Change'].map((tag) => (
-                      <span key={tag} className="text-xs bg-slate-50 border border-slate-200 px-2 py-1 rounded-sm text-slate-600">{tag}</span>
-                    ))}
-                  </div>
+                <h4 className="text-4xl font-bold text-blue-900 mb-2">15+</h4>
+                <p className="font-bold text-slate-900 mb-2">Global Enterprises</p>
+                <p className="text-sm text-slate-500">Delivering complex solutions for major financial, retail, and technology brands.</p>
+             </div>
+
+             {/* Card 3 */}
+             <div className="group bg-white p-8 rounded-xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-300 transition-all flex flex-col items-center text-center">
+                <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform text-blue-900">
+                  <TrendingUp size={32} />
                 </div>
-              </div>
-            </div>
+                <h4 className="text-4xl font-bold text-blue-900 mb-2">SME</h4>
+                <p className="font-bold text-slate-900 mb-2">Specialised Focus</p>
+                <p className="text-sm text-slate-500">Bridging the gap for smaller organisations to adopt enterprise-grade AI safely.</p>
+             </div>
           </div>
         </div>
       </section>
