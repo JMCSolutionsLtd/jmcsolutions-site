@@ -126,9 +126,9 @@ const JMCWebsite = () => {
     }
   ];
 
-  // --- Gemini API Integration ---
-  const apiKey = ""; // Injected at runtime
-
+// --- Gemini API Integration ---
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  
   const callGemini = async (prompt, systemPrompt) => {
   const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
     
