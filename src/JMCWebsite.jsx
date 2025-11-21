@@ -643,7 +643,7 @@ const JMCWebsite = () => {
             {/* Fork Label */}
              <div className="relative z-10 text-center mb-12">
                 <span className="bg-slate-100 text-slate-600 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider border border-slate-200 ring-4 ring-white">
-                  Step 2: Select Your Modules (Click to add to proposal)
+                  Step 2: Click To Add Your Modules
                 </span>
              </div>
 
@@ -898,7 +898,7 @@ const JMCWebsite = () => {
                 </div>
                 <div>
                   <h4 className="text-white font-bold text-sm">JMC Virtual Consultant</h4>
-                  <p className="text-blue-200 text-xs">Online | Powered by Gemini</p>
+                  <p className="text-blue-200 text-xs">Online</p>
                 </div>
               </div>
               <button onClick={() => setIsChatOpen(false)} className="text-white/70 hover:text-white">
