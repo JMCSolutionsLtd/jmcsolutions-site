@@ -118,7 +118,7 @@ const JMCWebsite = () => {
       desc: 'A custom AI assistant that understands your business and takes action.',
       includes: [
         'Custom multi-department assistant in Teams',
-        'Live system connections (Salesforce, SQL, Databricks)',
+        'Live system connections (Salesforce, Databricks, Confluence etc.)',
         'Workflow execution through Power Automate',
         'Secure business knowledge integration',
         'Guardrails & governance'
@@ -692,7 +692,7 @@ const JMCWebsite = () => {
                         <div className={`flex items-center gap-2 text-[10px] font-bold px-3 py-2 rounded-md transition-colors ${
                           isSelected ? 'bg-blue-100 text-blue-900' : 'bg-blue-50 text-blue-800'
                         }`}>
-                          <CheckCircle2 size={12} /> Includes Training & Support
+                          <CheckCircle2 size={12} /> Includes Training, Monitoring & Support
                         </div>
                       </div>
                    </div>
@@ -786,7 +786,7 @@ const JMCWebsite = () => {
                   <div className="w-10 h-10 bg-blue-50 flex items-center justify-center text-blue-900 rounded-full">
                     <Users size={20} />
                   </div>
-                  <span className="text-slate-700">+44 (0) 20 7123 4567</span>
+                  <span className="text-slate-700">+44 (0) 7827337189</span>
                 </div>
               </div>
 
