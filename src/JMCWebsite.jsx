@@ -550,7 +550,7 @@ const JMCWebsite = () => {
                 <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform text-blue-900">
                   <Award size={32} />
                 </div>
-                <h4 className="text-4xl font-bold text-blue-900 mb-2">20+</h4>
+                <h4 className="text-4xl font-bold text-blue-900 mb-2">15+</h4>
                 <p className="font-bold text-slate-900 mb-2">Years Experience</p>
                 <p className="text-sm text-slate-500">Deep industry knowledge in digital transformation, automation, and change management.</p>
              </div>
