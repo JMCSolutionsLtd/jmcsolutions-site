@@ -104,7 +104,7 @@ const JMCWebsite = () => {
     },
     {
       id: 'workflow',
-      title: 'Workflow Automation',
+      title: 'AI Automations',
       icon: Zap,
       desc: 'Eliminate manual work with automated, end-to-end workflows.',
       includes: [
@@ -117,9 +117,9 @@ const JMCWebsite = () => {
     },
     {
       id: 'assistant',
-      title: 'Internal AI Assistant',
+      title: 'Agentic AI',
       icon: Bot,
-      desc: 'A custom AI assistant that understands your business and takes action.',
+      desc: 'Custom AI assistants that understands your business and take action for you.',
       includes: [
         'Custom multi-department assistant in Teams',
         'Live system connections (Salesforce, Databricks, Confluence etc.)',
@@ -247,12 +247,10 @@ const JMCWebsite = () => {
       
       Our Services:
       1. Copilot 365 Jumpstart: Enabling Copilot in Word, Excel, Teams.
-      2. Workflow Automation: Automating manual tasks with Power Automate.
-      3. Internal AI Assistant: Building custom chatbots with Copilot Studio.
+      2. AI Automations: Automating manual tasks with Power Automate.
+      3. Agentic AI: Building custom chatbots with Copilot Studio.
       4. Foundations: Security and data audits.
-      
-      Founders: Fin (Tech/Data) and Amit (Change/Strategy).
-      
+            
       Goal: Answer questions briefly and professionally. Always encourage the user to 'Book a Discovery Call' for complex queries. 
       Keep responses under 50 words if possible.`;
 
@@ -545,14 +543,19 @@ const JMCWebsite = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 relative z-10">
-             {/* Card 1 */}
+             {/* Card 1 - Updated to Microsoft Partner */}
              <div className="group bg-white p-8 rounded-xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-300 transition-all flex flex-col items-center text-center">
-                <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform text-blue-900">
-                  <Award size={32} />
+                <div className="w-16 h-16 bg-white rounded-full border border-slate-100 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-sm">
+                  <svg width="30" height="30" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0H10.5623V10.5623H0V0Z" fill="#F25022"/>
+                    <path d="M12.4377 0H23V10.5623H12.4377V0Z" fill="#7FBA00"/>
+                    <path d="M0 12.4377H10.5623V23H0V12.4377Z" fill="#00A4EF"/>
+                    <path d="M12.4377 12.4377H23V23H12.4377V12.4377Z" fill="#FFB900"/>
+                  </svg>
                 </div>
-                <h4 className="text-4xl font-bold text-blue-900 mb-2">15+</h4>
-                <p className="font-bold text-slate-900 mb-2">Years Experience</p>
-                <p className="text-sm text-slate-500">Deep industry knowledge in digital transformation, automation, and change management.</p>
+                <h4 className="text-2xl font-bold text-blue-900 mb-2">Microsoft</h4>
+                <p className="font-bold text-slate-900 mb-2">Solutions Partner</p>
+                <p className="text-sm text-slate-500">Certified expertise delivering enterprise-grade Microsoft AI and Cloud solutions.</p>
              </div>
 
              {/* Card 2 */}
