@@ -457,7 +457,7 @@ Keep responses under 50 words if possible.`;
                   </span>
                 </h1>
                 <p className="text-xl text-slate-600 max-w-2xl leading-relaxed mb-8 bg-white/60 backdrop-blur-sm md:bg-transparent p-2 md:p-0 rounded-lg">
-                  We modernise your organisation with smart automations and AI assistants that understand your business, your data, and how your teams work.
+                  We help SMEs adopt AI safely and compliantly as a Microsoft Solutions Partner, making your organisation future-proof with Microsoft 365 Copilot, smart automations and agentic assistants built around your data.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4">
