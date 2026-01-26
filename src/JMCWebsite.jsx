@@ -27,6 +27,72 @@ import {
   TrendingUp
 } from 'lucide-react';
 
+// --- Page Components ---
+
+const PrivacyPolicy = ({ onBack }) => (
+  <div className="pt-32 pb-20 px-6 max-w-4xl mx-auto">
+    <button onClick={onBack} className="flex items-center text-blue-600 hover:text-blue-800 mb-8 font-medium">
+      <ArrowLeft size={16} className="mr-2" /> Back to Home
+    </button>
+    <h1 className="text-4xl font-bold text-slate-900 mb-8">Privacy Policy</h1>
+    <div className="prose prose-slate max-w-none text-slate-600 space-y-6">
+      <p><strong>Last Updated:</strong> October 26, 2023</p>
+      <p>JMC Solutions Ltd ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclosure, and safeguard your information when you visit our website.</p>
+      
+      <h3 className="text-xl font-bold text-slate-900 mt-8">1. Information We Collect</h3>
+      <p>We may collect information about you in a variety of ways. The information we may collect on the Site includes:</p>
+      <ul className="list-disc pl-6 space-y-2">
+        <li><strong>Personal Data:</strong> Personally identifiable information, such as your name, shipping address, email address, and telephone number, that you voluntarily give to us when you register with the Site or when you choose to participate in various activities related to the Site (such as the "Discovery Call" form).</li>
+        <li><strong>Derivative Data:</strong> Information our servers automatically collect when you access the Site, such as your IP address, your browser type, your operating system, your access times, and the pages you have viewed directly before and after accessing the Site.</li>
+      </ul>
+
+      <h3 className="text-xl font-bold text-slate-900 mt-8">2. Use of Your Information</h3>
+      <p>Having accurate information about you permits us to provide you with a smooth, efficient, and customized experience. Specifically, we may use information collected about you via the Site to:</p>
+      <ul className="list-disc pl-6 space-y-2">
+        <li>Compile anonymous statistical data and analysis for use internally.</li>
+        <li>Deliver targeted advertising, coupons, newsletters, and other information regarding promotions and the Site to you.</li>
+        <li>Email you regarding your account or order.</li>
+        <li>Fulfill and manage purchases, orders, payments, and other transactions related to the Site.</li>
+      </ul>
+
+      <h3 className="text-xl font-bold text-slate-900 mt-8">3. Data Security</h3>
+      <p>We use administrative, technical, and physical security measures to help protect your personal information. While we have taken reasonable steps to secure the personal information you provide to us, please be aware that despite our efforts, no security measures are perfect or impenetrable, and no method of data transmission can be guaranteed against any interception or other type of misuse.</p>
+
+      <h3 className="text-xl font-bold text-slate-900 mt-8">4. Contact Us</h3>
+      <p>If you have questions or comments about this Privacy Policy, please contact us at: <a href="mailto:fin@jmcsolutions.ai" className="text-blue-600 hover:underline">fin@jmcsolutions.ai</a></p>
+    </div>
+  </div>
+);
+
+const CookiePolicy = ({ onBack }) => (
+  <div className="pt-32 pb-20 px-6 max-w-4xl mx-auto">
+    <button onClick={onBack} className="flex items-center text-blue-600 hover:text-blue-800 mb-8 font-medium">
+      <ArrowLeft size={16} className="mr-2" /> Back to Home
+    </button>
+    <h1 className="text-4xl font-bold text-slate-900 mb-8">Cookie Policy</h1>
+    <div className="prose prose-slate max-w-none text-slate-600 space-y-6">
+      <p>This Cookie Policy explains how JMC Solutions Ltd uses cookies and similar technologies to recognize you when you visit our website.</p>
+      
+      <h3 className="text-xl font-bold text-slate-900 mt-8">1. What are cookies?</h3>
+      <p>Cookies are small data files that are placed on your computer or mobile device when you visit a website. Cookies are widely used by website owners in order to make their websites work, or to work more efficiently, as well as to provide reporting information.</p>
+
+      <h3 className="text-xl font-bold text-slate-900 mt-8">2. Why do we use cookies?</h3>
+      <p>We use first- and third-party cookies for several reasons. Some cookies are required for technical reasons in order for our Website to operate, and we refer to these as "essential" or "strictly necessary" cookies. Other cookies also enable us to track and target the interests of our users to enhance the experience on our Online Properties.</p>
+
+      <h3 className="text-xl font-bold text-slate-900 mt-8">3. Types of Cookies We Use</h3>
+      <ul className="list-disc pl-6 space-y-2">
+        <li><strong>Essential Cookies:</strong> These are strictly necessary to provide you with services available through our Website and to use some of its features.</li>
+        <li><strong>Performance and Functionality Cookies:</strong> These are used to enhance the performance and functionality of our Website but are non-essential to their use.</li>
+        <li><strong>Analytics and Customization Cookies:</strong> These collect information that is used either in aggregate form to help us understand how our Website is being used or how effective our marketing campaigns are.</li>
+      </ul>
+
+      <h3 className="text-xl font-bold text-slate-900 mt-8">4. How can I control cookies?</h3>
+      <p>You have the right to decide whether to accept or reject cookies. You can exercise your cookie rights by setting your preferences in the Cookie Consent Manager. In addition, most advertising networks offer you a way to opt out of targeted advertising.</p>
+    </div>
+  </div>
+);
+
+
 const JMCWebsite = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -866,6 +932,12 @@ const JMCWebsite = () => {
         </div>
       </section>
 
+      {/* Privacy Policy Page */}
+      {activePage === 'privacy' && <PrivacyPolicy onBack={() => setActivePage('home')} />}
+
+      {/* Cookie Policy Page */}
+      {activePage === 'cookies' && <CookiePolicy onBack={() => setActivePage('home')} />}
+
       {/* Footer */}
       <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
@@ -877,8 +949,8 @@ const JMCWebsite = () => {
             &copy; {new Date().getFullYear()} JMC Solutions Ltd. All rights reserved.
           </div>
           <div className="flex gap-6 text-sm font-medium">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <button onClick={() => setActivePage('privacy')} className="hover:text-white transition-colors">Privacy Policy</button>
+            <button onClick={() => setActivePage('cookies')} className="hover:text-white transition-colors">Cookie Policy</button>
             <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
           </div>
         </div>
