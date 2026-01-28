@@ -65,7 +65,7 @@ const PrivacyPolicy = ({ onBack }) => (
       <p>We use administrative, technical, and physical security measures to help protect your personal information. While we have taken reasonable steps to secure the personal information you provide to us, please be aware that despite our efforts, no security measures are perfect or impenetrable, and no method of data transmission can be guaranteed against any interception or other type of misuse.</p>
 
       <h3 className="text-xl font-bold text-slate-900 mt-8">4. Contact Us</h3>
-      <p>If you have questions or comments about this Privacy Policy, please contact us at: <a href="mailto:fin@jmcsolutions.ai" className="text-blue-600 hover:underline">fin@jmcsolutions.ai</a></p>
+      <p>If you have questions or comments about this Privacy Policy, please contact us at: <a href="mailto:contact@jmcsolutions.ai" className="text-blue-600 hover:underline">contact@jmcsolutions.ai</a></p>
     </div>
   </div>
 );
@@ -117,8 +117,7 @@ const JMCWebsite = () => {
 
   // Selection State
   const [selectedModules, setSelectedModules] = useState([]);
-  const [expandedModule, setExpandedModule] = useState(null);
-  const [activeBundle, setActiveBundle] = useState(null);
+  const [expandedModules, setExpandedModules] = useState([]);
 
   // AI Feature States - Virtual Consultant Chatbot
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -153,23 +152,42 @@ const JMCWebsite = () => {
   const toggleModuleSelection = (e, id) => {
     e.stopPropagation(); // Prevent toggling the accordion
     setSelectedModules((prev) => (prev.includes(id) ? prev.filter((m) => m !== id) : [...prev, id]));
-    setActiveBundle(null); // Deselect bundle if manual selection occurs
   };
 
   const toggleAccordion = (id) => {
-    setExpandedModule(expandedModule === id ? null : id);
+    setExpandedModules((prev) => 
+      prev.includes(id) ? prev.filter((m) => m !== id) : [...prev, id]
+    );
   };
 
   const bundles = {
-    core: ['foundations', 'copilot', 'retainer'],
-    plus: ['foundations', 'copilot', 'automations', 'retainer'],
-    max: ['foundations', 'copilot', 'automations', 'agentic', 'retainer'],
-    complete: ['foundations', 'copilot', 'automations', 'agentic', 'ml', 'retainer']
+    core: ['foundations', 'copilot', 'training', 'retainer'],
+    plus: ['foundations', 'copilot', 'training', 'automations', 'retainer'],
+    max: ['foundations', 'copilot', 'training', 'automations', 'agentic', 'retainer'],
+    complete: ['foundations', 'copilot', 'training', 'automations', 'agentic', 'ml', 'retainer']
   };
 
-  const selectBundle = (bundleKey) => {
-    setSelectedModules(bundles[bundleKey]);
-    setActiveBundle(bundleKey);
+  // Determine active bundle based on current selections
+  const getActiveBundle = () => {
+    const activeKey = Object.keys(bundles).find(key => {
+      const bundleServices = bundles[key];
+      // Check if selectedModules contains exactly the same elements as bundleServices
+      return bundleServices.length === selectedModules.length && 
+             bundleServices.every(service => selectedModules.includes(service));
+    });
+    return activeKey || null;
+  };
+
+  const activeBundle = getActiveBundle();
+
+  const handleBundleClick = (bundleKey) => {
+    // If clicking the currently active bundle, deselect all
+    if (activeBundle === bundleKey) {
+      setSelectedModules([]);
+    } else {
+      // Otherwise select the new bundle
+      setSelectedModules(bundles[bundleKey]);
+    }
   };
 
   const serviceModules = [
@@ -189,15 +207,28 @@ const JMCWebsite = () => {
     },
     {
       id: 'copilot',
-      title: 'Copilot 365 Enablement and Training',
+      title: 'Copilot 365 Enablement',
       icon: LayoutTemplate,
-      summary: 'A structured enablement programme to deploy Microsoft 365 Copilot correctly and ensure your team actually uses it.',
-      desc: 'Deploy Microsoft 365 Copilot correctly, train staff effectively, and ensure strong adoption. This is a structured enablement programme, not simply turning licences on.',
+      summary: 'Technical deployment and configuration to get your environment ready for Microsoft 365 Copilot.',
+      desc: 'We handle the technical setup, licensing verification, and environment configuration to ensure Copilot works perfectly from day one.',
       includes: [
         'Technical Setup & Indexing Validation',
+        'Admin Configuration & Policy Setup',
         'Department-specific Prompt Libraries',
-        'Role-based Team Training',
-        '30-day Adoption Tracking & Optimisation'
+        'Security & Compliance Configuration'
+      ]
+    },
+    {
+      id: 'training',
+      title: 'AI Training and Effective Adoption',
+      icon: GraduationCap,
+      summary: 'Ensure your investment pays off with role-based training and structured adoption programmes.',
+      desc: 'Deployment is not adoption. We train your staff on how to actually use these tools in their specific roles to drive real productivity gains.',
+      includes: [
+        'Role-based Team Training Sessions',
+        '30-day Adoption Tracking & Analytics',
+        'Usage Optimisation Workshops',
+        'Change Management Support'
       ]
     },
     {
@@ -241,7 +272,7 @@ const JMCWebsite = () => {
     },
     {
       id: 'retainer',
-      title: 'Ongoing Retainer & Support',
+      title: 'Ongoing Support & Optimisation',
       icon: RefreshCw,
       summary: 'Continuous training, optimisation, and governance to ensure long-term value as your organisation evolves.',
       desc: 'AI does not deliver value through one-off deployment. Ongoing training, optimisation, and governance are essential to ensure AI systems remain accurate. We also keep you updated with the latest AI releases so you remain at the forefront of innovation.',
@@ -370,11 +401,12 @@ We are a premium AI consultancy helping SMEs implement Microsoft Copilot, Power 
 
 Our Services:
 1. AI Foundations: Data audits, security, and governance.
-2. Copilot 365 Enablement and Training: Setup, prompt libraries, and training.
-3. AI Automations: Workflows, voice agents, and process automation.
-4. Agentic AI: Custom autonomous agents using Copilot Studio.
-5. Machine Learning & Advanced Analytics: Bespoke models and predictive analytics.
-6. Ongoing Retainer & Support: Continuous optimization and updates.
+2. Copilot 365 Enablement: Technical setup and configuration.
+3. AI Training and Effective Adoption: Role-based training and adoption tracking.
+4. AI Automations: Workflows, voice agents, and process automation.
+5. Agentic AI: Custom autonomous agents using Copilot Studio.
+6. Machine Learning & Advanced Analytics: Bespoke models and predictive analytics.
+7. Ongoing Support & Optimisation: Continuous optimization and updates.
 
 Goal: Answer questions briefly and professionally. Always encourage the user to 'Book a Discovery Call' for complex queries.
 Keep responses under 50 words if possible.`;
@@ -403,7 +435,7 @@ Keep responses under 50 words if possible.`;
   const bundleConfig = {
     core: { 
       label: 'Core', 
-      desc: 'Foundations + Copilot + Retainer',
+      desc: 'Foundations + Copilot + Training',
       colorClass: 'bg-red-50 border-red-200 hover:border-red-400',
       activeClass: 'ring-2 ring-red-500 border-red-500 bg-red-100'
     },
@@ -773,7 +805,7 @@ Keep responses under 50 words if possible.`;
               </div>
 
               <div className="max-w-4xl mx-auto">
-                <div className="mb-8">
+                <div className="mb-12">
                   <h4 className="text-center text-sm font-bold text-slate-500 uppercase tracking-wider mb-6">
                     Get better value by selecting one of our packages
                   </h4>
@@ -781,7 +813,7 @@ Keep responses under 50 words if possible.`;
                     {Object.entries(bundleConfig).map(([id, config]) => (
                       <button
                         key={id}
-                        onClick={() => selectBundle(id)}
+                        onClick={() => handleBundleClick(id)}
                         className={`p-3 rounded-xl border transition-all duration-300 text-left relative overflow-hidden group h-full flex flex-col justify-center ${
                           activeBundle === id
                             ? config.activeClass
@@ -789,7 +821,7 @@ Keep responses under 50 words if possible.`;
                         }`}
                       >
                         <div className="flex justify-between items-center mb-1">
-                          <div className="font-bold text-slate-900 text-sm">{config.label}</div>
+                          <div className="font-bold text-slate-900 text-base">{config.label}</div>
                           {activeBundle === id && <CheckCircle2 size={16} className="text-slate-900 shrink-0 ml-1" />}
                         </div>
                         <div className="text-xs text-slate-600 leading-tight opacity-90">{config.desc}</div>
@@ -798,7 +830,7 @@ Keep responses under 50 words if possible.`;
                   </div>
                   <div className="text-center mt-10 relative">
                     <span className="bg-white px-4 text-slate-400 text-xs font-bold uppercase tracking-wider relative z-10">
-                      OR Select your desired services below (click to expand each service)
+                      OR Select your desired services below
                     </span>
                     <div className="absolute top-1/2 left-0 w-full h-px bg-slate-100 -z-0"></div>
                   </div>
@@ -806,7 +838,7 @@ Keep responses under 50 words if possible.`;
 
                  {serviceModules.map((module) => {
                     const isSelected = selectedModules.includes(module.id);
-                    const isExpanded = expandedModule === module.id;
+                    const isExpanded = expandedModules.includes(module.id);
                     const Icon = module.icon;
 
                     return (
@@ -840,7 +872,7 @@ Keep responses under 50 words if possible.`;
                                     </span>
                                 )}
                             </div>
-                            <p className="text-sm text-slate-500 line-clamp-1 sm:line-clamp-none pr-4">{module.summary}</p>
+                            <p className="text-sm text-slate-500 pr-4">{module.summary}</p>
                           </div>
 
                           <div className="flex items-center gap-4 shrink-0">
@@ -1010,7 +1042,7 @@ Keep responses under 50 words if possible.`;
                         <div className="w-10 h-10 bg-blue-50 flex items-center justify-center text-blue-900 rounded-full">
                           <Briefcase size={20} />
                         </div>
-                        <span className="text-slate-700">fin@jmcsolutions.ai</span>
+                        <span className="text-slate-700">contact@jmcsolutions.ai</span>
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="w-10 h-10 bg-blue-50 flex items-center justify-center text-blue-900 rounded-full">
