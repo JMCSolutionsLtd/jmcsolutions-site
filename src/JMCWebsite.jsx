@@ -523,7 +523,7 @@ Keep responses under 50 words if possible.`;
                 {item.name}
               </button>
             ))}
-            <div className="pt-2 border-t border-slate-100">
+            <div className="pt-2 border-t border-slate-100 flex flex-col">
               <button onClick={() => setActivePage('privacy')} className="text-left text-lg font-medium text-slate-800 py-2">
                 Privacy Policy
               </button>
@@ -872,7 +872,7 @@ Keep responses under 50 words if possible.`;
                                     </span>
                                 )}
                             </div>
-                            <p className="text-sm text-slate-500 pr-4">{module.summary}</p>
+                            <p className="hidden md:block text-sm text-slate-500 pr-4">{module.summary}</p>
                           </div>
 
                           <div className="flex items-center gap-4 shrink-0">
