@@ -25,7 +25,12 @@ import {
   Building2,
   Globe,
   Award,
-  TrendingUp
+  TrendingUp,
+  ChevronUp,
+  GraduationCap,
+  RefreshCw,
+  BrainCircuit,
+  Package
 } from 'lucide-react';
 
 // --- Page Components ---
@@ -112,6 +117,8 @@ const JMCWebsite = () => {
 
   // Selection State
   const [selectedModules, setSelectedModules] = useState([]);
+  const [expandedModule, setExpandedModule] = useState(null);
+  const [activeBundle, setActiveBundle] = useState(null);
 
   // AI Feature States - Virtual Consultant Chatbot
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -143,49 +150,107 @@ const JMCWebsite = () => {
     }, 0);
   };
 
-  const toggleModule = (id) => {
+  const toggleModuleSelection = (e, id) => {
+    e.stopPropagation(); // Prevent toggling the accordion
     setSelectedModules((prev) => (prev.includes(id) ? prev.filter((m) => m !== id) : [...prev, id]));
+    setActiveBundle(null); // Deselect bundle if manual selection occurs
+  };
+
+  const toggleAccordion = (id) => {
+    setExpandedModule(expandedModule === id ? null : id);
+  };
+
+  const bundles = {
+    core: ['foundations', 'copilot', 'retainer'],
+    plus: ['foundations', 'copilot', 'automations', 'retainer'],
+    max: ['foundations', 'copilot', 'automations', 'agentic', 'retainer'],
+    complete: ['foundations', 'copilot', 'automations', 'agentic', 'ml', 'retainer']
+  };
+
+  const selectBundle = (bundleKey) => {
+    setSelectedModules(bundles[bundleKey]);
+    setActiveBundle(bundleKey);
   };
 
   const serviceModules = [
     {
-      id: 'copilot',
-      title: 'Copilot 365 Jumpstart',
-      icon: LayoutTemplate,
-      desc: 'Give every employee a personal AI assistant inside Microsoft 365 apps.',
+      id: 'foundations',
+      title: 'AI Foundations',
+      icon: ShieldCheck,
+      badge: 'Recommended Foundation',
+      summary: 'The solid starting point. We prepare your Microsoft 365 environment to ensure AI is accurate, secure, and compliant.',
+      desc: 'Prepare the organisation’s Microsoft 365 environment so AI, automation, and intelligent agents can operate accurately, securely, and compliantly.',
       includes: [
-        'Organisation-wide Copilot setup',
-        'Role-specific prompt libraries',
-        'Optimised 365 environment & governance',
-        'Team onboarding and training',
-        '30-day usage review',
-        'Optional Microsoft Graph external connectors'
+        'Full Data Audit (SharePoint, OneDrive, Teams)',
+        'Permissions Audit & Risk Assessment',
+        'Governance Setup & Standardisation',
+        'Remediation & Cleanup of high-risk items'
       ]
     },
     {
-      id: 'workflow',
+      id: 'copilot',
+      title: 'Copilot 365 Enablement and Training',
+      icon: LayoutTemplate,
+      summary: 'A structured enablement programme to deploy Microsoft 365 Copilot correctly and ensure your team actually uses it.',
+      desc: 'Deploy Microsoft 365 Copilot correctly, train staff effectively, and ensure strong adoption. This is a structured enablement programme, not simply turning licences on.',
+      includes: [
+        'Technical Setup & Indexing Validation',
+        'Department-specific Prompt Libraries',
+        'Role-based Team Training',
+        '30-day Adoption Tracking & Optimisation'
+      ]
+    },
+    {
+      id: 'automations',
       title: 'AI Automations',
       icon: Zap,
-      desc: 'Eliminate manual work with automated, end-to-end workflows.',
+      summary: 'Replace repetitive, manual work with intelligent workflows across Microsoft and external platforms.',
+      desc: 'Replace repetitive, manual work with intelligent automation. This pack includes any appropriate AI-driven automation, across Microsoft and external platforms.',
       includes: [
-        'Automation of key business processes',
-        'Data transformation & scheduled tasks',
-        'Approval flows integrated with Teams',
-        'System & API integrations',
-        'Real-time notifications'
+        'Process Mapping & ROI Prioritisation',
+        'Power Automate Workflows & Document Processing',
+        'Voice Agents & Messaging Bots',
+        'Cross-system Integrations & "Vibe-Coded" Websites'
       ]
     },
     {
-      id: 'assistant',
+      id: 'agentic',
       title: 'Agentic AI',
       icon: Bot,
-      desc: 'Custom AI assistants that understands your business and take action for you.',
+      summary: 'Design and deploy secure, context-aware AI agents that act on behalf of your organisation using Copilot Studio.',
+      desc: 'Design and deploy secure, context-aware AI agents that act on behalf of the organisation. These are not chatbots; they are governed agents capable of execution.',
       includes: [
-        'Custom multi-department assistant in Teams',
-        'Live system connections (Salesforce, Databricks, Confluence etc.)',
-        'Workflow execution through Power Automate',
-        'Secure business knowledge integration',
-        'Guardrails & governance'
+        'Agent Blueprinting & Persona Design',
+        'Knowledge Retrieval & Task Execution Skills',
+        'Secure Connectors (Salesforce, SQL, etc.)',
+        'Guardrails & Safety Governance'
+      ]
+    },
+    {
+      id: 'ml',
+      title: 'Machine Learning & Advanced Analytics',
+      icon: BrainCircuit,
+      summary: 'High-end, bespoke analytics and predictive modeling for complex business challenges.',
+      desc: 'Deliver high-end, bespoke analytics and machine learning where pre-built AI and automation are insufficient.',
+      includes: [
+        'Custom Machine Learning Models',
+        'Pattern & Anomaly Detection',
+        'Python-based Analytics Pipelines',
+        'Compliance-focused Deterministic Models'
+      ]
+    },
+    {
+      id: 'retainer',
+      title: 'Ongoing Retainer & Support',
+      icon: RefreshCw,
+      summary: 'Continuous training, optimisation, and governance to ensure long-term value as your organisation evolves.',
+      desc: 'AI does not deliver value through one-off deployment. Ongoing training, optimisation, and governance are essential to ensure AI systems remain accurate. We also keep you updated with the latest AI releases so you remain at the forefront of innovation.',
+      includes: [
+        'Regular Refresher Training',
+        'Copilot Usage Analysis & Tuning',
+        'Automation Reliability Improvements',
+        'Agent Behaviour Refinement',
+        'Updates on Latest AI Features & Releases'
       ]
     }
   ];
@@ -232,7 +297,7 @@ const JMCWebsite = () => {
 
     try {
       const systemPrompt =
-        "You are a senior AI consultant at JMC Solutions. Your goal is to impress a potential client by suggesting 3 specific, high-value use cases for Microsoft Copilot or Power Automate in their specific industry. Keep it professional, concise, and focused on ROI. Output strictly as a JSON object with a 'use_cases' array, where each object has a 'title' and 'description'.";
+        "You are a senior AI consultant at JMC Solutions. Your goal is to impress a potential client by suggesting 3 specific, high-value use cases for Microsoft Copilot, Power Automate, agentic Ai with Copilot Studio, or Machine learning & analytics in their specific industry. Keep it professional, concise, and focused on ROI. Output strictly as a JSON object with a 'use_cases' array, where each object has a 'title' and 'description'.";
       const userPrompt = `Industry: ${industryInput}. Generate 3 specific AI use cases.`;
 
       const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
@@ -272,7 +337,7 @@ const JMCWebsite = () => {
       .join(', ');
 
     const selectionContext = selectedTitles
-      ? `They are specifically interested in: Foundations (Mandatory) and ${selectedTitles}.`
+      ? `They are specifically interested in: ${selectedTitles}.`
       : "They haven't selected specific modules yet, but are interested in AI consulting.";
 
     try {
@@ -304,10 +369,12 @@ const JMCWebsite = () => {
 We are a premium AI consultancy helping SMEs implement Microsoft Copilot, Power Automate, and Custom AI Assistants.
 
 Our Services:
-1. Copilot 365 Jumpstart: Enabling Copilot in Word, Excel, Teams.
-2. AI Automations: Automating manual tasks with Power Automate.
-3. Agentic AI: Building custom chatbots with Copilot Studio.
-4. Foundations: Security and data audits.
+1. AI Foundations: Data audits, security, and governance.
+2. Copilot 365 Enablement and Training: Setup, prompt libraries, and training.
+3. AI Automations: Workflows, voice agents, and process automation.
+4. Agentic AI: Custom autonomous agents using Copilot Studio.
+5. Machine Learning & Advanced Analytics: Bespoke models and predictive analytics.
+6. Ongoing Retainer & Support: Continuous optimization and updates.
 
 Goal: Answer questions briefly and professionally. Always encourage the user to 'Book a Discovery Call' for complex queries.
 Keep responses under 50 words if possible.`;
@@ -332,6 +399,33 @@ Keep responses under 50 words if possible.`;
   `;
 
   const showHome = activePage === 'home';
+
+  const bundleConfig = {
+    core: { 
+      label: 'Core', 
+      desc: 'Foundations + Copilot + Retainer',
+      colorClass: 'bg-red-50 border-red-200 hover:border-red-400',
+      activeClass: 'ring-2 ring-red-500 border-red-500 bg-red-100'
+    },
+    plus: { 
+      label: 'Automate Plus', 
+      desc: 'Core + Automations',
+      colorClass: 'bg-orange-50 border-orange-200 hover:border-orange-400',
+      activeClass: 'ring-2 ring-orange-500 border-orange-500 bg-orange-100'
+    },
+    max: { 
+      label: 'Automate Max', 
+      desc: 'Plus + Agentic AI',
+      colorClass: 'bg-yellow-50 border-yellow-200 hover:border-yellow-400',
+      activeClass: 'ring-2 ring-yellow-500 border-yellow-500 bg-yellow-100'
+    },
+    complete: { 
+      label: 'Complete', 
+      desc: 'Everything Including ML',
+      colorClass: 'bg-green-50 border-green-200 hover:border-green-400',
+      activeClass: 'ring-2 ring-green-500 border-green-500 bg-green-100'
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900 selection:bg-blue-100">
@@ -619,43 +713,8 @@ Keep responses under 50 words if possible.`;
             </div>
           </section>
 
-          {/* Why You Need This */}
-          <section className="py-16 bg-slate-50">
-            <div className="max-w-7xl mx-auto px-6">
-              <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
-                <div className="bg-white p-8 rounded-none border-l-4 border-blue-900 shadow-sm hover:shadow-md transition-all">
-                  <div className="w-12 h-12 bg-blue-50 flex items-center justify-center mb-6 text-blue-900">
-                    <ShieldCheck size={24} />
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 text-slate-900">Governance & Security</h3>
-                  <p className="text-slate-600 leading-relaxed">
-                    Copilot requires clean data permissions. We ensure your AI adoption doesn't expose sensitive information or create compliance risks.
-                  </p>
-                </div>
-                <div className="bg-white p-8 rounded-none border-l-4 border-blue-600 shadow-sm hover:shadow-md transition-all">
-                  <div className="w-12 h-12 bg-blue-50 flex items-center justify-center mb-6 text-blue-800">
-                    <Zap size={24} />
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 text-slate-900">Automate the Routine</h3>
-                  <p className="text-slate-600 leading-relaxed">
-                    Workflow automation eliminates repetitive tasks. Let your team focus on strategy while our systems handle the manual labour.
-                  </p>
-                </div>
-                <div className="bg-white p-8 rounded-none border-l-4 border-blue-400 shadow-sm hover:shadow-md transition-all">
-                  <div className="w-12 h-12 bg-blue-50 flex items-center justify-center mb-6 text-blue-600">
-                    <Bot size={24} />
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 text-slate-900">Centralised Intelligence</h3>
-                  <p className="text-slate-600 leading-relaxed">
-                    An internal assistant centralises business knowledge, giving early adopters a major competitive advantage in speed and accuracy.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* About */}
-          <section id="about" className="py-16 bg-white relative overflow-hidden">
+          {/* About (Moved Here) */}
+          <section id="about" className="py-16 bg-slate-50 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-900 via-blue-600 to-blue-900" />
             <div className="max-w-7xl mx-auto px-6">
               <div className="text-center max-w-3xl mx-auto mb-12">
@@ -703,114 +762,173 @@ Keep responses under 50 words if possible.`;
           </section>
 
           {/* Services & Approach */}
-          <section id="approach" className="py-16 bg-slate-50">
+          <section id="approach" className="py-16 bg-white relative">
             <div className="max-w-7xl mx-auto px-6">
-              <div className="text-center max-w-3xl mx-auto mb-16">
+              <div className="text-center max-w-3xl mx-auto mb-12">
                 <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">Our Services & Approach</h2>
-                <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-6">Flexible implementation, built on solid foundations.</h3>
+                <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">Full Service Capabilities.</h3>
                 <p className="text-lg text-slate-600">
-                  We believe in a modular approach. Every engagement starts with a mandatory security audit. From there, you select the specific AI capabilities your business needs.
+                  From laying the secure foundations to deploying advanced machine learning, we cover every stage of your AI journey.
                 </p>
               </div>
 
-              <div className="relative max-w-5xl mx-auto">
-                <div className="absolute left-1/2 top-0 bottom-0 w-px bg-slate-200 -translate-x-1/2 hidden md:block -z-10" />
-
-                <div className="relative z-10 mb-16 text-center">
-                  <div className="inline-block bg-blue-900 text-white px-6 py-2 rounded-full font-bold text-sm mb-6 shadow-lg shadow-blue-900/20 ring-4 ring-white">
-                    Step 1: Mandatory Foundation
+              <div className="max-w-4xl mx-auto">
+                <div className="mb-8">
+                  <h4 className="text-center text-sm font-bold text-slate-500 uppercase tracking-wider mb-6">
+                    Get better value by selecting one of our packages
+                  </h4>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {Object.entries(bundleConfig).map(([id, config]) => (
+                      <button
+                        key={id}
+                        onClick={() => selectBundle(id)}
+                        className={`p-3 rounded-xl border transition-all duration-300 text-left relative overflow-hidden group h-full flex flex-col justify-center ${
+                          activeBundle === id
+                            ? config.activeClass
+                            : config.colorClass
+                        }`}
+                      >
+                        <div className="flex justify-between items-center mb-1">
+                          <div className="font-bold text-slate-900 text-sm">{config.label}</div>
+                          {activeBundle === id && <CheckCircle2 size={16} className="text-slate-900 shrink-0 ml-1" />}
+                        </div>
+                        <div className="text-xs text-slate-600 leading-tight opacity-90">{config.desc}</div>
+                      </button>
+                    ))}
                   </div>
-                  <div className="bg-white border-2 border-blue-100 p-8 rounded-2xl shadow-lg max-w-2xl mx-auto relative text-left">
-                    <div className="flex items-center gap-4 justify-center mb-6 border-b border-slate-100 pb-6">
-                      <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-blue-900">
-                        <ShieldCheck size={24} />
-                      </div>
-                      <h4 className="text-2xl font-bold text-slate-900">Foundations — Data & Permissions Audit</h4>
-                    </div>
-
-                    <p className="text-center text-slate-600 mb-8 text-base italic leading-relaxed">
-                      Prepare your data and access controls for compliant and effective AI adoption.
-                    </p>
-
-                    <div className="mb-2">
-                      <h5 className="text-xs font-bold text-blue-900 uppercase mb-4 tracking-wider text-center sm:text-left">Includes:</h5>
-                      <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-3">
-                        {[
-                          'Full data and content audit',
-                          'Permissions review and clean-up',
-                          'Role-based group access structuring',
-                          'SharePoint, OneDrive, and Teams optimisation'
-                        ].map((item, i) => (
-                          <li key={i} className="flex items-start gap-3 text-slate-600 text-sm">
-                            <CheckCircle2 size={16} className="text-blue-600 mt-0.5 shrink-0" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-white border-b-2 border-r-2 border-blue-100 transform rotate-45" />
+                  <div className="text-center mt-10 relative">
+                    <span className="bg-white px-4 text-slate-400 text-xs font-bold uppercase tracking-wider relative z-10">
+                      OR Select your desired services below
+                    </span>
+                    <div className="absolute top-1/2 left-0 w-full h-px bg-slate-100 -z-0"></div>
                   </div>
                 </div>
 
-                <div className="relative z-10 text-center mb-12">
-                  <span className="bg-slate-100 text-slate-600 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider border border-slate-200 ring-4 ring-white">
-                    Step 2: Select Your Modules
-                  </span>
-                </div>
-
-                <div className="grid md:grid-cols-3 gap-6 relative z-10">
-                  {serviceModules.map((module) => {
+                 {serviceModules.map((module) => {
                     const isSelected = selectedModules.includes(module.id);
+                    const isExpanded = expandedModule === module.id;
                     const Icon = module.icon;
 
                     return (
                       <div
                         key={module.id}
-                        onClick={() => toggleModule(module.id)}
-                        className={`p-8 rounded-xl border shadow-sm transition-all group flex flex-col cursor-pointer relative ${
-                          isSelected ? 'bg-blue-50 border-blue-500 ring-1 ring-blue-500' : 'bg-white border-slate-200 hover:shadow-xl hover:border-blue-300'
+                        className={`mb-4 rounded-xl border transition-all duration-300 overflow-hidden ${
+                          isSelected ? 'border-blue-500 ring-1 ring-blue-500 bg-white shadow-md' : 'border-slate-200 bg-white hover:border-blue-300 hover:shadow-md'
                         }`}
                       >
-                        {isSelected && (
-                          <div className="absolute top-4 right-4 bg-blue-600 text-white rounded-full p-1">
-                            <Check size={16} />
-                          </div>
-                        )}
+                        {/* Header Row */}
                         <div
-                          className={`w-12 h-12 rounded-full flex items-center justify-center mb-6 transition-transform ${
-                            isSelected ? 'bg-blue-100 text-blue-700 scale-110' : 'bg-blue-50 text-blue-900 group-hover:scale-110'
-                          }`}
+                          onClick={() => toggleAccordion(module.id)}
+                          className="flex items-center p-6 cursor-pointer"
                         >
-                          <Icon size={24} />
-                        </div>
-                        <h4 className="text-xl font-bold text-slate-900 mb-2">{module.title}</h4>
-                        <p className="text-sm text-slate-500 italic mb-4 border-b border-slate-100 pb-4">{module.desc}</p>
-
-                        <div className="flex-grow">
-                          <h5 className="text-xs font-bold text-blue-900 uppercase mb-3 tracking-wider">Includes:</h5>
-                          <ul className="space-y-2 mb-6">
-                            {module.includes.map((item, i) => (
-                              <li key={i} className="flex items-start gap-2 text-slate-600 text-xs">
-                                <div className={`w-1 h-1 rounded-full mt-1.5 shrink-0 ${isSelected ? 'bg-blue-600' : 'bg-blue-400'}`} />
-                                {item}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        <div className="mt-auto pt-4 border-t border-slate-100">
-                          <div
-                            className={`flex items-center gap-2 text-[10px] font-bold px-3 py-2 rounded-md transition-colors ${
-                              isSelected ? 'bg-blue-100 text-blue-900' : 'bg-blue-50 text-blue-800'
+                           <div
+                            className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 transition-colors ${
+                              isSelected ? 'bg-blue-100 text-blue-700' : 'bg-blue-50 text-blue-900'
                             }`}
                           >
-                            <CheckCircle2 size={12} /> Includes Training, Monitoring & Support
+                            <Icon size={24} />
                           </div>
+
+                          <div className="ml-5 flex-grow">
+                            <div className="flex items-center gap-3 mb-1">
+                                <h4 className={`text-lg font-bold ${isSelected ? 'text-blue-900' : 'text-slate-900'}`}>
+                                    {module.title}
+                                </h4>
+                                {module.badge && (
+                                    <span className="hidden sm:inline-block bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wide border border-amber-200">
+                                        {module.badge}
+                                    </span>
+                                )}
+                            </div>
+                            <p className="text-sm text-slate-500 line-clamp-1 sm:line-clamp-none pr-4">{module.summary}</p>
+                          </div>
+
+                          <div className="flex items-center gap-4 shrink-0">
+                             {/* Selection Toggle */}
+                             <div
+                                onClick={(e) => toggleModuleSelection(e, module.id)}
+                                className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer border ${
+                                    isSelected
+                                    ? 'bg-blue-600 text-white border-blue-600'
+                                    : 'bg-white text-slate-400 border-slate-200 hover:border-blue-300 hover:text-blue-600'
+                                }`}
+                             >
+                                {isSelected ? <Check size={14} /> : null}
+                                {isSelected ? 'Selected' : 'Select'}
+                             </div>
+
+                             {/* Chevron */}
+                             <div className={`text-slate-400 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>
+                                <ChevronDown size={20} />
+                             </div>
+                          </div>
+                        </div>
+
+                        {/* Expanded Content */}
+                        <div
+                            className={`transition-[max-height,opacity] duration-300 ease-in-out ${
+                                isExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+                            }`}
+                        >
+                            <div className="p-6 pt-0 border-t border-slate-100 bg-slate-50/50">
+                                <div className="grid md:grid-cols-3 gap-8 pt-6">
+                                    <div className="md:col-span-2">
+                                        <h5 className="text-xs font-bold text-blue-900 uppercase mb-3 tracking-wider">Description</h5>
+                                        <p className="text-sm text-slate-600 leading-relaxed mb-6">
+                                            {module.desc}
+                                        </p>
+                                    </div>
+                                    <div>
+                                         <h5 className="text-xs font-bold text-blue-900 uppercase mb-3 tracking-wider">What's Included</h5>
+                                         <ul className="space-y-2">
+                                            {module.includes.map((item, i) => (
+                                              <li key={i} className="flex items-start gap-2 text-slate-600 text-xs">
+                                                <div className="w-1 h-1 rounded-full mt-1.5 shrink-0 bg-blue-500" />
+                                                {item}
+                                              </li>
+                                            ))}
+                                          </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                       </div>
                     );
                   })}
+              </div>
+            </div>
+          </section>
+
+          {/* Governance & Security (Moved Here) */}
+          <section className="py-16 bg-slate-50">
+            <div className="max-w-7xl mx-auto px-6">
+              <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+                <div className="bg-white p-8 rounded-none border-l-4 border-blue-900 shadow-sm hover:shadow-md transition-all">
+                  <div className="w-12 h-12 bg-blue-50 flex items-center justify-center mb-6 text-blue-900">
+                    <ShieldCheck size={24} />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-slate-900">Governance & Security</h3>
+                  <p className="text-slate-600 leading-relaxed">
+                    Copilot requires clean data permissions. We ensure your AI adoption doesn't expose sensitive information or create compliance risks.
+                  </p>
+                </div>
+                <div className="bg-white p-8 rounded-none border-l-4 border-blue-600 shadow-sm hover:shadow-md transition-all">
+                  <div className="w-12 h-12 bg-blue-50 flex items-center justify-center mb-6 text-blue-800">
+                    <Zap size={24} />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-slate-900">Automate the Routine</h3>
+                  <p className="text-slate-600 leading-relaxed">
+                    Workflow automation eliminates repetitive tasks. Let your team focus on strategy while our systems handle the manual labour.
+                  </p>
+                </div>
+                <div className="bg-white p-8 rounded-none border-l-4 border-blue-400 shadow-sm hover:shadow-md transition-all">
+                  <div className="w-12 h-12 bg-blue-50 flex items-center justify-center mb-6 text-blue-600">
+                    <Bot size={24} />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-slate-900">Centralised Intelligence</h3>
+                  <p className="text-slate-600 leading-relaxed">
+                    An internal assistant centralises business knowledge, giving early adopters a major competitive advantage in speed and accuracy.
+                  </p>
                 </div>
               </div>
             </div>
@@ -920,9 +1038,6 @@ Keep responses under 50 words if possible.`;
                     <div className="bg-blue-50 p-4 rounded-md border border-blue-100 mb-6 animate-in fade-in slide-in-from-top-2 duration-300">
                       <h5 className="text-xs font-bold text-blue-900 uppercase mb-2">Your Project Scope:</h5>
                       <div className="flex flex-wrap gap-2">
-                        <span className="text-xs bg-white px-2 py-1 rounded border border-blue-200 text-slate-600 flex items-center gap-1">
-                          <ShieldCheck size={12} className="text-blue-500" /> Foundations (Mandatory)
-                        </span>
                         {selectedModules.map((id) => {
                           const module = serviceModules.find((m) => m.id === id);
                           return (
