@@ -798,7 +798,7 @@ Keep responses under 50 words if possible.`;
                   </div>
                   <div className="text-center mt-10 relative">
                     <span className="bg-white px-4 text-slate-400 text-xs font-bold uppercase tracking-wider relative z-10">
-                      OR Select your desired services below
+                      OR Select your desired services below (click to expand each service)
                     </span>
                     <div className="absolute top-1/2 left-0 w-full h-px bg-slate-100 -z-0"></div>
                   </div>
