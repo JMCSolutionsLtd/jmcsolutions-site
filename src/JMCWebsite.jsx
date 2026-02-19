@@ -115,6 +115,14 @@ const JMCWebsite = () => {
   // AI Feature States - Contact Form
   const [contactMessage, setContactMessage] = useState('');
   const [isDrafting, setIsDrafting] = useState(false);
+  const [contactForm, setContactForm] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    company: ''
+  });
+  const [isSending, setIsSending] = useState(false);
+  const [sendStatus, setSendStatus] = useState(null); // 'success', 'error', or null
 
   // Selection State
   const [selectedModules, setSelectedModules] = useState([]);
@@ -389,6 +397,50 @@ const JMCWebsite = () => {
       setContactMessage("I'm interested in booking a discovery call to discuss how AI can benefit my business.");
     } finally {
       setIsDrafting(false);
+    }
+  };
+
+  const handleSendEmail = async (e) => {
+    e.preventDefault();
+    
+    // Validate form
+    if (!contactForm.firstName || !contactForm.lastName || !contactForm.email || !contactForm.company || !contactMessage) {
+      setSendStatus({ type: 'error', message: 'Please fill in all fields.' });
+      return;
+    }
+
+    setIsSending(true);
+    setSendStatus(null);
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: contactForm.firstName,
+          lastName: contactForm.lastName,
+          email: contactForm.email,
+          company: contactForm.company,
+          message: contactMessage
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setSendStatus({ type: 'error', message: data.error || 'Failed to send email.' });
+        return;
+      }
+
+      setSendStatus({ type: 'success', message: 'Email sent! We'll be in touch soon.' });
+      // Reset form
+      setContactForm({ firstName: '', lastName: '', email: '', company: '' });
+      setContactMessage('');
+    } catch (error) {
+      console.error('Send email error:', error);
+      setSendStatus({ type: 'error', message: 'Network error. Please try again.' });
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -1088,22 +1140,42 @@ Keep responses under 50 words if possible.`;
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-1">
                       <label className="text-xs font-bold text-slate-500 uppercase">First Name</label>
-                      <input type="text" className="w-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors" />
+                      <input
+                        type="text"
+                        value={contactForm.firstName}
+                        onChange={(e) => setContactForm({ ...contactForm, firstName: e.target.value })}
+                        className="w-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
+                      />
                     </div>
                     <div className="space-y-1">
                       <label className="text-xs font-bold text-slate-500 uppercase">Last Name</label>
-                      <input type="text" className="w-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors" />
+                      <input
+                        type="text"
+                        value={contactForm.lastName}
+                        onChange={(e) => setContactForm({ ...contactForm, lastName: e.target.value })}
+                        className="w-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
+                      />
                     </div>
                   </div>
 
                   <div className="space-y-1">
                     <label className="text-xs font-bold text-slate-500 uppercase">Business Email</label>
-                    <input type="email" className="w-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors" />
+                    <input
+                      type="email"
+                      value={contactForm.email}
+                      onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+                      className="w-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
+                    />
                   </div>
 
                   <div className="space-y-1">
                     <label className="text-xs font-bold text-slate-500 uppercase">Company Name</label>
-                    <input id="companyName" type="text" className="w-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors" />
+                    <input
+                      type="text"
+                      value={contactForm.company}
+                      onChange={(e) => setContactForm({ ...contactForm, company: e.target.value })}
+                      className="w-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
+                    />
                   </div>
 
                   <div className="space-y-1 relative flex-grow">
@@ -1126,9 +1198,29 @@ Keep responses under 50 words if possible.`;
                     />
                   </div>
 
-                  <button className="w-full py-4 bg-blue-900 text-white font-bold hover:bg-blue-800 transition-all mt-4 shadow-lg">
-                    Send Message
+                  <button
+                    onClick={handleSendEmail}
+                    disabled={isSending}
+                    className="w-full py-4 bg-blue-900 text-white font-bold hover:bg-blue-800 transition-all mt-4 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  >
+                    {isSending ? (
+                      <>
+                        <Loader2 size={18} className="animate-spin" /> Sending...
+                      </>
+                    ) : (
+                      'Send Message'
+                    )}
                   </button>
+
+                  {sendStatus && (
+                    <div className={`p-4 rounded-lg text-sm font-medium ${
+                      sendStatus.type === 'success'
+                        ? 'bg-green-50 text-green-800 border border-green-200'
+                        : 'bg-red-50 text-red-800 border border-red-200'
+                    }`}>
+                      {sendStatus.message}
+                    </div>
+                  )}
                 </form>
               </div>
             </div>
