@@ -432,7 +432,7 @@ const JMCWebsite = () => {
         return;
       }
 
-      setSendStatus({ type: 'success', message: 'Email sent! We'll be in touch soon.' });
+      setSendStatus({ type: 'success', message: "Email sent! We'll be in touch soon." });
       // Reset form
       setContactForm({ firstName: '', lastName: '', email: '', company: '' });
       setContactMessage('');
