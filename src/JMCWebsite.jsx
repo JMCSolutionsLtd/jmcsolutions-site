@@ -43,7 +43,7 @@ const PrivacyPolicy = ({ onBack }) => (
     </button>
     <h1 className="text-4xl font-bold text-slate-900 mb-8">Privacy Policy</h1>
     <div className="prose prose-slate max-w-none text-slate-600 space-y-6">
-      <p><strong>Last Updated:</strong> October 26, 2023</p>
+      <p><strong>Last Updated:</strong> November 26, 2025</p>
       <p>JMC Solutions Ltd ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclosure, and safeguard your information when you visit our website.</p>
 
       <h3 className="text-xl font-bold text-slate-900 mt-8">1. Information We Collect</h3>
