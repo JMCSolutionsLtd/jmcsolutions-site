@@ -32,6 +32,7 @@ import {
   BrainCircuit,
   Package
 } from 'lucide-react';
+import logo from './assets/JMC Solutions_v2_1.png';
 
 // --- Page Components ---
 
@@ -466,15 +467,12 @@ Keep responses under 50 words if possible.`;
       {/* Navigation */}
       <nav
         className={`fixed w-full z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-4' : 'bg-slate-50 py-6'
+          isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-2' : 'bg-slate-50 py-3'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => scrollToSection('hero')}>
-            <div className="w-8 h-8 bg-blue-900 rounded-sm flex items-center justify-center text-white font-bold text-lg tracking-tighter">
-              JMC
-            </div>
-            <span className="text-xl font-semibold tracking-tight text-slate-900">JMC Solutions Ltd.</span>
+          <div className="flex items-center cursor-pointer" onClick={() => scrollToSection('hero')}>
+            <img src={logo} alt="JMC Solutions Logo" className="h-20 w-auto max-w-xs object-contain" />
           </div>
 
           {/* Desktop Nav */}
