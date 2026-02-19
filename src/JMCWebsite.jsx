@@ -250,7 +250,7 @@ const JMCWebsite = () => {
         'Process Mapping & ROI Prioritisation',
         'Power Automate Workflows & Document Processing',
         'Voice Agents & Messaging Bots',
-        'Cross-system Integrations & "Vibe-Coded" Websites'
+        'Cross-system Integrations & Website Creation'
       ]
     },
     {
