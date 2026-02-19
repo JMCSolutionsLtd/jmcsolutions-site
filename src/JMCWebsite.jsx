@@ -529,7 +529,7 @@ Keep responses under 50 words if possible.`;
       >
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <div className="flex items-center cursor-pointer" onClick={() => scrollToSection('hero')}>
-            <img src={logo} alt="JMC Solutions Logo" className="h-20 w-auto max-w-xs object-contain" />
+            <img src={logo} alt="JMC Solutions Logo" className="h-14 md:h-20 w-auto max-w-xs object-contain" />
           </div>
 
           {/* Desktop Nav */}
@@ -631,13 +631,13 @@ Keep responses under 50 words if possible.`;
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
               <div className="max-w-4xl">
-                <h1 className="text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-white mb-8 drop-shadow-lg">
+                <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-white mb-8 drop-shadow-lg">
                   Secure AI Implementation <br className="hidden lg:block" />
                   <span className="text-blue-100">
                     Across Your Business.
                   </span>
                 </h1>
-                <p className="text-xl text-blue-50 max-w-2xl leading-relaxed mb-8">
+                <p className="text-lg sm:text-xl text-blue-50 max-w-2xl leading-relaxed mb-8">
                   As a Microsoft Solutions Partner, we help SMEs adopt AI safely and compliantly, making your organisation future-ready with Microsoft 365 Copilot, smart automations, and agentic assistants built around your data.
                 </p>
 
