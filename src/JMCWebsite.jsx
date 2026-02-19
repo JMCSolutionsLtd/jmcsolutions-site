@@ -623,7 +623,7 @@ Keep responses under 50 words if possible.`;
       {showHome && (
         <>
           {/* Hero Section */}
-          <section id="hero" className="relative pt-16 sm:pt-24 pb-12 lg:pt-36 lg:pb-20 overflow-hidden bg-blue-900">
+          <section id="hero" className="relative pt-28 sm:pt-24 pb-12 lg:pt-36 lg:pb-20 overflow-hidden bg-blue-900">
             <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-b from-blue-900 to-blue-950 -z-10 opacity-30" />
             <div className="absolute top-20 right-10 w-64 h-64 bg-blue-700 rounded-full blur-3xl -z-10 opacity-25" />
             <div className="absolute bottom-20 left-10 w-96 h-96 bg-blue-800 rounded-full blur-3xl -z-10 opacity-20" />
