@@ -667,7 +667,7 @@ Keep responses under 50 words if possible.`;
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-blue-600">For Your Industry.</span>
                   </h2>
                   <p className="text-lg text-slate-600 mb-8">
-                    Not sure where to start? Enter your industry below, and our AI assistant will generate three high-impact use cases tailored specifically for you.
+                    Not sure where to start? Enter your industry below, and our AI assistant will generate four high-impact use cases tailored specifically for you.
                   </p>
 
                   <div className={`bg-slate-50 p-2 rounded-md border border-slate-200 flex flex-col sm:flex-row gap-2 shadow-sm max-w-md ${aiInsights || isGeneratingInsights ? '' : 'mx-auto'}`}>
