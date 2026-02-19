@@ -291,8 +291,7 @@ const JMCWebsite = () => {
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
   const callGemini = async (prompt, systemPrompt) => {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
     const payload = {
       contents: [{ parts: [{ text: prompt }] }],
       systemInstruction: { parts: [{ text: systemPrompt }] }
