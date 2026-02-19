@@ -1097,7 +1097,7 @@ Keep responses under 50 words if possible.`;
                         <div className="w-10 h-10 bg-blue-50 flex items-center justify-center text-blue-900 rounded-full">
                           <Briefcase size={20} />
                         </div>
-                        <span className="text-slate-700">contact@jmcsolutions.ai</span>
+                        <span className="text-slate-700">fin@jmcsolutions.ai</span>
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="w-10 h-10 bg-blue-50 flex items-center justify-center text-blue-900 rounded-full">
