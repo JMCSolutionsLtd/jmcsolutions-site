@@ -328,9 +328,15 @@ const JMCWebsite = () => {
     setAiInsights(null);
 
     try {
-      const systemPrompt =
-        "You are a senior AI consultant at JMC Solutions. Your goal is to impress a potential client by suggesting 3 specific, high-value use cases for Microsoft Copilot, Power Automate, agentic Ai with Copilot Studio, or Machine learning & analytics in their specific industry. Keep it professional, concise, and focused on ROI. Output strictly as a JSON object with a 'use_cases' array, where each object has a 'title' and 'description'.";
-      const userPrompt = `Industry: ${industryInput}. Generate 3 specific AI use cases.`;
+      const systemPrompt = `You are a senior AI consultant at JMC Solutions. For the given industry, return EXACTLY FOUR use cases, one in each of these categories: "copilot" (Microsoft 365 Copilot idea), "automation" (AI Automation / Power Automate-style workflow), "agentic" (agentic AI using Copilot Studio that can take actions), and "ml" (Machine Learning & Analytics idea such as predictive or anomaly detection).
+
+        Rules:
+        - Return exactly 4 items, no more and no less.
+        - Output strictly as valid JSON with a top-level object containing a single key "use_cases" whose value is an array of 4 objects.
+        - Each object must have these keys: "category" (one of: copilot, automation, agentic, machine learning), "title" (short, 6-10 words max), and "description" (1-2 concise sentences focused on ROI and feasibility).
+        - Order does matter, categories must be unique (one per category).
+        - Do not include any extra commentary, notes, or metadata outside the JSON object.`;
+      const userPrompt = `Industry: ${industryInput}. Generate 4 specific AI use cases.`;
 
       const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
       const payload = {
@@ -672,7 +678,7 @@ Keep responses under 50 words if possible.`;
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-blue-600">For Your Industry.</span>
                   </h2>
                   <p className="text-lg text-slate-600 mb-8">
-                    Not sure where to start? Enter your industry below, and our Gemini-powered consultant will generate three high-impact use cases tailored specifically for you.
+                    Not sure where to start? Enter your industry below, and our AI consultant will generate three high-impact use cases tailored specifically for you.
                   </p>
 
                   <div className={`bg-slate-50 p-2 rounded-md border border-slate-200 flex flex-col sm:flex-row gap-2 shadow-sm max-w-md ${aiInsights || isGeneratingInsights ? '' : 'mx-auto'}`}>
