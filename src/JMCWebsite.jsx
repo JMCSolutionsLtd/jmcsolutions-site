@@ -493,7 +493,7 @@ Keep responses under 50 words if possible.`;
   const bundleConfig = {
     core: { 
       label: 'Core', 
-      desc: 'Foundations + Copilot + Training',
+      desc: 'AI Set-Up & Adoption',
       colorClass: 'bg-red-50 border-red-200 hover:border-red-400',
       activeClass: 'ring-2 ring-red-500 border-red-500 bg-red-100'
     },
@@ -623,94 +623,32 @@ Keep responses under 50 words if possible.`;
       {showHome && (
         <>
           {/* Hero Section */}
-          <section id="hero" className="relative pt-32 sm:pt-24 pb-12 lg:pt-36 lg:pb-20 overflow-hidden">
-            <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-b from-slate-50 to-white -z-10 opacity-50" />
-            <div className="absolute top-20 right-10 w-64 h-64 bg-blue-50 rounded-full blur-3xl -z-10 opacity-60" />
-            <div className="absolute bottom-20 left-10 w-96 h-96 bg-slate-50 rounded-full blur-3xl -z-10" />
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] -z-10" />
+          <section id="hero" className="relative pt-32 sm:pt-24 pb-12 lg:pt-36 lg:pb-20 overflow-hidden bg-blue-900">
+            <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-b from-blue-900 to-blue-950 -z-10 opacity-30" />
+            <div className="absolute top-20 right-10 w-64 h-64 bg-blue-700 rounded-full blur-3xl -z-10 opacity-25" />
+            <div className="absolute bottom-20 left-10 w-96 h-96 bg-blue-800 rounded-full blur-3xl -z-10 opacity-20" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff12_1px,transparent_1px),linear-gradient(to_bottom,#ffffff12_1px,transparent_1px)] bg-[size:24px_24px] -z-10" />
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
               <div className="max-w-4xl">
-                <h1 className="text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-slate-900 mb-8 drop-shadow-sm">
+                <h1 className="text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-white mb-8 drop-shadow-lg">
                   Secure AI Implementation <br className="hidden lg:block" />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-blue-600">
+                  <span className="text-blue-100">
                     Across Your Business.
                   </span>
                 </h1>
-                <p className="text-xl text-slate-600 max-w-2xl leading-relaxed mb-8 bg-white/60 backdrop-blur-sm md:bg-transparent p-2 md:p-0 rounded-lg">
+                <p className="text-xl text-blue-50 max-w-2xl leading-relaxed mb-8">
                   As a Microsoft Solutions Partner, we help SMEs adopt AI safely and compliantly, making your organisation future-ready with Microsoft 365 Copilot, smart automations, and agentic assistants built around your data.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
                     onClick={() => scrollToSection('contact')}
-                    className="px-8 py-4 bg-blue-900 text-white font-medium hover:bg-blue-800 transition-all shadow-xl shadow-blue-900/20 flex items-center justify-center gap-2"
+                    className="px-8 py-4 bg-white text-blue-900 font-bold hover:bg-blue-50 transition-all shadow-2xl flex items-center justify-center gap-2 rounded-lg"
                   >
                     Book a Discovery Call <ArrowRight size={18} />
                   </button>
                 </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Trusted By Ticker */}
-          <section className="py-6 border-y border-slate-100 bg-slate-50/50 overflow-hidden">
-            <div className="max-w-7xl mx-auto px-6">
-              <p className="text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Trusted by leaders at</p>
-
-              <div className="w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
-                <ul className="flex items-center justify-center md:justify-start [&_li]:mx-8 animate-infinite-scroll">
-                  {[
-                    'Kubrick Group',
-                    'Lloyds Banking Group',
-                    'Schroders Personal Wealth',
-                    'Ascot Insurance',
-                    'Millennium Management',
-                    'Zoopla',
-                    'DHL',
-                    'Essjay Solutions',
-                    'DC Media Advisory',
-                    'Anglo American',
-                    'Accenture',
-                    'Wilko',
-                    'Engage Digital Partners',
-                    'State Street',
-                    'Primark'
-                  ].map((company, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-center gap-2 font-bold text-lg text-slate-600 whitespace-nowrap opacity-60 grayscale hover:grayscale-0 transition-all"
-                    >
-                      <Building2 size={20} /> {company}
-                    </li>
-                  ))}
-                </ul>
-                <ul className="flex items-center justify-center md:justify-start [&_li]:mx-8 animate-infinite-scroll" aria-hidden="true">
-                  {[
-                    'Kubrick Group',
-                    'Lloyds Banking Group',
-                    'Schroders Personal Wealth',
-                    'Ascot Insurance',
-                    'Millennium Management',
-                    'Zoopla',
-                    'DHL',
-                    'Essjay Solutions',
-                    'DC Media Advisory',
-                    'Anglo American',
-                    'Accenture',
-                    'Wilko',
-                    'Engage Digital Partners',
-                    'State Street',
-                    'Primark'
-                  ].map((company, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-center gap-2 font-bold text-lg text-slate-600 whitespace-nowrap opacity-60 grayscale hover:grayscale-0 transition-all"
-                    >
-                      <Building2 size={20} /> {company}
-                    </li>
-                  ))}
-                </ul>
               </div>
             </div>
           </section>
