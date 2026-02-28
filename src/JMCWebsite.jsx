@@ -547,6 +547,12 @@ Keep responses under 50 words if possible.`;
                 {item.name}
               </button>
             ))}
+            <a
+              href="/portal"
+              className="text-sm font-medium text-slate-600 hover:text-blue-900 transition-colors"
+            >
+              Client Portal
+            </a>
             <button
               onClick={() => scrollToSection('contact')}
               className="px-5 py-2.5 bg-blue-900 text-white text-sm font-medium hover:bg-blue-800 transition-all duration-300 shadow-lg shadow-blue-900/20"
@@ -578,6 +584,12 @@ Keep responses under 50 words if possible.`;
                 {item.name}
               </button>
             ))}
+            <a
+              href="/portal"
+              className="text-left text-lg font-medium text-blue-900 py-2"
+            >
+              Client Portal
+            </a>
             <div className="pt-2 border-t border-slate-100 flex flex-col">
               <button onClick={() => setActivePage('privacy')} className="text-left text-lg font-medium text-slate-800 py-2">
                 Privacy Policy
