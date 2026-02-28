@@ -1,7 +1,7 @@
 /**
  * Portal Dashboard — fully redesigned with draggable, collapsible, exportable sections.
  */
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { portalApi } from './portalApi';
 import { usePortalAuth } from './PortalContext';
@@ -41,6 +41,57 @@ const CATEGORIES = [
   'AI Readiness: Technology and Infrastructure',
 ];
 
+/* ── Bundle → Assessment Category mapping ── */
+const SERVICE_CATEGORIES = {
+  foundations: ['AI Readiness: Business Strategy', 'AI Readiness: Data Foundations'],
+  copilot:    ['AI Readiness: AI Strategy and Experience'],
+  training:   ['AI Readiness: Organization and Culture'],
+  automations: ['AI Readiness: Technology and Infrastructure'],
+  agentic:    ['AI Readiness: AI Governance and Security'],
+  ml:         ['AI Readiness: Technology and Infrastructure'],
+};
+
+const BUNDLES = {
+  core:     { label: 'Core',          modules: ['foundations', 'copilot', 'training', 'retainer'] },
+  plus:     { label: 'Automate Plus', modules: ['foundations', 'copilot', 'training', 'automations', 'retainer'] },
+  max:      { label: 'Automate Max',  modules: ['foundations', 'copilot', 'training', 'automations', 'agentic', 'retainer'] },
+  complete: { label: 'Complete',      modules: ['foundations', 'copilot', 'training', 'automations', 'agentic', 'ml', 'retainer'] },
+};
+
+const OFFERING_LABELS = {
+  foundations: 'AI Foundations',
+  copilot:    'Copilot 365',
+  training:   'Training & Adoption',
+  automations: 'AI Automations',
+  agentic:    'Agentic AI',
+  ml:         'ML & Analytics',
+};
+
+function getCategoriesForFilter(filterValue) {
+  if (!filterValue) return CATEGORIES;
+  const modules = BUNDLES[filterValue]?.modules;
+  const moduleList = modules || [filterValue];
+  const cats = new Set();
+  moduleList.forEach((mod) => {
+    (SERVICE_CATEGORIES[mod] || []).forEach((cat) => cats.add(cat));
+  });
+  const filtered = CATEGORIES.filter((c) => cats.has(c));
+  return filtered.length > 0 ? filtered : CATEGORIES;
+}
+
+function recomputeOverall(scores, filteredCats) {
+  if (!scores?.categories) return null;
+  let wSum = 0, total = 0;
+  for (const cat of filteredCats) {
+    const cs = scores.categories[cat];
+    if (cs?.percent != null && cs?.answered > 0) {
+      wSum += cs.percent * cs.answered;
+      total += cs.answered;
+    }
+  }
+  return total > 0 ? { percent: Math.round(wSum / total), answered: total } : null;
+}
+
 const SECTION_ORDER_KEY = 'portal_section_order';
 
 const DEFAULT_SECTIONS = [
@@ -74,6 +125,22 @@ export default function PortalDashboard() {
   const [error, setError] = useState(null);
   const [creating, setCreating] = useState(false);
   const [sectionOrder, setSectionOrder] = useState(loadSectionOrder);
+  const [bundleFilter, setBundleFilter] = useState('');
+
+  const filteredCategories = useMemo(() => getCategoriesForFilter(bundleFilter), [bundleFilter]);
+
+  const filteredMilestones = useMemo(() => {
+    if (filteredCategories.length === CATEGORIES.length) return milestones;
+    return milestones.map((m) => ({
+      ...m,
+      scores: {
+        ...m.scores,
+        overall: recomputeOverall(m.scores, filteredCategories) || m.scores?.overall,
+      },
+    }));
+  }, [milestones, filteredCategories]);
+
+  const filteredLatest = filteredMilestones.length > 0 ? filteredMilestones[filteredMilestones.length - 1] : null;
 
   // Drag state
   const dragItem = useRef(null);
@@ -265,13 +332,13 @@ export default function PortalDashboard() {
                   <h4 className="text-xs font-semibold uppercase text-slate-500 mb-4 flex items-center gap-1.5 tracking-wide">
                     <TrendingUp size={14} /> Overall Score Trend
                   </h4>
-                  <OverallProgressChart milestones={milestones} />
+                  <OverallProgressChart milestones={filteredMilestones} />
                 </div>
                 <div className="bg-slate-50/80 rounded-xl p-4 border border-slate-100/60">
                   <h4 className="text-xs font-semibold uppercase text-slate-500 mb-4 flex items-center gap-1.5 tracking-wide">
                     <Activity size={14} /> Category Breakdown
                   </h4>
-                  <CategoryProgressChart milestones={milestones} categories={CATEGORIES} />
+                  <CategoryProgressChart milestones={filteredMilestones} categories={filteredCategories} />
                 </div>
               </div>
             </SectionWrapper>
@@ -279,7 +346,7 @@ export default function PortalDashboard() {
         );
 
       case 'scores':
-        if (!latest?.scores?.overall) return null;
+        if (!filteredLatest?.scores?.overall) return null;
         return (
           <div key={sectionId} ref={setRef} {...dragProps}>
             <SectionWrapper
@@ -288,11 +355,11 @@ export default function PortalDashboard() {
               icon={<ClipboardList size={18} />}
               accent="amber"
               onExportCsv={() => {
-                exportToCsv(getRecommendationsExportData(latest, CATEGORIES), 'ai-recommendations.csv');
+                exportToCsv(getRecommendationsExportData(filteredLatest, filteredCategories), 'ai-recommendations.csv');
               }}
               onExportPdf={() => exportToPdf('AI Recommendations', sectionRefs.current.scores)}
             >
-              <AIRecommendations latest={latest} categories={CATEGORIES} />
+              <AIRecommendations latest={filteredLatest} categories={filteredCategories} />
             </SectionWrapper>
           </div>
         );
@@ -379,7 +446,14 @@ export default function PortalDashboard() {
         )}
 
         {/* Hero Score Card — always visible, not draggable */}
-        <HeroScoreCard milestones={milestones} categories={CATEGORIES} />
+        <HeroScoreCard
+          milestones={filteredMilestones}
+          categories={filteredCategories}
+          bundleFilter={bundleFilter}
+          onBundleFilterChange={setBundleFilter}
+          bundles={BUNDLES}
+          offerings={OFFERING_LABELS}
+        />
 
         {/* Drag-reorderable sections */}
         <p className="text-[10px] text-slate-400 text-center font-medium tracking-wide">

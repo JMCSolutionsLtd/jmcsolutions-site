@@ -2,7 +2,7 @@
  * HeroScoreCard — prominent overall score display with radial gauge and category breakdown.
  */
 import React from 'react';
-import { TrendingUp, Target, Clock } from 'lucide-react';
+import { TrendingUp, Target, Clock, ChevronDown } from 'lucide-react';
 
 const CATEGORY_SHORT = {
   'AI Readiness: Business Strategy': 'Business Strategy',
@@ -76,7 +76,7 @@ function CategoryBar({ name, percent }) {
   );
 }
 
-export default function HeroScoreCard({ milestones, categories }) {
+export default function HeroScoreCard({ milestones, categories, bundleFilter, onBundleFilterChange, bundles = {}, offerings = {} }) {
   const latest = milestones?.length > 0 ? milestones[milestones.length - 1] : null;
   const overallPercent = latest?.scores?.overall?.percent ?? null;
   const answeredCount = latest?.scores?.overall?.answered ?? 0;
@@ -84,15 +84,37 @@ export default function HeroScoreCard({ milestones, categories }) {
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200/80 shadow-card hover:shadow-card-hover transition-shadow duration-300 overflow-hidden">
-      <div className="bg-gradient-to-r from-blue-950 via-blue-900 to-blue-800 px-6 py-4">
+      <div className="bg-gradient-to-r from-blue-950 via-blue-900 to-blue-800 px-6 py-4 flex items-center justify-between gap-4">
         <h2 className="text-white font-bold text-sm sm:text-base flex items-center gap-2 tracking-tight">
           <Target size={16} className="opacity-80" /> AI Readiness Overview
         </h2>
+        {onBundleFilterChange && (
+          <div className="relative">
+            <select
+              value={bundleFilter || ''}
+              onChange={(e) => onBundleFilterChange(e.target.value)}
+              className="bg-white/10 text-white text-xs font-medium border border-white/25 rounded-lg pl-3 pr-7 py-1.5 outline-none cursor-pointer hover:bg-white/20 transition-colors appearance-none [&>option]:text-slate-900 [&>optgroup]:text-slate-700"
+            >
+              <option value="">All Questions</option>
+              <optgroup label="Bundles">
+                {Object.entries(bundles).map(([key, b]) => (
+                  <option key={key} value={key}>{b.label}</option>
+                ))}
+              </optgroup>
+              <optgroup label="Individual Offerings">
+                {Object.entries(offerings).map(([key, label]) => (
+                  <option key={key} value={key}>{label}</option>
+                ))}
+              </optgroup>
+            </select>
+            <ChevronDown size={12} className="absolute right-2 top-1/2 -translate-y-1/2 text-white/60 pointer-events-none" />
+          </div>
+        )}
       </div>
 
       <div className="p-6">
         {/* Evenly-split 3-column grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Radial gauge — centred with RAG badge */}
           <div className="flex flex-col items-center justify-center gap-3">
             <RadialGauge percent={overallPercent} size={180} />
@@ -100,18 +122,20 @@ export default function HeroScoreCard({ milestones, categories }) {
           </div>
 
           {/* Category breakdown */}
-          <div className="w-full space-y-3">
+          <div className="w-full flex flex-col">
             <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Category Breakdown</h3>
-            {categories.map((cat) => {
-              const catScore = latest?.scores?.categories?.[cat];
-              return (
-                <CategoryBar
-                  key={cat}
-                  name={cat}
-                  percent={catScore?.percent ?? null}
-                />
-              );
-            })}
+            <div className="flex-1 flex flex-col justify-between gap-3 min-h-0">
+              {categories.map((cat) => {
+                const catScore = latest?.scores?.categories?.[cat];
+                return (
+                  <CategoryBar
+                    key={cat}
+                    name={cat}
+                    percent={catScore?.percent ?? null}
+                  />
+                );
+              })}
+            </div>
           </div>
 
           {/* Stats column — 3 cards stacked */}

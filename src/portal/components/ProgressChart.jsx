@@ -63,19 +63,13 @@ export function OverallProgressChart({ milestones }) {
   return (
     <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
       <AreaChart data={data} margin={{ top: 10, right: 20, bottom: 25, left: 0 }}>
-        <defs>
-          <linearGradient id="overallGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#1e3a8a" stopOpacity={0.2} />
-            <stop offset="95%" stopColor="#1e3a8a" stopOpacity={0} />
-          </linearGradient>
-        </defs>
         {/* RAG threshold zones */}
         <ReferenceArea y1={0} y2={33} fill="#fef2f2" fillOpacity={0.6} />
         <ReferenceArea y1={33} y2={65} fill="#fffbeb" fillOpacity={0.5} />
         <ReferenceArea y1={65} y2={100} fill="#f0fdf4" fillOpacity={0.5} />
         {/* Threshold lines */}
-        <ReferenceLine y={33} stroke="#ef4444" strokeDasharray="4 4" strokeWidth={1.5} label={{ value: 'Needs Attention', position: 'right', fontSize: 9, fill: '#ef4444', fontWeight: 600 }} />
-        <ReferenceLine y={65} stroke="#f59e0b" strokeDasharray="4 4" strokeWidth={1.5} label={{ value: 'Developing', position: 'right', fontSize: 9, fill: '#f59e0b', fontWeight: 600 }} />
+        <ReferenceLine y={33} stroke="#ef4444" strokeDasharray="4 4" strokeWidth={1.5} />
+        <ReferenceLine y={65} stroke="#f59e0b" strokeDasharray="4 4" strokeWidth={1.5} />
         <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
         <XAxis
           dataKey="name"
@@ -98,7 +92,7 @@ export function OverallProgressChart({ milestones }) {
           dataKey="overall"
           stroke="#1e3a8a"
           strokeWidth={3}
-          fill="url(#overallGrad)"
+          fill="none"
           dot={{ r: 5, fill: '#1e3a8a', strokeWidth: 2, stroke: '#fff' }}
           activeDot={{ r: 7, stroke: '#1e3a8a', strokeWidth: 2, fill: '#fff' }}
           connectNulls
