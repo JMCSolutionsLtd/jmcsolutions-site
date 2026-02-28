@@ -547,6 +547,12 @@ Keep responses under 50 words if possible.`;
                 {item.name}
               </button>
             ))}
+            <a
+              href="/portal"
+              className="text-sm font-medium text-slate-600 hover:text-blue-900 transition-colors"
+            >
+              Client Portal
+            </a>
             <button
               onClick={() => scrollToSection('contact')}
               className="px-5 py-2.5 bg-blue-900 text-white text-sm font-medium hover:bg-blue-800 transition-all duration-300 shadow-lg shadow-blue-900/20"
@@ -578,6 +584,12 @@ Keep responses under 50 words if possible.`;
                 {item.name}
               </button>
             ))}
+            <a
+              href="/portal"
+              className="text-left text-lg font-medium text-blue-900 py-2"
+            >
+              Client Portal
+            </a>
             <div className="pt-2 border-t border-slate-100 flex flex-col">
               <button onClick={() => setActivePage('privacy')} className="text-left text-lg font-medium text-slate-800 py-2">
                 Privacy Policy
@@ -746,7 +758,7 @@ Keep responses under 50 words if possible.`;
                 <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">Who We Are</h2>
                 <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-6">We’re a specialist AI consulting team.</h3>
                 <p className="text-lg text-slate-600 leading-relaxed">
-                  With almost two decades of experience in AI implementation, workflow automation, and digital transformation, we have delivered programmes for more than 15 global organisations. Now, we bring that enterprise expertise to you.
+                  With experience delivering AI implementation, workflow automation, and digital transformation across 15+ organisations, our team now brings that enterprise-grade expertise to you.
                 </p>
               </div>
 
