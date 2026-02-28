@@ -14,6 +14,7 @@ import ProjectDocuments from './components/ProjectDocuments';
 import MilestoneHistory, { getMilestoneExportData } from './components/MilestoneHistory';
 import SectionWrapper from './components/SectionWrapper';
 import AIRecommendations, { getRecommendationsExportData } from './components/AIRecommendations';
+import SecuritySettings from './components/SecuritySettings';
 import { exportToCsv } from './utils/exportCsv';
 import { exportToPdf } from './utils/exportPdf';
 import {
@@ -24,6 +25,7 @@ import {
   Activity,
   ClipboardList,
   LogOut,
+  Shield,
   ChevronRight,
   CheckCircle2,
   BarChart3,
@@ -119,6 +121,7 @@ function loadSectionOrder() {
 
 export default function PortalDashboard() {
   const { client, logout } = usePortalAuth();
+  const [showSecurity, setShowSecurity] = useState(false);
   const navigate = useNavigate();
   const [milestones, setMilestones] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -416,7 +419,7 @@ export default function PortalDashboard() {
       <header className="bg-white/90 backdrop-blur-xl border-b border-slate-200/80 sticky top-0 z-40 shadow-card">
         <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <img src={logo} alt="JMC Solutions" className="h-12 w-auto" />
+            <img src={logo} alt="JMC Solutions" className="h-16 w-auto" />
             <div className="border-l border-slate-200 pl-4">
               <h1 className="text-base font-bold text-slate-900 tracking-tight">{client?.name || 'Client Portal'}</h1>
               <p className="text-[11px] text-slate-400 font-medium">AI Adoption & Readiness Portal</p>
@@ -429,6 +432,13 @@ export default function PortalDashboard() {
             >
               JMC Home
             </a>
+            <button
+              onClick={() => setShowSecurity(true)}
+              className="text-slate-400 hover:text-slate-600 transition-colors p-2 rounded-lg hover:bg-slate-100"
+              title="Security settings"
+            >
+              <Shield size={18} />
+            </button>
             <button
               onClick={logout}
               className="text-slate-400 hover:text-slate-600 transition-colors p-2 rounded-lg hover:bg-slate-100"
@@ -462,6 +472,9 @@ export default function PortalDashboard() {
 
         {sectionOrder.map((id, idx) => renderSection(id, idx))}
       </div>
+
+      {/* Security Settings Modal */}
+      {showSecurity && <SecuritySettings onClose={() => setShowSecurity(false)} />}
     </div>
   );
 }

@@ -23,6 +23,7 @@ async function request(path, options = {}) {
   if (!res.ok) {
     const err = new Error(data.error || `Request failed (${res.status})`);
     err.status = res.status;
+    err.data = data;
     throw err;
   }
 
@@ -34,6 +35,24 @@ export const portalApi = {
   login: (email, password) =>
     request('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
   verify: () => request('/auth/verify'),
+  mfaVerify: (mfaToken, code) =>
+    request('/auth/mfa-verify', { method: 'POST', body: JSON.stringify({ mfaToken, code }) }),
+  requestReset: (email) =>
+    request('/auth/request-reset', { method: 'POST', body: JSON.stringify({ email }) }),
+  resetPassword: (token, newPassword) =>
+    request('/auth/reset-password', { method: 'POST', body: JSON.stringify({ token, newPassword }) }),
+  forcedReset: (resetToken, newPassword) =>
+    request('/auth/forced-reset', { method: 'POST', body: JSON.stringify({ resetToken, newPassword }) }),
+  changePassword: (currentPassword, newPassword) =>
+    request('/auth/change-password', { method: 'POST', body: JSON.stringify({ currentPassword, newPassword }) }),
+
+  // MFA
+  mfaSetup: () => request('/mfa/setup', { method: 'POST' }),
+  mfaVerifySetup: (code) =>
+    request('/mfa/verify-setup', { method: 'POST', body: JSON.stringify({ code }) }),
+  mfaDisable: (code) =>
+    request('/mfa/disable', { method: 'POST', body: JSON.stringify({ code }) }),
+  mfaStatus: () => request('/mfa/status'),
 
   // Assessments
   listAssessments: () => request('/assessments'),

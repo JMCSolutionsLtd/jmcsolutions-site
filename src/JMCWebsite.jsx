@@ -758,7 +758,7 @@ Keep responses under 50 words if possible.`;
                 <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">Who We Are</h2>
                 <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-6">We’re a specialist AI consulting team.</h3>
                 <p className="text-lg text-slate-600 leading-relaxed">
-                  With almost two decades of experience in AI implementation, workflow automation, and digital transformation, we have delivered programmes for more than 15 global organisations. Now, we bring that enterprise expertise to you.
+                  With experience delivering AI implementation, workflow automation, and digital transformation across 15+ organisations, our team now brings that enterprise-grade expertise to you.
                 </p>
               </div>
 

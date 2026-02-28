@@ -64,9 +64,9 @@ export function OverallProgressChart({ milestones }) {
     <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
       <AreaChart data={data} margin={{ top: 10, right: 20, bottom: 25, left: 0 }}>
         {/* RAG threshold zones */}
-        <ReferenceArea y1={0} y2={33} fill="#fef2f2" fillOpacity={0.6} />
-        <ReferenceArea y1={33} y2={65} fill="#fffbeb" fillOpacity={0.5} />
-        <ReferenceArea y1={65} y2={100} fill="#f0fdf4" fillOpacity={0.5} />
+        <ReferenceArea y1={0} y2={33} fill="#fecaca" fillOpacity={0.3} />
+        <ReferenceArea y1={33} y2={65} fill="#fde68a" fillOpacity={0.28} />
+        <ReferenceArea y1={65} y2={100} fill="#a7f3d0" fillOpacity={0.3} />
         {/* Threshold lines */}
         <ReferenceLine y={33} stroke="#ef4444" strokeDasharray="4 4" strokeWidth={1.5} />
         <ReferenceLine y={65} stroke="#f59e0b" strokeDasharray="4 4" strokeWidth={1.5} />

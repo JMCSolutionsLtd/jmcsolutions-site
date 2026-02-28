@@ -45,6 +45,10 @@ function PortalRoutes() {
         element={client ? <Navigate to="/portal" replace /> : <PortalLogin />}
       />
       <Route
+        path="reset-password"
+        element={<PortalLogin />}
+      />
+      <Route
         index
         element={
           <RequireAuth>

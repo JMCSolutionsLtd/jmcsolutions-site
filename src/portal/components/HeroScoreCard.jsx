@@ -84,7 +84,7 @@ export default function HeroScoreCard({ milestones, categories, bundleFilter, on
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200/80 shadow-card hover:shadow-card-hover transition-shadow duration-300 overflow-hidden">
-      <div className="bg-gradient-to-r from-blue-950 via-blue-900 to-blue-800 px-6 py-4 flex items-center justify-between gap-4">
+      <div className="bg-blue-900 px-6 py-4 flex items-center justify-between gap-4">
         <h2 className="text-white font-bold text-sm sm:text-base flex items-center gap-2 tracking-tight">
           <Target size={16} className="opacity-80" /> AI Readiness Overview
         </h2>

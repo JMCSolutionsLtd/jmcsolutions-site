@@ -17,9 +17,9 @@ import {
 
 const STATUS_CYCLE = ['pending', 'in-progress', 'complete'];
 const STATUS_CONFIG = {
-  complete: { icon: CheckCircle2, color: 'text-emerald-600', bg: 'bg-emerald-50', label: 'Done' },
-  'in-progress': { icon: Clock, color: 'text-amber-600', bg: 'bg-amber-50', label: 'In Progress' },
-  pending: { icon: Circle, color: 'text-slate-300', bg: 'bg-slate-50', label: 'Pending' },
+  complete: { icon: CheckCircle2, color: 'text-emerald-700', bg: 'bg-emerald-100', border: 'border-emerald-200', label: 'Done' },
+  'in-progress': { icon: Clock, color: 'text-amber-700', bg: 'bg-amber-100', border: 'border-amber-200', label: 'In Progress' },
+  pending: { icon: Circle, color: 'text-slate-400', bg: 'bg-slate-100', border: 'border-slate-200', label: 'Pending' },
 };
 
 export default function DeliveryChecklist() {
@@ -173,7 +173,7 @@ export default function DeliveryChecklist() {
                             {/* Task text */}
                             <div className="flex-1 min-w-0">
                               <span
-                                className={`text-sm ${task.status === 'complete' ? 'text-slate-400 line-through' : 'text-slate-700'}`}
+                                className={`text-[13px] ${task.status === 'complete' ? 'text-slate-400 line-through' : 'text-slate-700'}`}
                               >
                                 {task.task}
                               </span>
@@ -215,7 +215,7 @@ export default function DeliveryChecklist() {
                                   <MessageSquare size={13} />
                                 </button>
                               )}
-                              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${cfg.bg} ${cfg.color}`}>
+                              <span className={`text-xs font-bold px-2.5 py-1 rounded-full border ${cfg.bg} ${cfg.color} ${cfg.border}`}>
                                 {cfg.label}
                               </span>
                               {task.invoice && (
@@ -259,10 +259,16 @@ function OverallProgress({ tasks }) {
           />
         </div>
       </div>
-      <div className="flex items-center gap-4 text-xs text-slate-500">
-        <span className="flex items-center gap-1"><CheckCircle2 size={12} className="text-emerald-600" /> {done} Done</span>
-        <span className="flex items-center gap-1"><Clock size={12} className="text-amber-600" /> {inProgress} Active</span>
-        <span className="flex items-center gap-1"><Circle size={12} className="text-slate-300" /> {total - done - inProgress} Pending</span>
+      <div className="flex items-center gap-3">
+        <span className="flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200">
+          <CheckCircle2 size={14} /> {done} Done
+        </span>
+        <span className="flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full bg-amber-100 text-amber-700 border border-amber-200">
+          <Clock size={14} /> {inProgress} Active
+        </span>
+        <span className="flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-500 border border-slate-200">
+          <Circle size={14} /> {total - done - inProgress} Pending
+        </span>
       </div>
     </div>
   );

@@ -42,10 +42,25 @@ export async function initDb() {
       name          TEXT    NOT NULL,
       email         TEXT    NOT NULL UNIQUE,
       password_hash TEXT    NOT NULL,
+      mfa_secret    TEXT    DEFAULT NULL,
+      mfa_enabled   INTEGER NOT NULL DEFAULT 0,
+      mfa_backup_codes TEXT DEFAULT NULL,
+      password_reset_token TEXT DEFAULT NULL,
+      password_reset_expires TEXT DEFAULT NULL,
+      must_reset_password INTEGER NOT NULL DEFAULT 0,
       created_at    TEXT    NOT NULL DEFAULT (datetime('now')),
       updated_at    TEXT    NOT NULL DEFAULT (datetime('now'))
     )
   `);
+
+  // ── Auto-migration: add new columns to existing clients table ──────────
+  try { db.run('ALTER TABLE clients ADD COLUMN mfa_secret TEXT DEFAULT NULL'); } catch (_) {}
+  try { db.run('ALTER TABLE clients ADD COLUMN mfa_enabled INTEGER NOT NULL DEFAULT 0'); } catch (_) {}
+  try { db.run('ALTER TABLE clients ADD COLUMN mfa_backup_codes TEXT DEFAULT NULL'); } catch (_) {}
+  try { db.run('ALTER TABLE clients ADD COLUMN password_reset_token TEXT DEFAULT NULL'); } catch (_) {}
+  try { db.run('ALTER TABLE clients ADD COLUMN password_reset_expires TEXT DEFAULT NULL'); } catch (_) {}
+  try { db.run('ALTER TABLE clients ADD COLUMN must_reset_password INTEGER NOT NULL DEFAULT 0'); } catch (_) {}
+
 
   db.run(`
     CREATE TABLE IF NOT EXISTS assessment_milestones (
