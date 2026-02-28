@@ -1,5 +1,5 @@
 {
-  "_comment": "AI Readiness Assessment — 72 placeholder questions across 7 categories. Replace prompts with real content; keep id, category, and order fields intact.",
+  "_comment": "AI Readiness Assessment — 72 questions across 6 categories. Replace prompts with real content; keep id, category, and order fields intact.",
   "questions": [
     { "id": "bs-01", "category": "AI Readiness: Business Strategy", "order": 1, "prompt": "How clearly has your organisation defined AI as a component of its overall business strategy?" },
     { "id": "bs-02", "category": "AI Readiness: Business Strategy", "order": 2, "prompt": "To what extent has senior leadership committed budget and resources for AI initiatives?" },
@@ -58,26 +58,25 @@
     { "id": "gs-09", "category": "AI Readiness: AI Governance and Security", "order": 9, "prompt": "To what degree are AI outputs reviewed and validated by humans?" },
     { "id": "gs-10", "category": "AI Readiness: AI Governance and Security", "order": 10, "prompt": "How well-documented are your AI risk assessment procedures?" },
 
-    { "id": "ia-01", "category": "AI Readiness: Infrastructure for AI", "order": 1, "prompt": "How up-to-date are your Microsoft 365 licences for AI features (e.g., Copilot licences)?" },
-    { "id": "ia-02", "category": "AI Readiness: Infrastructure for AI", "order": 2, "prompt": "To what extent does your cloud infrastructure support AI workloads?" },
-    { "id": "ia-03", "category": "AI Readiness: Infrastructure for AI", "order": 3, "prompt": "How reliable and performant is your network connectivity for cloud-based AI services?" },
-    { "id": "ia-04", "category": "AI Readiness: Infrastructure for AI", "order": 4, "prompt": "Do you have the compute resources required for AI model training or inference?" },
-    { "id": "ia-05", "category": "AI Readiness: Infrastructure for AI", "order": 5, "prompt": "How well-integrated is your identity and access management (e.g., Azure AD / Entra ID)?" },
-    { "id": "ia-06", "category": "AI Readiness: Infrastructure for AI", "order": 6, "prompt": "To what degree do you use API integrations to connect business systems?" },
-    { "id": "ia-07", "category": "AI Readiness: Infrastructure for AI", "order": 7, "prompt": "How mature is your DevOps or MLOps pipeline for deploying AI solutions?" },
-    { "id": "ia-08", "category": "AI Readiness: Infrastructure for AI", "order": 8, "prompt": "Do you have monitoring and alerting in place for AI services and automations?" },
-    { "id": "ia-09", "category": "AI Readiness: Infrastructure for AI", "order": 9, "prompt": "How well does your infrastructure handle scaling AI workloads as demand grows?" },
-    { "id": "ia-10", "category": "AI Readiness: Infrastructure for AI", "order": 10, "prompt": "To what extent do you have sandbox or staging environments for testing AI features?" },
-
-    { "id": "mm-01", "category": "AI Readiness: Model Management", "order": 1, "prompt": "Does your organisation track which AI models are in use and their versions?" },
-    { "id": "mm-02", "category": "AI Readiness: Model Management", "order": 2, "prompt": "How well-documented are the inputs, outputs, and limitations of each AI model?" },
-    { "id": "mm-03", "category": "AI Readiness: Model Management", "order": 3, "prompt": "To what extent do you monitor AI model performance and accuracy over time?" },
-    { "id": "mm-04", "category": "AI Readiness: Model Management", "order": 4, "prompt": "How mature is your process for retraining or updating AI models?" },
-    { "id": "mm-05", "category": "AI Readiness: Model Management", "order": 5, "prompt": "Do you have rollback procedures if an AI model produces unacceptable results?" },
-    { "id": "mm-06", "category": "AI Readiness: Model Management", "order": 6, "prompt": "How effectively do you validate AI outputs before they reach end users?" },
-    { "id": "mm-07", "category": "AI Readiness: Model Management", "order": 7, "prompt": "To what extent do you track bias and fairness metrics in your AI models?" },
-    { "id": "mm-08", "category": "AI Readiness: Model Management", "order": 8, "prompt": "How well-defined is your model lifecycle management (build, deploy, monitor, retire)?" },
-    { "id": "mm-09", "category": "AI Readiness: Model Management", "order": 9, "prompt": "Do you have a model registry or catalogue for organisational AI assets?" },
-    { "id": "mm-10", "category": "AI Readiness: Model Management", "order": 10, "prompt": "How confident are you that your deployed models comply with regulatory requirements?" }
+    { "id": "ti-01", "category": "AI Readiness: Technology and Infrastructure", "order": 1, "prompt": "How up-to-date are your Microsoft 365 licences for AI features (e.g., Copilot licences)?" },
+    { "id": "ti-02", "category": "AI Readiness: Technology and Infrastructure", "order": 2, "prompt": "To what extent does your cloud infrastructure support AI workloads?" },
+    { "id": "ti-03", "category": "AI Readiness: Technology and Infrastructure", "order": 3, "prompt": "How reliable and performant is your network connectivity for cloud-based AI services?" },
+    { "id": "ti-04", "category": "AI Readiness: Technology and Infrastructure", "order": 4, "prompt": "Do you have the compute resources required for AI model training or inference?" },
+    { "id": "ti-05", "category": "AI Readiness: Technology and Infrastructure", "order": 5, "prompt": "How well-integrated is your identity and access management (e.g., Azure AD / Entra ID)?" },
+    { "id": "ti-06", "category": "AI Readiness: Technology and Infrastructure", "order": 6, "prompt": "To what degree do you use API integrations to connect business systems?" },
+    { "id": "ti-07", "category": "AI Readiness: Technology and Infrastructure", "order": 7, "prompt": "How mature is your DevOps or MLOps pipeline for deploying AI solutions?" },
+    { "id": "ti-08", "category": "AI Readiness: Technology and Infrastructure", "order": 8, "prompt": "Do you have monitoring and alerting in place for AI services and automations?" },
+    { "id": "ti-09", "category": "AI Readiness: Technology and Infrastructure", "order": 9, "prompt": "How well does your infrastructure handle scaling AI workloads as demand grows?" },
+    { "id": "ti-10", "category": "AI Readiness: Technology and Infrastructure", "order": 10, "prompt": "To what extent do you have sandbox or staging environments for testing AI features?" },
+    { "id": "ti-11", "category": "AI Readiness: Technology and Infrastructure", "order": 11, "prompt": "Does your organisation track which AI models are in use and their versions?" },
+    { "id": "ti-12", "category": "AI Readiness: Technology and Infrastructure", "order": 12, "prompt": "How well-documented are the inputs, outputs, and limitations of each AI model?" },
+    { "id": "ti-13", "category": "AI Readiness: Technology and Infrastructure", "order": 13, "prompt": "To what extent do you monitor AI model performance and accuracy over time?" },
+    { "id": "ti-14", "category": "AI Readiness: Technology and Infrastructure", "order": 14, "prompt": "How mature is your process for retraining or updating AI models?" },
+    { "id": "ti-15", "category": "AI Readiness: Technology and Infrastructure", "order": 15, "prompt": "Do you have rollback procedures if an AI model produces unacceptable results?" },
+    { "id": "ti-16", "category": "AI Readiness: Technology and Infrastructure", "order": 16, "prompt": "How effectively do you validate AI outputs before they reach end users?" },
+    { "id": "ti-17", "category": "AI Readiness: Technology and Infrastructure", "order": 17, "prompt": "To what extent do you track bias and fairness metrics in your AI models?" },
+    { "id": "ti-18", "category": "AI Readiness: Technology and Infrastructure", "order": 18, "prompt": "How well-defined is your model lifecycle management (build, deploy, monitor, retire)?" },
+    { "id": "ti-19", "category": "AI Readiness: Technology and Infrastructure", "order": 19, "prompt": "Do you have a model registry or catalogue for organisational AI assets?" },
+    { "id": "ti-20", "category": "AI Readiness: Technology and Infrastructure", "order": 20, "prompt": "How confident are you that your deployed models comply with regulatory requirements?" }
   ]
 }

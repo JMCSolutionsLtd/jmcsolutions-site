@@ -98,32 +98,16 @@ const RECOMMENDATIONS = {
     red: [
       'Your infrastructure is not ready for AI workloads. Assess cloud capacity, licensing, and integration readiness immediately.',
       'Copilot and AI tools require robust Microsoft 365 / Azure foundations. Review your tenant configuration and licensing posture.',
-      'Network and security infrastructure need review — AI tools can increase data flow and require updated security controls.',
+      'No model management practices in place. Start by cataloguing any AI models or Copilot agents currently deployed.',
     ],
     amber: [
       'Infrastructure partially supports AI. Identify bottlenecks (e.g., compute limits, API rate limits) and create an upgrade plan.',
-      'Review your Azure / cloud environment for cost optimisation — AI workloads can escalate costs if not managed properly.',
+      'Some model oversight exists. Implement systematic model performance monitoring with alerts for drift or accuracy degradation.',
       'Ensure your DevOps and CI/CD pipelines can support rapid iteration of AI features and models.',
     ],
     green: [
       'Infrastructure is well-positioned. Focus on scalability planning and ensure cost monitoring is in place for AI-specific resource usage.',
-      'Explore edge AI or hybrid deployment options if low-latency inference is important for your use cases.',
-    ],
-  },
-  'Model Mgmt': {
-    red: [
-      'No model management practices in place. Start by cataloguing any AI models or Copilot agents currently deployed.',
-      'Establish version control and monitoring for AI outputs — even low-code AI tools like Copilot Studio need oversight.',
-      'Define clear ownership for each AI model or agent, including who is responsible for monitoring performance and accuracy.',
-    ],
-    amber: [
-      'Some model oversight exists. Implement systematic model performance monitoring with alerts for drift or accuracy degradation.',
-      'Create a model retirement policy — ensure outdated or underperforming AI models are decommissioned in a controlled way.',
-      'Document your model lineage (data sources, training data, configuration) for each deployed AI agent or workflow.',
-    ],
-    green: [
       'Strong model management. Continue evolving your MLOps practices and consider automated retraining pipelines for critical models.',
-      'Share your model management practices as templates for new AI projects to accelerate time-to-deployment.',
     ],
   },
 };
@@ -134,8 +118,7 @@ const CATEGORY_KEY_MAP = {
   'AI Readiness: AI Strategy and Experience': 'AI Strategy',
   'AI Readiness: Data Foundations': 'Data Foundations',
   'AI Readiness: AI Governance and Security': 'Governance',
-  'AI Readiness: Infrastructure for AI': 'Infrastructure',
-  'AI Readiness: Model Management': 'Model Mgmt',
+  'AI Readiness: Technology and Infrastructure': 'Infrastructure',
 };
 
 function getTier(pct) {

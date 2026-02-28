@@ -38,8 +38,7 @@ const CATEGORIES = [
   'AI Readiness: AI Strategy and Experience',
   'AI Readiness: Data Foundations',
   'AI Readiness: AI Governance and Security',
-  'AI Readiness: Infrastructure for AI',
-  'AI Readiness: Model Management',
+  'AI Readiness: Technology and Infrastructure',
 ];
 
 const SECTION_ORDER_KEY = 'portal_section_order';
@@ -155,8 +154,8 @@ export default function PortalDashboard() {
               {/* Quick action cards */}
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
                 {/* Current assessment */}
-                <div className="bg-slate-50 rounded-lg p-4 border border-slate-100">
-                  <h4 className="text-xs font-bold uppercase text-slate-500 mb-2">Current Assessment</h4>
+                <div className="bg-slate-50/80 rounded-xl p-4 border border-slate-100">
+                  <h4 className="text-xs font-semibold uppercase text-slate-500 mb-2 tracking-wide">Current Assessment</h4>
                   {latest ? (
                     <>
                       <div className="flex items-center justify-between mb-2">
@@ -167,7 +166,7 @@ export default function PortalDashboard() {
                       </div>
                       <button
                         onClick={() => navigate(`/portal/assessment/${latest.id}`)}
-                        className="w-full py-2 bg-blue-900 text-white text-xs font-bold rounded-lg hover:bg-blue-800 transition flex items-center justify-center gap-1"
+                        className="w-full py-2.5 bg-blue-900 text-white text-xs font-bold rounded-xl hover:bg-blue-800 active:scale-[0.98] transition-all flex items-center justify-center gap-1 shadow-sm"
                       >
                         {latest.status === 'completed' ? 'View' : 'Continue'} <ChevronRight size={14} />
                       </button>
@@ -178,7 +177,7 @@ export default function PortalDashboard() {
                       <button
                         onClick={handleNewAssessment}
                         disabled={creating}
-                        className="w-full py-2 bg-blue-900 text-white text-xs font-bold rounded-lg hover:bg-blue-800 transition flex items-center justify-center gap-1 disabled:opacity-50"
+                        className="w-full py-2.5 bg-blue-900 text-white text-xs font-bold rounded-xl hover:bg-blue-800 active:scale-[0.98] transition-all flex items-center justify-center gap-1 disabled:opacity-50 shadow-sm"
                       >
                         {creating ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />} Start
                       </button>
@@ -187,21 +186,21 @@ export default function PortalDashboard() {
                 </div>
                 {/* New milestone */}
                 {latest && (
-                  <div className="bg-slate-50 rounded-lg p-4 border border-slate-100">
-                    <h4 className="text-xs font-bold uppercase text-slate-500 mb-2">New Milestone</h4>
+                  <div className="bg-slate-50/80 rounded-xl p-4 border border-slate-100">
+                    <h4 className="text-xs font-semibold uppercase text-slate-500 mb-2 tracking-wide">New Milestone</h4>
                     <p className="text-xs text-slate-400 mb-2">Track progress since last review</p>
                     <button
                       onClick={handleNewAssessment}
                       disabled={creating}
-                      className="w-full py-2 bg-emerald-600 text-white text-xs font-bold rounded-lg hover:bg-emerald-500 transition flex items-center justify-center gap-1 disabled:opacity-50"
+                      className="w-full py-2.5 bg-emerald-600 text-white text-xs font-bold rounded-xl hover:bg-emerald-500 active:scale-[0.98] transition-all flex items-center justify-center gap-1 disabled:opacity-50 shadow-sm"
                     >
                       {creating ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />} Create
                     </button>
                   </div>
                 )}
                 {/* Count */}
-                <div className="bg-slate-50 rounded-lg p-4 border border-slate-100">
-                  <h4 className="text-xs font-bold uppercase text-slate-500 mb-2">Total Assessments</h4>
+                <div className="bg-slate-50/80 rounded-xl p-4 border border-slate-100">
+                  <h4 className="text-xs font-semibold uppercase text-slate-500 mb-2 tracking-wide">Total Assessments</h4>
                   <p className="text-3xl font-black text-slate-900">{milestones.length}</p>
                 </div>
               </div>
@@ -262,14 +261,14 @@ export default function PortalDashboard() {
               onExportPdf={() => exportToPdf('Progress Charts', sectionRefs.current.charts)}
             >
               <div className="grid lg:grid-cols-2 gap-6">
-                <div className="bg-slate-50 rounded-lg p-4">
-                  <h4 className="text-xs font-bold uppercase text-slate-500 mb-4 flex items-center gap-1">
+                <div className="bg-slate-50/80 rounded-xl p-4 border border-slate-100/60">
+                  <h4 className="text-xs font-semibold uppercase text-slate-500 mb-4 flex items-center gap-1.5 tracking-wide">
                     <TrendingUp size={14} /> Overall Score Trend
                   </h4>
                   <OverallProgressChart milestones={milestones} />
                 </div>
-                <div className="bg-slate-50 rounded-lg p-4">
-                  <h4 className="text-xs font-bold uppercase text-slate-500 mb-4 flex items-center gap-1">
+                <div className="bg-slate-50/80 rounded-xl p-4 border border-slate-100/60">
+                  <h4 className="text-xs font-semibold uppercase text-slate-500 mb-4 flex items-center gap-1.5 tracking-wide">
                     <Activity size={14} /> Category Breakdown
                   </h4>
                   <CategoryProgressChart milestones={milestones} categories={CATEGORIES} />
@@ -337,28 +336,29 @@ export default function PortalDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <Loader2 size={32} className="animate-spin text-blue-900" />
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 via-slate-50 to-blue-50/30">
+        <Loader2 size={32} className="animate-spin text-blue-900 mb-3" />
+        <p className="text-sm text-slate-400 font-medium">Loading portal…</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      {/* Header — slimmer, no score (moved to hero card) */}
-      <header className="bg-white/80 backdrop-blur border-b border-slate-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-50 to-blue-50/30">
+      {/* Header */}
+      <header className="bg-white/90 backdrop-blur-xl border-b border-slate-200/80 sticky top-0 z-40 shadow-card">
+        <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <img src={logo} alt="JMC Solutions" className="h-14 w-auto" />
-            <div>
-              <h1 className="text-lg font-bold text-slate-900">{client?.name || 'Client Portal'}</h1>
-              <p className="text-[11px] text-slate-400">AI Adoption & Readiness Portal</p>
+            <img src={logo} alt="JMC Solutions" className="h-12 w-auto" />
+            <div className="border-l border-slate-200 pl-4">
+              <h1 className="text-base font-bold text-slate-900 tracking-tight">{client?.name || 'Client Portal'}</h1>
+              <p className="text-[11px] text-slate-400 font-medium">AI Adoption & Readiness Portal</p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             <a
               href="/"
-              className="text-sm text-slate-500 hover:text-slate-700 transition-colors px-3 py-2 rounded-lg hover:bg-slate-100"
+              className="text-sm font-medium text-slate-500 hover:text-slate-700 transition-colors px-3 py-2 rounded-lg hover:bg-slate-100"
             >
               JMC Home
             </a>
@@ -367,23 +367,23 @@ export default function PortalDashboard() {
               className="text-slate-400 hover:text-slate-600 transition-colors p-2 rounded-lg hover:bg-slate-100"
               title="Sign out"
             >
-              <LogOut size={20} />
+              <LogOut size={18} />
             </button>
           </div>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-6 py-8 space-y-6">
+      <div className="max-w-7xl mx-auto px-6 py-8 space-y-6 animate-fade-in">
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700">{error}</div>
+          <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700 animate-fade-in">{error}</div>
         )}
 
         {/* Hero Score Card — always visible, not draggable */}
         <HeroScoreCard milestones={milestones} categories={CATEGORIES} />
 
         {/* Drag-reorderable sections */}
-        <p className="text-[10px] text-slate-400 text-center">
-          Drag sections by the grip handle to reorder • Click header to collapse
+        <p className="text-[10px] text-slate-400 text-center font-medium tracking-wide">
+          Drag sections to reorder &middot; Click header to collapse
         </p>
 
         {sectionOrder.map((id, idx) => renderSection(id, idx))}

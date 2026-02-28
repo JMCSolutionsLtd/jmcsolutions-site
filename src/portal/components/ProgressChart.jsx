@@ -13,6 +13,8 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  ReferenceArea,
+  ReferenceLine,
 } from 'recharts';
 
 const CATEGORY_COLORS = [
@@ -21,7 +23,6 @@ const CATEGORY_COLORS = [
   '#f59e0b', // amber-500
   '#10b981', // emerald-500
   '#8b5cf6', // violet-500
-  '#ec4899', // pink-500
   '#06b6d4', // cyan-500
 ];
 
@@ -68,6 +69,13 @@ export function OverallProgressChart({ milestones }) {
             <stop offset="95%" stopColor="#1e3a8a" stopOpacity={0} />
           </linearGradient>
         </defs>
+        {/* RAG threshold zones */}
+        <ReferenceArea y1={0} y2={33} fill="#fef2f2" fillOpacity={0.6} />
+        <ReferenceArea y1={33} y2={65} fill="#fffbeb" fillOpacity={0.5} />
+        <ReferenceArea y1={65} y2={100} fill="#f0fdf4" fillOpacity={0.5} />
+        {/* Threshold lines */}
+        <ReferenceLine y={33} stroke="#ef4444" strokeDasharray="4 4" strokeWidth={1.5} label={{ value: 'Needs Attention', position: 'right', fontSize: 9, fill: '#ef4444', fontWeight: 600 }} />
+        <ReferenceLine y={65} stroke="#f59e0b" strokeDasharray="4 4" strokeWidth={1.5} label={{ value: 'Developing', position: 'right', fontSize: 9, fill: '#f59e0b', fontWeight: 600 }} />
         <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
         <XAxis
           dataKey="name"

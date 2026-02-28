@@ -23,8 +23,7 @@ const CATEGORIES = [
   'AI Readiness: AI Strategy and Experience',
   'AI Readiness: Data Foundations',
   'AI Readiness: AI Governance and Security',
-  'AI Readiness: Infrastructure for AI',
-  'AI Readiness: Model Management',
+  'AI Readiness: Technology and Infrastructure',
 ];
 
 function computeClientScores(responses, questions) {
@@ -187,9 +186,9 @@ export default function AssessmentView() {
   const progressPercent = totalQuestions > 0 ? Math.round((answeredCount / totalQuestions) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-50 to-blue-50/30">
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-40">
+      <header className="bg-white/90 backdrop-blur-xl border-b border-slate-200/80 sticky top-0 z-40 shadow-card">
         <div className="max-w-5xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -293,7 +292,7 @@ export default function AssessmentView() {
           const answeredInCat = catQuestions.filter((q) => responses[q.id]?.score).length;
 
           return (
-            <div key={cat} className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            <div key={cat} className="bg-white rounded-2xl border border-slate-200/80 shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden">
               {/* Section Header */}
               <button
                 onClick={() => toggleSection(cat)}
@@ -339,11 +338,11 @@ export default function AssessmentView() {
                                     key={s}
                                     disabled={!isEditable}
                                     onClick={() => handleScoreChange(q.id, s)}
-                                    className={`w-9 h-9 rounded-lg text-sm font-bold transition-all ${
+                                    className={`w-9 h-9 rounded-xl text-sm font-bold transition-all duration-200 ${
                                       isSelected
-                                        ? 'bg-blue-900 text-white shadow-md'
+                                        ? 'bg-blue-900 text-white shadow-lg shadow-blue-900/25 scale-105'
                                         : isEditable
-                                        ? 'bg-slate-100 text-slate-600 hover:bg-blue-100 hover:text-blue-900'
+                                        ? 'bg-slate-100 text-slate-600 hover:bg-blue-50 hover:text-blue-900 hover:scale-105'
                                         : 'bg-slate-100 text-slate-400 cursor-not-allowed'
                                     }`}
                                   >
@@ -363,7 +362,7 @@ export default function AssessmentView() {
                                 placeholder="Add a note (optional)…"
                                 value={r.notes || ''}
                                 onChange={(e) => handleNotesChange(q.id, e.target.value)}
-                                className="w-full text-xs bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors resize-none"
+                                className="w-full text-xs bg-slate-50/80 border border-slate-200 rounded-xl px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all resize-none"
                               />
                             ) : (
                               r.notes && (

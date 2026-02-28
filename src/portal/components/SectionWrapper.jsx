@@ -33,11 +33,11 @@ export default function SectionWrapper({
 
   return (
     <div
-      className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-shadow hover:shadow-md"
+      className="bg-white rounded-2xl border border-slate-200/80 shadow-card overflow-hidden transition-all duration-300 hover:shadow-card-hover"
       data-section-id={id}
     >
       {/* Header */}
-      <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-100">
+      <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-100/80">
         {/* Drag handle */}
         <div
           {...(dragHandleProps || {})}
@@ -98,7 +98,7 @@ export default function SectionWrapper({
 
       {/* Content */}
       {!collapsed && (
-        <div ref={contentRef} className="p-5">
+        <div ref={contentRef} className="p-5 animate-fade-in">
           {children}
         </div>
       )}

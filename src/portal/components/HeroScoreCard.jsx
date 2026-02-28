@@ -10,8 +10,7 @@ const CATEGORY_SHORT = {
   'AI Readiness: AI Strategy and Experience': 'AI Strategy',
   'AI Readiness: Data Foundations': 'Data Foundations',
   'AI Readiness: AI Governance and Security': 'Governance',
-  'AI Readiness: Infrastructure for AI': 'Infrastructure',
-  'AI Readiness: Model Management': 'Model Mgmt',
+  'AI Readiness: Technology and Infrastructure': 'Tech & Infra',
 };
 
 /** Return a colour on the red → yellow → green gradient based on percentage */
@@ -84,10 +83,10 @@ export default function HeroScoreCard({ milestones, categories }) {
   const lastUpdated = latest?.updated_at;
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-      <div className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700 px-6 py-3">
-        <h2 className="text-white font-bold text-sm sm:text-base flex items-center gap-2">
-          <Target size={16} /> AI Readiness Overview
+    <div className="bg-white rounded-2xl border border-slate-200/80 shadow-card hover:shadow-card-hover transition-shadow duration-300 overflow-hidden">
+      <div className="bg-gradient-to-r from-blue-950 via-blue-900 to-blue-800 px-6 py-4">
+        <h2 className="text-white font-bold text-sm sm:text-base flex items-center gap-2 tracking-tight">
+          <Target size={16} className="opacity-80" /> AI Readiness Overview
         </h2>
       </div>
 
