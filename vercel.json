@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/api/send-email", "destination": "/api/send-email" },
+    { "source": "/api/portal/:path*", "destination": "https://jmcsolutions-site-production.up.railway.app/api/portal/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
