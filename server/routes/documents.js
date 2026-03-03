@@ -11,7 +11,15 @@ import { queryAll, queryOne, execute, persist } from '../db.js';
 import { notifyIfAdmin } from '../lib/notifyClient.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const UPLOADS_DIR = path.join(__dirname, '..', '..', 'data', 'uploads');
+
+// Use Railway volume (/data) if available for persistent storage,
+// otherwise fall back to local path for development.
+const VOLUME_DIR = '/data';
+const UPLOADS_DIR = fs.existsSync(VOLUME_DIR)
+  ? path.join(VOLUME_DIR, 'uploads')
+  : path.join(__dirname, '..', '..', 'data', 'uploads');
+
+console.log(`[documents] Using uploads path: ${UPLOADS_DIR}`);
 
 // Ensure base uploads dir exists
 fs.mkdirSync(UPLOADS_DIR, { recursive: true });

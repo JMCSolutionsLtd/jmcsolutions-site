@@ -9,7 +9,16 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DB_PATH = process.env.PORTAL_DB_PATH || path.join(__dirname, 'portal.db');
+
+// Use Railway volume (/data) if available for persistent storage,
+// otherwise fall back to local path for development.
+const VOLUME_DIR = '/data';
+const DEFAULT_DB_PATH = fs.existsSync(VOLUME_DIR)
+  ? path.join(VOLUME_DIR, 'portal.db')
+  : path.join(__dirname, 'portal.db');
+const DB_PATH = process.env.PORTAL_DB_PATH || DEFAULT_DB_PATH;
+
+console.log(`[db] Using database path: ${DB_PATH}`);
 
 // Ensure the directory exists
 fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
