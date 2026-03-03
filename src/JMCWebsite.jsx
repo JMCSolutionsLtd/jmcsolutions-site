@@ -33,6 +33,7 @@ import {
   Package
 } from 'lucide-react';
 import logo from './assets/JMC Solutions_v2_1.png';
+import footerLogo from './assets/JMC Solutions_v2_4.png';
 
 // --- Page Components ---
 
@@ -128,14 +129,17 @@ const JMCWebsite = () => {
   const [selectedModules, setSelectedModules] = useState([]);
   const [expandedModules, setExpandedModules] = useState([]);
 
-  // AI Feature States - Virtual Consultant Chatbot
+  // AI Feature States - Joanna Chatbot
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatInput, setChatInput] = useState('');
   const [chatMessages, setChatMessages] = useState([
-    { role: 'assistant', text: "Hello! I'm the JMC Virtual Assistant. Ask me about Copilot, Automation, or how we can help your business." }
+    { role: 'assistant', text: "Hello! I'm Joanna. Ask me about Copilot, Automation, or how we can help your business." }
   ]);
   const [isChatLoading, setIsChatLoading] = useState(false);
   const chatEndRef = useRef(null);
+  const [expandedPartnerCard, setExpandedPartnerCard] = useState(null);
+  const [hoveredPartnerCard, setHoveredPartnerCard] = useState(null);
+  const partnerCardsRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -148,6 +152,17 @@ const JMCWebsite = () => {
       chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [chatMessages, isChatOpen]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (partnerCardsRef.current && !partnerCardsRef.current.contains(event.target)) {
+        setExpandedPartnerCard(null);
+      }
+    };
+
+    document.addEventListener('pointerdown', handleClickOutside);
+    return () => document.removeEventListener('pointerdown', handleClickOutside);
+  }, []);
 
   const scrollToSection = (id) => {
     if (activePage !== 'home') setActivePage('home');
@@ -197,6 +212,12 @@ const JMCWebsite = () => {
       // Otherwise select the new bundle
       setSelectedModules(bundles[bundleKey]);
     }
+  };
+
+  const isPartnerCardExpanded = (cardId) => hoveredPartnerCard === cardId || expandedPartnerCard === cardId;
+
+  const handlePartnerCardToggle = (cardId) => {
+    setExpandedPartnerCard((prev) => (prev === cardId ? null : cardId));
   };
 
   const serviceModules = [
@@ -468,7 +489,7 @@ const JMCWebsite = () => {
     setIsChatLoading(true);
 
     try {
-      const systemPrompt = `You are the Virtual Consultant for JMC Solutions Ltd.
+      const systemPrompt = `You are Joanna, the AI assistant for JMC Solutions Ltd.
 We are a premium AI consultancy helping SMEs implement Microsoft Copilot, Power Automate, and Custom AI Assistants.
 
 Our Services:
@@ -624,9 +645,8 @@ Keep responses under 50 words if possible.`;
 
           <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
             <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-slate-700 flex items-center justify-center text-white font-bold text-xs rounded-sm">JMC</div>
-                <span className="text-slate-200 font-semibold">JMC Solutions Ltd.</span>
+              <div className="flex items-center">
+                <img src={footerLogo} alt="JMC Solutions logo" className="h-10 w-auto object-contain" />
               </div>
               <div className="text-sm">&copy; {new Date().getFullYear()} JMC Solutions Ltd. All rights reserved.</div>
               <div className="flex gap-6 text-sm font-medium">
@@ -664,7 +684,7 @@ Keep responses under 50 words if possible.`;
                   </span>
                 </h1>
                 <p className="text-lg sm:text-xl text-blue-50 max-w-2xl leading-relaxed mb-8">
-                  As a Microsoft Solutions Partner, we help SMEs adopt AI safely and compliantly, making your organisation future-ready with Microsoft 365 Copilot, smart automations, and agentic assistants built around your data.
+                  As a Microsoft Partner, we help SMEs adopt AI safely and compliantly, making your organisation future-ready with Microsoft 365 Copilot, smart automations, and agentic assistants built around your data.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4">
@@ -776,8 +796,24 @@ Keep responses under 50 words if possible.`;
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-6 relative z-10">
-                <div className="group bg-white p-8 rounded-xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-300 transition-all flex flex-col items-center text-center">
+              <div ref={partnerCardsRef} className="grid md:grid-cols-3 gap-6 relative z-10">
+                <button
+                  type="button"
+                  onClick={() => handlePartnerCardToggle('microsoft')}
+                  onMouseEnter={() => setHoveredPartnerCard('microsoft')}
+                  onMouseLeave={() => {
+                    setHoveredPartnerCard(null);
+                    setExpandedPartnerCard(null);
+                  }}
+                  onFocus={() => setHoveredPartnerCard('microsoft')}
+                  onBlur={() => {
+                    setHoveredPartnerCard(null);
+                    setExpandedPartnerCard(null);
+                  }}
+                  aria-expanded={isPartnerCardExpanded('microsoft')}
+                  aria-controls="partner-detail-microsoft"
+                  className="group bg-white p-8 rounded-xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-300 transition-all flex flex-col items-center text-center"
+                >
                   <div className="w-16 h-16 bg-white rounded-full border border-slate-100 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-sm">
                     <svg width="30" height="30" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M0 0H10.5623V10.5623H0V0Z" fill="#F25022" />
@@ -786,28 +822,90 @@ Keep responses under 50 words if possible.`;
                       <path d="M12.4377 12.4377H23V23H12.4377V12.4377Z" fill="#FFB900" />
                     </svg>
                   </div>
-                  <h4 className="text-2xl font-bold text-blue-900 mb-2">Microsoft</h4>
-                  <p className="font-bold text-slate-900 mb-2">Solutions Partner</p>
+                  <h4 className="text-4xl font-bold leading-none text-blue-900 mb-2">Microsoft</h4>
+                  <p className="font-bold text-slate-900 mb-2">Partner</p>
                   <p className="text-sm text-slate-500">Certified expertise delivering enterprise-grade Microsoft AI and Cloud solutions.</p>
-                </div>
+                  <div
+                    id="partner-detail-microsoft"
+                    className={`w-full overflow-hidden text-left transition-all duration-300 ${
+                      isPartnerCardExpanded('microsoft') ? 'max-h-32 opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'
+                    }`}
+                  >
+                    <p className="text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                      We align deployment, governance, and security controls to Microsoft best practice so your team can adopt Copilot and automation safely at scale.
+                    </p>
+                  </div>
+                </button>
 
-                <div className="group bg-white p-8 rounded-xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-300 transition-all flex flex-col items-center text-center">
+                <button
+                  type="button"
+                  onClick={() => handlePartnerCardToggle('enterprises')}
+                  onMouseEnter={() => setHoveredPartnerCard('enterprises')}
+                  onMouseLeave={() => {
+                    setHoveredPartnerCard(null);
+                    setExpandedPartnerCard(null);
+                  }}
+                  onFocus={() => setHoveredPartnerCard('enterprises')}
+                  onBlur={() => {
+                    setHoveredPartnerCard(null);
+                    setExpandedPartnerCard(null);
+                  }}
+                  aria-expanded={isPartnerCardExpanded('enterprises')}
+                  aria-controls="partner-detail-enterprises"
+                  className="group bg-white p-8 rounded-xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-300 transition-all flex flex-col items-center text-center"
+                >
                   <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform text-blue-900">
                     <Globe size={32} />
                   </div>
-                  <h4 className="text-4xl font-bold text-blue-900 mb-2">15+</h4>
+                  <h4 className="text-4xl font-bold leading-none text-blue-900 mb-2">15+</h4>
                   <p className="font-bold text-slate-900 mb-2">Global Enterprises</p>
                   <p className="text-sm text-slate-500">Delivering complex solutions for major financial, retail, and technology brands.</p>
-                </div>
+                  <div
+                    id="partner-detail-enterprises"
+                    className={`w-full overflow-hidden text-left transition-all duration-300 ${
+                      isPartnerCardExpanded('enterprises') ? 'max-h-32 opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'
+                    }`}
+                  >
+                    <p className="text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                      This delivery track record means we bring proven frameworks, governance discipline, and practical rollout methods tailored for fast-moving SME teams.
+                    </p>
+                  </div>
+                </button>
 
-                <div className="group bg-white p-8 rounded-xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-300 transition-all flex flex-col items-center text-center">
+                <button
+                  type="button"
+                  onClick={() => handlePartnerCardToggle('sme')}
+                  onMouseEnter={() => setHoveredPartnerCard('sme')}
+                  onMouseLeave={() => {
+                    setHoveredPartnerCard(null);
+                    setExpandedPartnerCard(null);
+                  }}
+                  onFocus={() => setHoveredPartnerCard('sme')}
+                  onBlur={() => {
+                    setHoveredPartnerCard(null);
+                    setExpandedPartnerCard(null);
+                  }}
+                  aria-expanded={isPartnerCardExpanded('sme')}
+                  aria-controls="partner-detail-sme"
+                  className="group bg-white p-8 rounded-xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-300 transition-all flex flex-col items-center text-center"
+                >
                   <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform text-blue-900">
                     <TrendingUp size={32} />
                   </div>
-                  <h4 className="text-4xl font-bold text-blue-900 mb-2">SME</h4>
+                  <h4 className="text-4xl font-bold leading-none text-blue-900 mb-2">SME</h4>
                   <p className="font-bold text-slate-900 mb-2">Specialised Focus</p>
                   <p className="text-sm text-slate-500">Bridging the gap for smaller organisations to adopt enterprise-grade AI safely.</p>
-                </div>
+                  <div
+                    id="partner-detail-sme"
+                    className={`w-full overflow-hidden text-left transition-all duration-300 ${
+                      isPartnerCardExpanded('sme') ? 'max-h-32 opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'
+                    }`}
+                  >
+                    <p className="text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                      We prioritise adoption outcomes, measurable ROI, and lightweight governance so smaller organisations can get value quickly without enterprise overhead.
+                    </p>
+                  </div>
+                </button>
               </div>
             </div>
           </section>
@@ -1001,16 +1099,16 @@ Keep responses under 50 words if possible.`;
             <div className="max-w-7xl mx-auto px-6 relative z-10">
               <div className="grid md:grid-cols-3 gap-8 text-center">
                 <div className="p-6">
-                  <div className="text-5xl font-bold text-blue-300 mb-2">40%</div>
-                  <div className="text-lg font-medium opacity-90">Faster Document Processing</div>
+                  <div className="text-5xl font-bold text-blue-300 mb-2">88%</div>
+                  <div className="text-lg font-medium opacity-90">Global organisations using AI</div>
+                </div>
+                <div className="p-6 border-t md:border-t-0 md:border-l border-blue-800">
+                  <div className="text-5xl font-bold text-blue-300 mb-2">39%</div>
+                  <div className="text-lg font-medium opacity-90">Scaled AI enterprise-wide</div>
                 </div>
                 <div className="p-6 border-t md:border-t-0 md:border-l border-blue-800">
                   <div className="text-5xl font-bold text-blue-300 mb-2">40h</div>
                   <div className="text-lg font-medium opacity-90">Saved Per Dept / Month</div>
-                </div>
-                <div className="p-6 border-t md:border-t-0 md:border-l border-blue-800">
-                  <div className="text-5xl font-bold text-blue-300 mb-2">50%</div>
-                  <div className="text-lg font-medium opacity-90">Fewer Manual Tasks</div>
                 </div>
               </div>
               <div className="text-center mt-12 pt-12 border-t border-blue-800">
@@ -1026,20 +1124,14 @@ Keep responses under 50 words if possible.`;
             <div className="max-w-4xl mx-auto px-6 text-center">
               <h2 className="text-3xl lg:text-5xl font-bold text-slate-900 mb-6">Every Business Is Different.</h2>
               <p className="text-xl text-slate-600 mb-10">
-                We don't sell cookie-cutter solutions. Book a discovery call for a tailored proposal aimed at your specific operational needs.
+                We don't sell cookie-cutter solutions. Book a discovery call for a tailored plan aimed at your specific operational needs.
               </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <div className="flex items-center justify-center">
                 <button
                   onClick={() => scrollToSection('contact')}
                   className="w-full sm:w-auto px-10 py-4 bg-blue-900 text-white font-bold text-lg hover:bg-blue-800 transition-all shadow-xl shadow-blue-900/20"
                 >
                   Book a Discovery Call
-                </button>
-                <button
-                  onClick={() => scrollToSection('contact')}
-                  className="w-full sm:w-auto px-10 py-4 bg-white text-slate-900 font-medium border border-slate-300 hover:bg-slate-50 transition-all"
-                >
-                  Request Proposal
                 </button>
               </div>
             </div>
@@ -1193,9 +1285,8 @@ Keep responses under 50 words if possible.`;
           {/* Footer */}
           <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
             <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-slate-700 flex items-center justify-center text-white font-bold text-xs rounded-sm">JMC</div>
-                <span className="text-slate-200 font-semibold">JMC Solutions Ltd.</span>
+              <div className="flex items-center">
+                <img src={footerLogo} alt="JMC Solutions logo" className="h-10 w-auto object-contain" />
               </div>
               <div className="text-sm">&copy; {new Date().getFullYear()} JMC Solutions Ltd. All rights reserved.</div>
               <div className="flex gap-6 text-sm font-medium">
@@ -1208,7 +1299,7 @@ Keep responses under 50 words if possible.`;
         </>
       )}
 
-      {/* Chatbot */}
+      {/* Joanna Chatbot */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
         {isChatOpen && (
           <div className="mb-4 w-80 bg-white rounded-lg shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in slide-in-from-bottom-10 duration-300">
@@ -1218,7 +1309,7 @@ Keep responses under 50 words if possible.`;
                   <Bot size={16} className="text-white" />
                 </div>
                 <div>
-                  <h4 className="text-white font-bold text-sm">JMC Virtual Consultant</h4>
+                  <h4 className="text-white font-bold text-sm">Joanna</h4>
                   <p className="text-blue-200 text-xs">Online</p>
                 </div>
               </div>
