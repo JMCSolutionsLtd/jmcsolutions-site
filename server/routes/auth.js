@@ -13,10 +13,56 @@ import { loginRateLimit } from '../middleware/rateLimit.js';
 const router = Router();
 const JWT_SECRET = process.env.PORTAL_JWT_SECRET || 'CHANGE_ME_IN_PRODUCTION_use_a_long_random_string';
 const ISSUER = 'JMC Solutions Portal';
+const TRUSTED_DEVICE_DAYS = Number(process.env.PORTAL_MFA_TRUSTED_DAYS || 30);
+
+function hashTrustedDeviceToken(token) {
+  return crypto.createHash('sha256').update(token).digest('hex');
+}
+
+function createTrustedDeviceToken(clientId) {
+  const trustedDeviceToken = crypto.randomBytes(32).toString('hex');
+  const tokenHash = hashTrustedDeviceToken(trustedDeviceToken);
+  const expiresAt = Math.floor(Date.now() / 1000) + (TRUSTED_DEVICE_DAYS * 24 * 60 * 60);
+
+  execute(
+    'INSERT OR REPLACE INTO mfa_trusted_devices (client_id, token_hash, expires_at, last_used_at) VALUES (?, ?, ?, datetime(\'now\'))',
+    [clientId, tokenHash, expiresAt]
+  );
+
+  execute('DELETE FROM mfa_trusted_devices WHERE expires_at <= strftime(\'%s\', \'now\')');
+
+  return trustedDeviceToken;
+}
+
+function isTrustedDevice(clientId, trustedDeviceToken) {
+  if (!trustedDeviceToken || typeof trustedDeviceToken !== 'string') return false;
+  const tokenHash = hashTrustedDeviceToken(trustedDeviceToken);
+  const row = queryOne(
+    'SELECT id FROM mfa_trusted_devices WHERE client_id = ? AND token_hash = ? AND expires_at > strftime(\'%s\', \'now\')',
+    [clientId, tokenHash]
+  );
+  if (!row) return false;
+  execute('UPDATE mfa_trusted_devices SET last_used_at = datetime(\'now\') WHERE id = ?', [row.id]);
+  return true;
+}
+
+function authSuccessResponse(client, rememberDevice = false) {
+  const token = signToken(client);
+  const response = {
+    token,
+    client: { id: client.id, name: client.name, email: client.email, mfaEnabled: !!client.mfa_enabled },
+  };
+
+  if (rememberDevice) {
+    response.trustedDeviceToken = createTrustedDeviceToken(client.id);
+  }
+
+  return response;
+}
 
 // ── POST /api/portal/auth/login ─────────────────────────────────────────────
 router.post('/login', loginRateLimit, (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, trustedDeviceToken } = req.body;
 
   if (!email || !password) {
     return res.status(400).json({ error: 'Email and password are required.' });
@@ -35,6 +81,10 @@ router.post('/login', loginRateLimit, (req, res) => {
 
   // Check if MFA is enabled
   if (client.mfa_enabled) {
+    if (isTrustedDevice(client.id, trustedDeviceToken)) {
+      return res.json(authSuccessResponse(client, false));
+    }
+
     // Issue a short-lived MFA challenge token (5 minutes)
     const mfaToken = jwt.sign(
       { clientId: client.id, email: client.email, purpose: 'mfa-challenge' },
@@ -54,16 +104,12 @@ router.post('/login', loginRateLimit, (req, res) => {
     return res.json({ requiresPasswordReset: true, resetToken });
   }
 
-  const token = signToken(client);
-  return res.json({
-    token,
-    client: { id: client.id, name: client.name, email: client.email, mfaEnabled: !!client.mfa_enabled },
-  });
+  return res.json(authSuccessResponse(client, false));
 });
 
 // ── POST /api/portal/auth/mfa-verify ────────────────────────────────────────
 router.post('/mfa-verify', loginRateLimit, (req, res) => {
-  const { mfaToken, code } = req.body;
+  const { mfaToken, code, rememberDevice } = req.body;
 
   if (!mfaToken || !code) {
     return res.status(400).json({ error: 'MFA token and verification code are required.' });
@@ -97,11 +143,7 @@ router.post('/mfa-verify', loginRateLimit, (req, res) => {
 
   const delta = totp.validate({ token: code.trim(), window: 1 });
   if (delta !== null) {
-    const token = signToken(client);
-    return res.json({
-      token,
-      client: { id: client.id, name: client.name, email: client.email, mfaEnabled: true },
-    });
+    return res.json(authSuccessResponse(client, !!rememberDevice));
   }
 
   // Try backup code
@@ -116,10 +158,8 @@ router.post('/mfa-verify', loginRateLimit, (req, res) => {
       'UPDATE clients SET mfa_backup_codes = ?, updated_at = datetime(\'now\') WHERE id = ?',
       [JSON.stringify(backupCodes), client.id]
     );
-    const token = signToken(client);
     return res.json({
-      token,
-      client: { id: client.id, name: client.name, email: client.email, mfaEnabled: true },
+      ...authSuccessResponse(client, !!rememberDevice),
       backupCodeUsed: true,
       backupCodesRemaining: backupCodes.length,
     });

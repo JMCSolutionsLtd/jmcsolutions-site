@@ -299,6 +299,10 @@ const JMCWebsite = () => {
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
   const callGemini = async (prompt, systemPrompt) => {
+    if (!apiKey) {
+      throw new Error('Missing VITE_GEMINI_API_KEY');
+    }
+
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`;
     const payload = {
       contents: [{ parts: [{ text: prompt }] }],
@@ -329,6 +333,10 @@ const JMCWebsite = () => {
 
   const handleGenerateInsights = async () => {
     if (!industryInput.trim()) return;
+    if (!apiKey) {
+      setInsightError('Live demo is not configured. Missing VITE_GEMINI_API_KEY.');
+      return;
+    }
 
     setIsGeneratingInsights(true);
     setInsightError(null);
@@ -359,12 +367,18 @@ const JMCWebsite = () => {
       });
 
       const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data?.error?.message || `Gemini request failed (${response.status})`);
+      }
       const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '{}';
       const parsed = JSON.parse(text);
-      setAiInsights(parsed.use_cases || []);
+      if (!Array.isArray(parsed.use_cases) || parsed.use_cases.length === 0) {
+        throw new Error('Gemini returned no use cases.');
+      }
+      setAiInsights(parsed.use_cases);
     } catch (error) {
       console.error('AI Generation Error:', error);
-      setInsightError('Unable to generate insights at this moment. Please try again.');
+      setInsightError(error?.message || 'Unable to generate insights at this moment. Please try again.');
     } finally {
       setIsGeneratingInsights(false);
     }

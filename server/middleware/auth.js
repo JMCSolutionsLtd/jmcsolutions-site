@@ -4,7 +4,7 @@
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.PORTAL_JWT_SECRET || 'CHANGE_ME_IN_PRODUCTION_use_a_long_random_string';
-const JWT_EXPIRES_IN = '8h';
+const JWT_EXPIRES_IN = process.env.PORTAL_JWT_EXPIRES_IN || '8h';
 
 /**
  * Sign a JWT for a client.

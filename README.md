@@ -52,6 +52,16 @@ npm run create-client -- --name "Acme Corp" --email "admin@acme.com" --password 
 | `PORTAL_ADMIN_KEY`  | Yes      | —                     | Admin API key for client management  |
 | `PORTAL_DB_PATH`    | No       | `server/portal.db`    | SQLite database file location        |
 | `PORTAL_PORT`       | No       | `3001`                | Portal API server port               |
+| `PORTAL_JWT_EXPIRES_IN` | No   | `8h`                  | JWT session lifetime (e.g. `7d`)     |
+| `PORTAL_MFA_TRUSTED_DAYS` | No | `30`                | Trusted-device MFA duration in days  |
+
+### Production Persistence (Important)
+
+If you deploy the portal API to Railway (or any container platform), ensure the database file is on a persistent volume, otherwise milestones/MFA settings can disappear after redeploy/restart.
+
+- Create a persistent volume and mount it (example mount path: `/data`).
+- Set `PORTAL_DB_PATH=/data/portal.db`.
+- Keep backups/snapshots enabled for that volume.
 
 ### npm Scripts
 

@@ -6,6 +6,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 import { portalApi } from './portalApi';
 
 const PortalAuthContext = createContext(null);
+const PORTAL_TRUSTED_DEVICE_KEY = 'portal_mfa_device';
 
 export function PortalAuthProvider({ children }) {
   const [client, setClient] = useState(null);
@@ -34,7 +35,8 @@ export function PortalAuthProvider({ children }) {
   }, []);
 
   const login = useCallback(async (email, password) => {
-    const data = await portalApi.login(email, password);
+    const trustedDeviceToken = localStorage.getItem(PORTAL_TRUSTED_DEVICE_KEY);
+    const data = await portalApi.login(email, password, trustedDeviceToken);
 
     // MFA required — return challenge info
     if (data.requiresMfa) {
@@ -53,9 +55,12 @@ export function PortalAuthProvider({ children }) {
     return data.client;
   }, []);
 
-  const completeMfa = useCallback(async (code) => {
+  const completeMfa = useCallback(async (code, rememberDevice = false) => {
     if (!mfaChallenge) throw new Error('No MFA challenge in progress.');
-    const data = await portalApi.mfaVerify(mfaChallenge.mfaToken, code);
+    const data = await portalApi.mfaVerify(mfaChallenge.mfaToken, code, rememberDevice);
+    if (data.trustedDeviceToken) {
+      localStorage.setItem(PORTAL_TRUSTED_DEVICE_KEY, data.trustedDeviceToken);
+    }
     localStorage.setItem('portal_token', data.token);
     setClient(data.client);
     setMfaChallenge(null);

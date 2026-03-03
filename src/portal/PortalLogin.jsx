@@ -11,6 +11,7 @@ import logo from '../assets/JMC Solutions_v2_4.png';
 // ── MFA Verification Step ───────────────────────────────────────────────────
 function MfaStep({ onComplete, onCancel, error: parentError }) {
   const [code, setCode] = useState('');
+  const [rememberDevice, setRememberDevice] = useState(true);
   const [error, setError] = useState(parentError);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef(null);
@@ -23,7 +24,7 @@ function MfaStep({ onComplete, onCancel, error: parentError }) {
     setError(null);
     setLoading(true);
     try {
-      await onComplete(code.trim());
+      await onComplete(code.trim(), rememberDevice);
     } catch (err) {
       setError(err.message || 'Invalid code.');
     } finally {
@@ -67,6 +68,16 @@ function MfaStep({ onComplete, onCancel, error: parentError }) {
           />
           <p className="text-xs text-slate-400 text-center mt-1">Or enter a backup code</p>
         </div>
+
+        <label className="flex items-center gap-2 text-xs text-slate-600 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={rememberDevice}
+            onChange={(e) => setRememberDevice(e.target.checked)}
+            className="rounded border-slate-300 text-blue-900 focus:ring-blue-500/30"
+          />
+          Remember this device for 30 days
+        </label>
 
         <button
           type="submit"
@@ -373,8 +384,8 @@ export default function PortalLogin() {
     }
   };
 
-  const handleMfaComplete = async (code) => {
-    await completeMfa(code);
+  const handleMfaComplete = async (code, rememberDevice) => {
+    await completeMfa(code, rememberDevice);
     navigate('/portal');
   };
 

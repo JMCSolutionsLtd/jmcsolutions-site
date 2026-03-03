@@ -32,11 +32,11 @@ async function request(path, options = {}) {
 
 export const portalApi = {
   // Auth
-  login: (email, password) =>
-    request('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
+  login: (email, password, trustedDeviceToken) =>
+    request('/auth/login', { method: 'POST', body: JSON.stringify({ email, password, trustedDeviceToken }) }),
   verify: () => request('/auth/verify'),
-  mfaVerify: (mfaToken, code) =>
-    request('/auth/mfa-verify', { method: 'POST', body: JSON.stringify({ mfaToken, code }) }),
+  mfaVerify: (mfaToken, code, rememberDevice = false) =>
+    request('/auth/mfa-verify', { method: 'POST', body: JSON.stringify({ mfaToken, code, rememberDevice }) }),
   requestReset: (email) =>
     request('/auth/request-reset', { method: 'POST', body: JSON.stringify({ email }) }),
   resetPassword: (token, newPassword) =>

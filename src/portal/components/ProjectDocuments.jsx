@@ -181,7 +181,7 @@ export default function ProjectDocuments() {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-2">
       <input
         ref={fileInputRef}
         type="file"
@@ -227,9 +227,9 @@ export default function ProjectDocuments() {
             }`}
           >
             {/* Phase header */}
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100">
-              <FolderOpen size={15} className="text-slate-400" />
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 flex-1">{phase}</h4>
+            <div className="flex items-center gap-2 px-3 py-2 border-b border-slate-100">
+              <FolderOpen size={14} className="text-slate-400" />
+              <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-500 flex-1">{phase}</h4>
               <span className="text-[10px] text-slate-400 mr-2">
                 {expectedForPhase.length > 0
                   ? `${expectedWithStatus.filter((e) => e.uploaded).length}/${expectedForPhase.length} deliverables`
@@ -245,10 +245,10 @@ export default function ProjectDocuments() {
             </div>
 
             {/* Content area */}
-            <div className="p-3">
+            <div className="p-2">
               {/* Expected deliverables */}
               {expectedWithStatus.length > 0 && (
-                <div className="grid sm:grid-cols-2 gap-2 mb-2">
+                <div className="grid sm:grid-cols-2 gap-1.5 mb-1.5">
                   {expectedWithStatus.map((exp, i) => {
                     const uploaded = exp.uploaded;
                     const typeLabel = uploaded ? (MIME_TO_LABEL[uploaded.mimetype] || 'FILE') : exp.type;
@@ -259,9 +259,9 @@ export default function ProjectDocuments() {
                       return (
                         <div
                           key={`exp-${i}`}
-                          className="flex items-center gap-3 p-3 rounded-lg border border-emerald-200 bg-emerald-50/50 hover:border-emerald-300 hover:shadow-sm transition group"
+                          className="flex items-center gap-2 px-2.5 py-2 rounded-lg border border-emerald-200 bg-emerald-50/50 hover:border-emerald-300 hover:shadow-sm transition group"
                         >
-                          <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
+                          <CheckCircle2 size={15} className="text-emerald-500 shrink-0" />
                           <div className="flex-1 min-w-0">
                             <p className="text-xs font-semibold text-slate-700 truncate" title={uploaded.original_name}>
                               {uploaded.original_name}
@@ -295,9 +295,9 @@ export default function ProjectDocuments() {
                     return (
                       <div
                         key={`exp-${i}`}
-                        className="flex items-center gap-3 p-3 rounded-lg border border-dashed border-slate-200 bg-slate-50/60"
+                        className="flex items-center gap-2 px-2.5 py-2 rounded-lg border border-dashed border-slate-200 bg-slate-50/60"
                       >
-                        <Clock size={18} className="text-slate-300 shrink-0" />
+                        <Clock size={15} className="text-slate-300 shrink-0" />
                         <div className="flex-1 min-w-0">
                           <p className="text-xs font-medium text-slate-400 truncate">
                             {exp.name}
@@ -317,16 +317,16 @@ export default function ProjectDocuments() {
 
               {/* Additional uploaded docs (not matching expected) */}
               {additionalDocs.length > 0 && (
-                <div className={`grid sm:grid-cols-2 gap-2 ${expectedWithStatus.length > 0 ? 'mt-1' : ''}`}>
+                <div className={`grid sm:grid-cols-2 gap-1.5 ${expectedWithStatus.length > 0 ? 'mt-1' : ''}`}>
                   {additionalDocs.map((doc) => {
                     const typeLabel = MIME_TO_LABEL[doc.mimetype] || 'FILE';
                     const badgeCls = TYPE_BADGE[typeLabel] || TYPE_BADGE.FILE;
                     return (
                       <div
                         key={doc.id}
-                        className="flex items-center gap-3 p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 hover:shadow-sm transition group"
+                        className="flex items-center gap-2 px-2.5 py-2 rounded-lg border border-slate-200 bg-white hover:border-blue-300 hover:shadow-sm transition group"
                       >
-                        <FileText size={18} className="text-blue-500 shrink-0" />
+                        <FileText size={15} className="text-blue-500 shrink-0" />
                         <div className="flex-1 min-w-0">
                           <p className="text-xs font-semibold text-slate-700 truncate" title={doc.original_name}>
                             {doc.original_name}

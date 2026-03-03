@@ -124,6 +124,18 @@ export async function initDb() {
     )
   `);
 
+  db.run(`
+    CREATE TABLE IF NOT EXISTS mfa_trusted_devices (
+      id          INTEGER PRIMARY KEY AUTOINCREMENT,
+      client_id   INTEGER NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+      token_hash  TEXT    NOT NULL,
+      expires_at  INTEGER NOT NULL,
+      created_at  TEXT    NOT NULL DEFAULT (datetime('now')),
+      last_used_at TEXT   NOT NULL DEFAULT (datetime('now')),
+      UNIQUE(client_id, token_hash)
+    )
+  `);
+
   // ── Seed questions from JSON if table is empty ────────────────────────────
   const countResult = db.exec('SELECT COUNT(*) AS cnt FROM questions');
   const questionCount = countResult[0]?.values[0]?.[0] || 0;
