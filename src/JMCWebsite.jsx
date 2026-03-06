@@ -324,7 +324,7 @@ const JMCWebsite = () => {
       throw new Error('Missing VITE_GEMINI_API_KEY');
     }
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`;
     const payload = {
       contents: [{ parts: [{ text: prompt }] }],
       systemInstruction: { parts: [{ text: systemPrompt }] }
@@ -374,7 +374,7 @@ const JMCWebsite = () => {
         - Do not include any extra commentary, notes, or metadata outside the JSON object.`;
       const userPrompt = `Industry: ${industryInput}. Generate 4 specific AI use cases.`;
 
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`;
       const payload = {
         contents: [{ parts: [{ text: userPrompt }] }],
         systemInstruction: { parts: [{ text: systemPrompt }] },
