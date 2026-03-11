@@ -525,6 +525,51 @@ Keep responses under 50 words if possible.`;
 
   const showHome = activePage === 'home';
 
+  /** Render chat message with markdown bold + CTA buttons */
+  const renderChatMessage = (text) => {
+    // Split into lines to process individually
+    const lines = text.split('\n');
+    return lines.map((line, lineIdx) => {
+      // Check if this line is a CTA like "Book a Discovery Call"
+      const ctaMatch = line.match(/book\s+a\s+discovery\s+call/i);
+      if (ctaMatch) {
+        // Replace the CTA portion with a button, keep surrounding text
+        const before = line.slice(0, ctaMatch.index);
+        const after = line.slice(ctaMatch.index + ctaMatch[0].length);
+        return (
+          <span key={lineIdx}>
+            {before && renderBoldText(before)}
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="inline-block mt-2 mb-1 px-3 py-1.5 bg-blue-900 text-white text-xs font-semibold rounded-md hover:bg-blue-800 transition-colors active:scale-95"
+            >
+              Book a Discovery Call
+            </button>
+            {after && renderBoldText(after)}
+            {lineIdx < lines.length - 1 && <br />}
+          </span>
+        );
+      }
+      return (
+        <span key={lineIdx}>
+          {renderBoldText(line)}
+          {lineIdx < lines.length - 1 && <br />}
+        </span>
+      );
+    });
+  };
+
+  /** Convert **text** into <strong> elements */
+  const renderBoldText = (text) => {
+    const parts = text.split(/(\*\*[^*]+\*\*)/g);
+    return parts.map((part, i) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return <strong key={i} className="font-semibold">{part.slice(2, -2)}</strong>;
+      }
+      return part;
+    });
+  };
+
   const bundleConfig = {
     core: { 
       label: 'Core', 
@@ -656,7 +701,7 @@ Keep responses under 50 words if possible.`;
                 <button onClick={() => setActivePage('cookies')} className="hover:text-white transition-colors">
                   Cookie Policy
                 </button>
-                <a href="#" className="hover:text-white transition-colors">
+                <a href="https://www.linkedin.com/company/jmcsolutionsltd/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                   LinkedIn
                 </a>
               </div>
@@ -1292,7 +1337,7 @@ Keep responses under 50 words if possible.`;
               <div className="flex gap-6 text-sm font-medium">
                 <button onClick={() => setActivePage('privacy')} className="hover:text-white transition-colors">Privacy Policy</button>
                 <button onClick={() => setActivePage('cookies')} className="hover:text-white transition-colors">Cookie Policy</button>
-                <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
+                <a href="https://www.linkedin.com/company/jmcsolutionsltd/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
               </div>
             </div>
           </footer>
@@ -1328,7 +1373,7 @@ Keep responses under 50 words if possible.`;
                         : 'bg-white border border-slate-200 text-slate-700 rounded-tl-none shadow-sm'
                     }`}
                   >
-                    {msg.text}
+                    {msg.role === 'assistant' ? renderChatMessage(msg.text) : msg.text}
                   </div>
                 </div>
               ))}

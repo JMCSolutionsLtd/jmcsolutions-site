@@ -19,13 +19,13 @@ import {
 /* ── Expected deliverables per phase ─────────────────────────────────────── */
 const EXPECTED_DOCS = [
   { phase: 'Onboarding', name: 'Welcome Pack', type: 'PDF' },
-  { phase: 'D1 — Data & Permissions Audit', name: 'Microsoft 365 AI Readiness Assessment Summary', type: 'PDF' },
+  { phase: 'D1 — Data & Permissions Audit', name: 'AI Readiness Assessment Summary', type: 'PDF' },
   { phase: 'D1 — Data & Permissions Audit', name: 'Risk & Remediation Document', type: 'XLSX' },
   { phase: 'D2 — Governance & Policy', name: 'AI Governance Framework', type: 'PDF' },
   { phase: 'D2 — Governance & Policy', name: 'Responsible Use Policy and Staff Handbook', type: 'PDF' },
   { phase: 'D3 — Go-Live Readiness', name: 'Go-Live Readiness Summary', type: 'PDF' },
   { phase: 'D4 — Copilot Enablement', name: 'Copilot Enablement Record', type: 'PDF' },
-  { phase: 'D4 — Copilot Enablement', name: 'Connector Enablement and Configuration Record', type: 'PDF' },
+  { phase: 'D4 — Copilot Enablement', name: 'Connector Enablement Record', type: 'PDF' },
   { phase: 'D4 — Copilot Enablement', name: 'Connector Test Plan and Evidence Pack', type: 'PDF' },
   { phase: 'D4 — Copilot Enablement', name: 'Connector Issue and Remediation Tracker', type: 'XLSX' },
   { phase: 'D5 — Training', name: 'Participant Handbook', type: 'PDF' },
@@ -248,7 +248,7 @@ export default function ProjectDocuments() {
             <div className="p-2">
               {/* Expected deliverables */}
               {expectedWithStatus.length > 0 && (
-                <div className="grid sm:grid-cols-2 gap-1.5 mb-1.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mb-1.5">
                   {expectedWithStatus.map((exp, i) => {
                     const uploaded = exp.uploaded;
                     const typeLabel = uploaded ? (MIME_TO_LABEL[uploaded.mimetype] || 'FILE') : exp.type;
@@ -259,11 +259,11 @@ export default function ProjectDocuments() {
                       return (
                         <div
                           key={`exp-${i}`}
-                          className="flex items-center gap-2 px-2.5 py-2 rounded-lg border border-emerald-200 bg-emerald-50/50 hover:border-emerald-300 hover:shadow-sm transition group"
+                          className="flex items-start gap-2 px-2.5 py-2 rounded-lg border border-emerald-200 bg-emerald-50/50 hover:border-emerald-300 hover:shadow-sm transition group overflow-hidden"
                         >
-                          <CheckCircle2 size={15} className="text-emerald-500 shrink-0" />
+                          <CheckCircle2 size={15} className="text-emerald-500 shrink-0 mt-0.5" />
                           <div className="flex-1 min-w-0">
-                            <p className="text-xs font-semibold text-slate-700 truncate" title={uploaded.original_name}>
+                            <p className="text-xs font-semibold text-slate-700 line-clamp-2 break-words" title={uploaded.original_name}>
                               {uploaded.original_name}
                             </p>
                             <div className="flex items-center gap-2 mt-0.5">
@@ -295,11 +295,11 @@ export default function ProjectDocuments() {
                     return (
                       <div
                         key={`exp-${i}`}
-                        className="flex items-center gap-2 px-2.5 py-2 rounded-lg border border-dashed border-slate-200 bg-slate-50/60"
+                        className="flex items-start gap-2 px-2.5 py-2 rounded-lg border border-dashed border-slate-200 bg-slate-50/60 overflow-hidden"
                       >
-                        <Clock size={15} className="text-slate-300 shrink-0" />
+                        <Clock size={15} className="text-slate-300 shrink-0 mt-0.5" />
                         <div className="flex-1 min-w-0">
-                          <p className="text-xs font-medium text-slate-400 truncate">
+                          <p className="text-xs font-medium text-slate-400 line-clamp-2 break-words">
                             {exp.name}
                           </p>
                           <div className="flex items-center gap-2 mt-0.5">
@@ -317,18 +317,18 @@ export default function ProjectDocuments() {
 
               {/* Additional uploaded docs (not matching expected) */}
               {additionalDocs.length > 0 && (
-                <div className={`grid sm:grid-cols-2 gap-1.5 ${expectedWithStatus.length > 0 ? 'mt-1' : ''}`}>
+                <div className={`grid grid-cols-1 sm:grid-cols-2 gap-1.5 ${expectedWithStatus.length > 0 ? 'mt-1' : ''}`}>
                   {additionalDocs.map((doc) => {
                     const typeLabel = MIME_TO_LABEL[doc.mimetype] || 'FILE';
                     const badgeCls = TYPE_BADGE[typeLabel] || TYPE_BADGE.FILE;
                     return (
                       <div
                         key={doc.id}
-                        className="flex items-center gap-2 px-2.5 py-2 rounded-lg border border-slate-200 bg-white hover:border-blue-300 hover:shadow-sm transition group"
+                        className="flex items-start gap-2 px-2.5 py-2 rounded-lg border border-slate-200 bg-white hover:border-blue-300 hover:shadow-sm transition group overflow-hidden"
                       >
-                        <FileText size={15} className="text-blue-500 shrink-0" />
+                        <FileText size={15} className="text-blue-500 shrink-0 mt-0.5" />
                         <div className="flex-1 min-w-0">
-                          <p className="text-xs font-semibold text-slate-700 truncate" title={doc.original_name}>
+                          <p className="text-xs font-semibold text-slate-700 line-clamp-2 break-words" title={doc.original_name}>
                             {doc.original_name}
                           </p>
                           <div className="flex items-center gap-2 mt-0.5">
