@@ -12,7 +12,6 @@ import {
   ChevronRight,
   Loader2,
   MessageSquare,
-  Receipt,
 } from 'lucide-react';
 
 const STATUS_CYCLE = ['pending', 'in-progress', 'complete'];
@@ -113,7 +112,6 @@ export default function DeliveryChecklist() {
         const doneCount = catTasks.filter((t) => t.status === 'complete').length;
         const pct = Math.round((doneCount / catTasks.length) * 100);
         const isExpanded = expandedCats.has(cat);
-        const hasInvoice = catTasks.some((t) => t.invoice);
 
         return (
           <div key={cat} className="border border-slate-200 rounded-lg overflow-hidden">
@@ -128,11 +126,6 @@ export default function DeliveryChecklist() {
                 <ChevronRight size={16} className="text-slate-400 shrink-0" />
               )}
               <span className="font-bold text-sm text-slate-800 flex-1">{cat}</span>
-              {hasInvoice && (
-                <span className="text-[10px] font-bold bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full flex items-center gap-1">
-                  <Receipt size={10} /> Invoice
-                </span>
-              )}
               <span className="text-xs text-slate-500 shrink-0">
                 {doneCount}/{catTasks.length}
               </span>
@@ -218,11 +211,6 @@ export default function DeliveryChecklist() {
                               <span className={`text-xs font-bold px-2.5 py-1 rounded-full border ${cfg.bg} ${cfg.color} ${cfg.border}`}>
                                 {cfg.label}
                               </span>
-                              {task.invoice && (
-                                <span className="text-[10px] font-bold bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded-full">
-                                  INV {task.invoice}
-                                </span>
-                              )}
                             </div>
                           </div>
                         </div>
@@ -291,6 +279,5 @@ export function getChecklistExportData(tasks) {
     Task: t.task,
     Status: t.status,
     Notes: t.notes || '',
-    Invoice: t.invoice || '',
   }));
 }

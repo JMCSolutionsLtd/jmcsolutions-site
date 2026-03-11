@@ -364,15 +364,19 @@ const JMCWebsite = () => {
     setAiInsights(null);
 
     try {
-      const systemPrompt = `You are a senior AI consultant at JMC Solutions. For the given industry, return EXACTLY FOUR use cases, one in each of these categories: "copilot" (Microsoft 365 Copilot idea), "automation" (AI Automation / Power Automate-style workflow), "agentic" (agentic AI using Copilot Studio that can take actions), and "ml" (Machine Learning & Analytics idea such as predictive or anomaly detection).
+      const systemPrompt = `You are a senior AI consultant at JMC Solutions. For the given industry, return EXACTLY FOUR use cases, one in each of these categories:
+1. "individual_productivity" — How Microsoft 365 Copilot can boost an individual employee's day-to-day productivity (e.g. drafting, summarising, data analysis).
+2. "team_collaboration" — How Copilot can enhance team collaboration and communication (e.g. meeting recaps, shared knowledge, project coordination).
+3. "workflow_automation" — A workflow automation or simple agentic AI use case such as an internal assistant, approvals bot, or document routing.
+4. "data_analytics" — A machine learning or data analytics use case such as forecasting, anomaly detection, or performance dashboards.
 
         Rules:
         - Return exactly 4 items, no more and no less.
         - Output strictly as valid JSON with a top-level object containing a single key "use_cases" whose value is an array of 4 objects.
-        - Each object must have these keys: "category" (one of: copilot, automation, agentic, machine learning), "title" (short, 6-10 words max), and "description" (1-2 concise sentences focused on ROI and feasibility).
-        - Order does matter, categories must be unique (one per category).
+        - Each object must have these keys: "category" (one of: individual_productivity, team_collaboration, workflow_automation, data_analytics), "title" (short, 6-10 words max), and "description" (1-2 concise sentences focused on ROI and feasibility).
+        - Order matters: individual_productivity first, then team_collaboration, workflow_automation, data_analytics.
         - Do not include any extra commentary, notes, or metadata outside the JSON object.`;
-      const userPrompt = `Industry: ${industryInput}. Generate 4 specific AI use cases.`;
+      const userPrompt = `Industry: ${industryInput}. Generate 4 tailored AI use cases covering individual productivity, team collaboration, workflow automation, and data analytics.`;
 
       const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`;
       const payload = {
@@ -525,48 +529,69 @@ Keep responses under 50 words if possible.`;
 
   const showHome = activePage === 'home';
 
-  /** Render chat message with markdown bold + CTA buttons */
+  /** Render chat message with markdown formatting + CTA links */
   const renderChatMessage = (text) => {
-    // Split into lines to process individually
     const lines = text.split('\n');
     return lines.map((line, lineIdx) => {
-      // Check if this line is a CTA like "Book a Discovery Call"
+      // Convert "Book a Discovery Call" into a hyperlink
       const ctaMatch = line.match(/book\s+a\s+discovery\s+call/i);
       if (ctaMatch) {
-        // Replace the CTA portion with a button, keep surrounding text
         const before = line.slice(0, ctaMatch.index);
         const after = line.slice(ctaMatch.index + ctaMatch[0].length);
         return (
           <span key={lineIdx}>
-            {before && renderBoldText(before)}
-            <button
-              onClick={() => scrollToSection('contact')}
-              className="inline-block mt-2 mb-1 px-3 py-1.5 bg-blue-900 text-white text-xs font-semibold rounded-md hover:bg-blue-800 transition-colors active:scale-95"
+            {before && renderFormattedText(before)}
+            <a
+              href="#contact"
+              onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}
+              className="text-blue-700 underline underline-offset-2 hover:text-blue-900 font-medium transition-colors"
             >
               Book a Discovery Call
-            </button>
-            {after && renderBoldText(after)}
+            </a>
+            {after && renderFormattedText(after)}
             {lineIdx < lines.length - 1 && <br />}
           </span>
         );
       }
       return (
         <span key={lineIdx}>
-          {renderBoldText(line)}
+          {renderFormattedText(line)}
           {lineIdx < lines.length - 1 && <br />}
         </span>
       );
     });
   };
 
-  /** Convert **text** into <strong> elements */
-  const renderBoldText = (text) => {
-    const parts = text.split(/(\*\*[^*]+\*\*)/g);
-    return parts.map((part, i) => {
-      if (part.startsWith('**') && part.endsWith('**')) {
-        return <strong key={i} className="font-semibold">{part.slice(2, -2)}</strong>;
+  /** Convert markdown emphasis to styled elements: ***bold italic***, **bold**, *italic* */
+  const renderFormattedText = (text) => {
+    // Handle ***, **, then * in a single pass
+    const parts = text.split(/(\*{1,3})(.*?)\1/g);
+    const result = [];
+    let i = 0;
+    // split produces: [before, delimiter, content, after, delimiter, content, ...]
+    // Use a regex-based approach instead for reliability
+    const tokens = [];
+    let remaining = text;
+    const mdRegex = /\*\*\*(.+?)\*\*\*|\*\*(.+?)\*\*|\*(.+?)\*/g;
+    let lastIndex = 0;
+    let match;
+    while ((match = mdRegex.exec(remaining)) !== null) {
+      if (match.index > lastIndex) {
+        tokens.push({ type: 'text', value: remaining.slice(lastIndex, match.index) });
       }
-      return part;
+      if (match[1]) tokens.push({ type: 'bold-italic', value: match[1] });
+      else if (match[2]) tokens.push({ type: 'bold', value: match[2] });
+      else if (match[3]) tokens.push({ type: 'italic', value: match[3] });
+      lastIndex = match.index + match[0].length;
+    }
+    if (lastIndex < remaining.length) {
+      tokens.push({ type: 'text', value: remaining.slice(lastIndex) });
+    }
+    return tokens.map((tok, idx) => {
+      if (tok.type === 'bold-italic') return <strong key={idx} className="font-semibold italic">{tok.value}</strong>;
+      if (tok.type === 'bold') return <strong key={idx} className="font-semibold">{tok.value}</strong>;
+      if (tok.type === 'italic') return <em key={idx}>{tok.value}</em>;
+      return tok.value;
     });
   };
 
