@@ -634,8 +634,8 @@ Keep responses under 50 words if possible.`;
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
             {[
-              { name: 'About', id: 'about' },
-              { name: 'Services & Approach', id: 'approach' }
+              { name: 'Services & Approach', id: 'approach' },
+              { name: 'About', id: 'about' }
             ].map((item) => (
               <button
                 key={item.name}
@@ -669,8 +669,8 @@ Keep responses under 50 words if possible.`;
         {isMobileMenuOpen && (
           <div className="absolute top-full left-0 w-full bg-white border-b border-slate-100 p-6 md:hidden flex flex-col gap-4 shadow-xl">
             {[
-              { name: 'About', id: 'about' },
               { name: 'Services & Approach', id: 'approach' },
+              { name: 'About Us', id: 'about' },
               { name: 'Contact', id: 'contact' }
             ].map((item) => (
               <button
@@ -1145,6 +1145,42 @@ Keep responses under 50 words if possible.`;
             </div>
           </section>
 
+          {/* Outcomes */}
+          <section id="outcomes" className="py-16 bg-blue-900 text-white relative overflow-hidden">
+            <div className="absolute inset-0 -z-10">
+              <img
+                src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
+                alt="Global data network"
+                className="w-full h-full object-cover opacity-20"
+              />
+              <div className="absolute inset-0 bg-blue-900/80 mix-blend-multiply" />
+            </div>
+
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
+
+            <div className="max-w-7xl mx-auto px-6 relative z-10">
+              <div className="grid md:grid-cols-3 gap-8 text-center">
+                <div className="p-6">
+                  <div className="text-5xl font-bold text-blue-300 mb-2">88%</div>
+                  <div className="text-lg font-medium opacity-90">Global organisations using AI</div>
+                </div>
+                <div className="p-6 border-t md:border-t-0 md:border-l border-blue-800">
+                  <div className="text-5xl font-bold text-blue-300 mb-2">39%</div>
+                  <div className="text-lg font-medium opacity-90">Scaled AI enterprise-wide</div>
+                </div>
+                <div className="p-6 border-t md:border-t-0 md:border-l border-blue-800">
+                  <div className="text-5xl font-bold text-blue-300 mb-2">40h</div>
+                  <div className="text-lg font-medium opacity-90">Saved Per Dept / Month</div>
+                </div>
+              </div>
+              <div className="text-center mt-12 pt-12 border-t border-blue-800">
+                <p className="text-xl font-light text-blue-100 max-w-2xl mx-auto">
+                  "Clean, secure data across the business with instant access to searchable company knowledge."
+                </p>
+              </div>
+            </div>
+          </section>
+
           {/* About Us - Founders */}
           <section id="about" className="py-16 bg-white relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-900 via-blue-600 to-blue-900" />
@@ -1207,42 +1243,6 @@ Keep responses under 50 words if possible.`;
             </div>
           </section>
 
-          {/* Outcomes */}
-          <section id="outcomes" className="py-16 bg-blue-900 text-white relative overflow-hidden">
-            <div className="absolute inset-0 -z-10">
-              <img
-                src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
-                alt="Global data network"
-                className="w-full h-full object-cover opacity-20"
-              />
-              <div className="absolute inset-0 bg-blue-900/80 mix-blend-multiply" />
-            </div>
-
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
-
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
-              <div className="grid md:grid-cols-3 gap-8 text-center">
-                <div className="p-6">
-                  <div className="text-5xl font-bold text-blue-300 mb-2">88%</div>
-                  <div className="text-lg font-medium opacity-90">Global organisations using AI</div>
-                </div>
-                <div className="p-6 border-t md:border-t-0 md:border-l border-blue-800">
-                  <div className="text-5xl font-bold text-blue-300 mb-2">39%</div>
-                  <div className="text-lg font-medium opacity-90">Scaled AI enterprise-wide</div>
-                </div>
-                <div className="p-6 border-t md:border-t-0 md:border-l border-blue-800">
-                  <div className="text-5xl font-bold text-blue-300 mb-2">40h</div>
-                  <div className="text-lg font-medium opacity-90">Saved Per Dept / Month</div>
-                </div>
-              </div>
-              <div className="text-center mt-12 pt-12 border-t border-blue-800">
-                <p className="text-xl font-light text-blue-100 max-w-2xl mx-auto">
-                  "Clean, secure data across the business with instant access to searchable company knowledge."
-                </p>
-              </div>
-            </div>
-          </section>
-
           {/* CTA */}
           <section className="py-16 bg-slate-50">
             <div className="max-w-4xl mx-auto px-6 text-center">
@@ -1269,7 +1269,7 @@ Keep responses under 50 words if possible.`;
                   <div>
                     <h2 className="text-3xl font-bold text-slate-900 mb-6">Get in touch.</h2>
                     <p className="text-slate-600 mb-8">
-                      Ready to transform your business operations? Fill out the form, or reach out directly to schedule your audit.
+                      Ready to transform your business operations? Fill out the form, or reach out directly to schedule your Discovery Call.
                     </p>
 
                     <div className="space-y-6 mb-8">
