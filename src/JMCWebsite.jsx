@@ -635,7 +635,7 @@ Keep responses under 50 words if possible.`;
           <div className="hidden md:flex items-center gap-8">
             {[
               { name: 'Services & Approach', id: 'approach' },
-              { name: 'About', id: 'about' }
+              { name: 'About Us', id: 'about' }
             ].map((item) => (
               <button
                 key={item.name}
