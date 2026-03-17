@@ -21,8 +21,8 @@ function getBarColor(p) {
   return '#10b981';               // green
 }
 
-function RadialGauge({ percent, size = 180 }) {
-  const radius = (size - 20) / 2;
+function RadialGauge({ percent, size = 160 }) {
+  const radius = (size - 18) / 2;
   const circumference = 2 * Math.PI * radius;
   const pct = percent ?? 0;
   const offset = circumference - (pct / 100) * circumference;
@@ -32,13 +32,13 @@ function RadialGauge({ percent, size = 180 }) {
       <svg width={size} height={size} className="-rotate-90">
         <circle
           cx={size / 2} cy={size / 2} r={radius}
-          fill="none" stroke="#f1f5f9" strokeWidth="12"
+          fill="none" stroke="#f1f5f9" strokeWidth="10"
         />
         <circle
           cx={size / 2} cy={size / 2} r={radius}
           fill="none"
           stroke={getBarColor(percent)}
-          strokeWidth="12"
+          strokeWidth="10"
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
@@ -46,10 +46,10 @@ function RadialGauge({ percent, size = 180 }) {
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-4xl font-black text-slate-900">
-          {percent !== null && percent !== undefined ? `${percent}%` : '-'}
+        <span className="text-3xl font-bold text-slate-900">
+          {percent !== null && percent !== undefined ? `${percent}%` : '—'}
         </span>
-        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mt-1">Overall Score</span>
+        <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mt-1">Overall Score</span>
       </div>
     </div>
   );
@@ -63,14 +63,14 @@ function CategoryBar({ name, percent }) {
       <span className="text-xs text-slate-600 w-28 sm:w-32 shrink-0 truncate" title={name}>
         {CATEGORY_SHORT[name] || name}
       </span>
-      <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
+      <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
         <div
           className="h-full rounded-full transition-all duration-700 ease-out"
           style={{ width: `${width}%`, backgroundColor: color }}
         />
       </div>
-      <span className="text-xs font-bold text-slate-700 w-10 text-right">
-        {percent !== null && percent !== undefined ? `${percent}%` : '-'}
+      <span className="text-xs font-semibold text-slate-700 w-10 text-right">
+        {percent !== null && percent !== undefined ? `${percent}%` : '—'}
       </span>
     </div>
   );
@@ -83,17 +83,17 @@ export default function HeroScoreCard({ milestones, categories, bundleFilter, on
   const lastUpdated = latest?.updated_at;
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/80 shadow-card hover:shadow-card-hover transition-shadow duration-300 overflow-hidden">
-      <div className="bg-blue-900 px-6 py-4 flex items-center justify-between gap-4">
-        <h2 className="text-white font-bold text-sm sm:text-base flex items-center gap-2 tracking-tight">
-          <Target size={16} className="opacity-80" /> AI Readiness Overview
+    <div className="bg-white rounded-lg border border-slate-200/60 shadow-card overflow-hidden">
+      <div className="bg-blue-900 px-5 py-3.5 flex items-center justify-between gap-4">
+        <h2 className="text-white font-semibold text-sm flex items-center gap-2 tracking-tight">
+          <Target size={15} className="opacity-70" /> AI Readiness Overview
         </h2>
         {onBundleFilterChange && (
           <div className="relative">
             <select
               value={bundleFilter || ''}
               onChange={(e) => onBundleFilterChange(e.target.value)}
-              className="bg-white/10 text-white text-xs font-medium border border-white/25 rounded-lg pl-3 pr-7 py-1.5 outline-none cursor-pointer hover:bg-white/20 transition-colors appearance-none [&>option]:text-slate-900 [&>optgroup]:text-slate-700"
+              className="bg-white/10 text-white text-[11px] font-medium border border-white/20 rounded-md pl-3 pr-7 py-1.5 outline-none cursor-pointer hover:bg-white/15 transition-colors appearance-none [&>option]:text-slate-900 [&>optgroup]:text-slate-700"
             >
               <option value="">All Questions</option>
               <optgroup label="Bundles">
@@ -107,24 +107,21 @@ export default function HeroScoreCard({ milestones, categories, bundleFilter, on
                 ))}
               </optgroup>
             </select>
-            <ChevronDown size={12} className="absolute right-2 top-1/2 -translate-y-1/2 text-white/60 pointer-events-none" />
+            <ChevronDown size={12} className="absolute right-2 top-1/2 -translate-y-1/2 text-white/50 pointer-events-none" />
           </div>
         )}
       </div>
 
-      <div className="p-6">
-        {/* Evenly-split 3-column grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Radial gauge — centred with RAG badge */}
+      <div className="p-5 sm:p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           <div className="flex flex-col items-center justify-center gap-3">
-            <RadialGauge percent={overallPercent} size={180} />
+            <RadialGauge percent={overallPercent} size={160} />
             <RagBadge percent={overallPercent} />
           </div>
 
-          {/* Category breakdown */}
           <div className="w-full flex flex-col">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Category Breakdown</h3>
-            <div className="flex-1 flex flex-col justify-between gap-3 min-h-0">
+            <h3 className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-3">Category Breakdown</h3>
+            <div className="flex-1 flex flex-col justify-between gap-2.5 min-h-0">
               {categories.map((cat) => {
                 const catScore = latest?.scores?.categories?.[cat];
                 return (
@@ -138,26 +135,10 @@ export default function HeroScoreCard({ milestones, categories, bundleFilter, on
             </div>
           </div>
 
-          {/* Stats column — 3 cards stacked */}
           <div className="grid grid-cols-3 lg:grid-cols-1 gap-3 w-full">
-            <StatCard
-              icon={TrendingUp}
-              label="Milestones"
-              value={milestones?.length || 0}
-              color="blue"
-            />
-            <StatCard
-              icon={Target}
-              label="Questions Answered"
-              value={answeredCount}
-              color="violet"
-            />
-            <StatCard
-              icon={Clock}
-              label="Last Updated"
-              value={lastUpdated ? new Date(lastUpdated).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : '-'}
-              color="amber"
-            />
+            <StatCard icon={TrendingUp} label="Milestones" value={milestones?.length || 0} color="blue" />
+            <StatCard icon={Target} label="Answered" value={answeredCount} color="violet" />
+            <StatCard icon={Clock} label="Updated" value={lastUpdated ? new Date(lastUpdated).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : '—'} color="amber" />
           </div>
         </div>
       </div>
@@ -168,8 +149,8 @@ export default function HeroScoreCard({ milestones, categories, bundleFilter, on
 function RagBadge({ percent }) {
   if (percent === null || percent === undefined) {
     return (
-      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-400 text-xs font-bold">
-        <span className="w-2 h-2 rounded-full bg-slate-300" />
+      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-400 text-[11px] font-semibold">
+        <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
         Not Assessed
       </span>
     );
@@ -180,8 +161,8 @@ function RagBadge({ percent }) {
     ? { bg: 'bg-amber-50', text: 'text-amber-700', dot: 'bg-amber-500', border: 'border-amber-200', label: 'Developing' }
     : { bg: 'bg-emerald-50', text: 'text-emerald-700', dot: 'bg-emerald-500', border: 'border-emerald-200', label: 'On Track' };
   return (
-    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border ${cfg.bg} ${cfg.border} ${cfg.text} text-xs font-bold`}>
-      <span className={`w-2 h-2 rounded-full ${cfg.dot} animate-pulse`} />
+    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border ${cfg.bg} ${cfg.border} ${cfg.text} text-[11px] font-semibold`}>
+      <span className={`w-1.5 h-1.5 rounded-full ${cfg.dot}`} />
       {cfg.label}
     </span>
   );
@@ -189,17 +170,17 @@ function RagBadge({ percent }) {
 
 function StatCard({ icon: Icon, label, value, color }) {
   const colorMap = {
-    blue: 'bg-blue-50 text-blue-900',
-    violet: 'bg-violet-50 text-violet-700',
-    amber: 'bg-amber-50 text-amber-700',
+    blue: 'bg-slate-50 text-blue-900 border border-slate-200/60',
+    violet: 'bg-slate-50 text-violet-700 border border-slate-200/60',
+    amber: 'bg-slate-50 text-amber-700 border border-slate-200/60',
   };
   return (
     <div className={`rounded-lg p-3 ${colorMap[color] || colorMap.blue}`}>
       <div className="flex items-center gap-2 mb-1">
-        <Icon size={14} className="opacity-60" />
-        <span className="text-[10px] font-bold uppercase tracking-wider opacity-60">{label}</span>
+        <Icon size={13} className="opacity-50" />
+        <span className="text-[10px] font-semibold uppercase tracking-wider opacity-50">{label}</span>
       </div>
-      <p className="text-lg font-black">{value}</p>
+      <p className="text-lg font-bold">{value}</p>
     </div>
   );
 }

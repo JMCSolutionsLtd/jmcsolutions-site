@@ -86,4 +86,54 @@ router.post('/impersonate', (req, res) => {
   return res.json({ token, client: { id: client.id, name: client.name, email: client.email } });
 });
 
+// ── POST /api/portal/admin/clients/:id/users — add an alias user to a client account ──
+router.post('/clients/:id/users', (req, res) => {
+  const clientId = parseInt(req.params.id, 10);
+  if (isNaN(clientId)) {
+    return res.status(400).json({ error: 'Invalid client ID.' });
+  }
+
+  const client = queryOne('SELECT id FROM clients WHERE id = ?', [clientId]);
+  if (!client) {
+    return res.status(404).json({ error: 'Client not found.' });
+  }
+
+  const { name, email, password } = req.body;
+  if (!name || !email || !password) {
+    return res.status(400).json({ error: 'name, email, and password are required.' });
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({ error: 'Invalid email format.' });
+  }
+
+  if (password.length < 8 || !/[a-zA-Z]/.test(password) || !/[0-9]/.test(password)) {
+    return res.status(400).json({
+      error: 'Password must be at least 8 characters with at least one letter and one number.',
+    });
+  }
+
+  const normalizedEmail = email.toLowerCase().trim();
+
+  // Check uniqueness across both clients and client_users
+  const existingClient = queryOne('SELECT id FROM clients WHERE email = ?', [normalizedEmail]);
+  if (existingClient) {
+    return res.status(409).json({ error: 'A user with this email already exists.' });
+  }
+  const existingUser = queryOne('SELECT id FROM client_users WHERE email = ?', [normalizedEmail]);
+  if (existingUser) {
+    return res.status(409).json({ error: 'A user with this email already exists.' });
+  }
+
+  const hash = bcrypt.hashSync(password, 12);
+  const result = execute(
+    'INSERT INTO client_users (client_id, name, email, password_hash) VALUES (?, ?, ?, ?)',
+    [clientId, name, normalizedEmail, hash]
+  );
+
+  const user = queryOne('SELECT id, client_id, name, email, created_at FROM client_users WHERE id = ?', [result.lastInsertRowid]);
+  return res.status(201).json({ user });
+});
+
 export default router;

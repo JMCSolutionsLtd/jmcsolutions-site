@@ -220,7 +220,7 @@ export default function ProjectDocuments() {
             onDrop={(e) => handleDrop(e, phase)}
             onDragOver={(e) => handleDragOverEvt(e, phase)}
             onDragLeave={() => setDragOver(null)}
-            className={`rounded-xl border transition-all ${
+            className={`rounded-lg border transition-all ${
               isOver
                 ? 'border-blue-400 bg-blue-50/50 shadow-md'
                 : 'border-slate-200 bg-white'

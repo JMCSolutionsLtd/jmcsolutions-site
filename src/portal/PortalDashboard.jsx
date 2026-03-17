@@ -5,7 +5,6 @@ import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { portalApi } from './portalApi';
 import { usePortalAuth } from './PortalContext';
-import { getScoreColor } from './components/ScoreBadge';
 import { OverallProgressChart, CategoryProgressChart } from './components/ProgressChart';
 import HeroScoreCard from './components/HeroScoreCard';
 import DeliveryChecklist, { getChecklistExportData } from './components/DeliveryChecklist';
@@ -13,7 +12,6 @@ import AdoptionStats, { getAdoptionExportData } from './components/AdoptionStats
 import ProjectDocuments from './components/ProjectDocuments';
 import MilestoneHistory, { getMilestoneExportData } from './components/MilestoneHistory';
 import SectionWrapper from './components/SectionWrapper';
-import AIRecommendations, { getRecommendationsExportData } from './components/AIRecommendations';
 import SecuritySettings from './components/SecuritySettings';
 import { exportToCsv } from './utils/exportCsv';
 import { exportToPdf } from './utils/exportPdf';
@@ -23,7 +21,6 @@ import {
   Loader2,
   TrendingUp,
   Activity,
-  ClipboardList,
   LogOut,
   Shield,
   ChevronRight,
@@ -32,7 +29,7 @@ import {
   History,
   FolderOpen,
 } from 'lucide-react';
-import logo from '../assets/JMC Solutions_v2_1.png';
+import logo from '../assets/JMC Solutions_v2_4.png';
 
 const CATEGORIES = [
   'AI Readiness: Business Strategy',
@@ -81,26 +78,27 @@ function getCategoriesForFilter(filterValue) {
 
 function recomputeOverall(scores, filteredCats) {
   if (!scores?.categories) return null;
-  let wSum = 0, total = 0;
+  let sumTotal = 0, countTotal = 0;
   for (const cat of filteredCats) {
     const cs = scores.categories[cat];
-    if (cs?.percent != null && cs?.answered > 0) {
-      wSum += cs.percent * cs.answered;
-      total += cs.answered;
+    if (cs?.answered > 0) {
+      // Use raw sum if available (from server), otherwise reconstruct from percent
+      const rawSum = cs.sum != null ? cs.sum : Math.round(cs.percent * cs.answered * 5 / 100);
+      sumTotal += rawSum;
+      countTotal += cs.answered;
     }
   }
-  return total > 0 ? { percent: Math.round(wSum / total), answered: total } : null;
+  return countTotal > 0 ? { percent: Math.round((sumTotal / (countTotal * 5)) * 100), answered: countTotal } : null;
 }
 
-const SECTION_ORDER_KEY = 'portal_section_order';
+const SECTION_ORDER_KEY = 'portal_section_order_v4';
 
 const DEFAULT_SECTIONS = [
+  'charts',
   'assessment',
   'checklist',
-  'adoption',
-  'charts',
-  'scores',
   'milestones',
+  'adoption',
   'documents',
 ];
 
@@ -140,8 +138,6 @@ export default function PortalDashboard() {
       },
     }));
   }, [milestones, filteredCategories]);
-
-  const filteredLatest = filteredMilestones.length > 0 ? filteredMilestones[filteredMilestones.length - 1] : null;
 
   // Drag state
   const dragItem = useRef(null);
@@ -222,8 +218,8 @@ export default function PortalDashboard() {
               {/* Quick action cards */}
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
                 {/* Current assessment */}
-                <div className="bg-slate-50/80 rounded-xl p-4 border border-slate-100">
-                  <h4 className="text-xs font-semibold uppercase text-slate-500 mb-2 tracking-wide">Current Assessment</h4>
+                <div className="bg-slate-50/60 rounded-lg p-4 border border-slate-200/60">
+                  <h4 className="text-[11px] font-semibold uppercase text-slate-500 mb-2 tracking-wider">Current Assessment</h4>
                   {latest ? (
                     <>
                       <div className="flex items-center justify-between mb-2">
@@ -234,7 +230,7 @@ export default function PortalDashboard() {
                       </div>
                       <button
                         onClick={() => navigate(`/portal/assessment/${latest.id}`)}
-                        className="w-full py-2.5 bg-blue-900 text-white text-xs font-bold rounded-xl hover:bg-blue-800 active:scale-[0.98] transition-all flex items-center justify-center gap-1 shadow-sm"
+                        className="w-full py-2.5 bg-blue-900 text-white text-xs font-semibold rounded-lg hover:bg-blue-800 transition-all flex items-center justify-center gap-1"
                       >
                         {latest.status === 'completed' ? 'View' : 'Continue'} <ChevronRight size={14} />
                       </button>
@@ -245,7 +241,7 @@ export default function PortalDashboard() {
                       <button
                         onClick={handleNewAssessment}
                         disabled={creating}
-                        className="w-full py-2.5 bg-blue-900 text-white text-xs font-bold rounded-xl hover:bg-blue-800 active:scale-[0.98] transition-all flex items-center justify-center gap-1 disabled:opacity-50 shadow-sm"
+                        className="w-full py-2.5 bg-blue-900 text-white text-xs font-semibold rounded-lg hover:bg-blue-800 transition-all flex items-center justify-center gap-1 disabled:opacity-50"
                       >
                         {creating ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />} Start
                       </button>
@@ -254,22 +250,22 @@ export default function PortalDashboard() {
                 </div>
                 {/* New milestone */}
                 {latest && (
-                  <div className="bg-slate-50/80 rounded-xl p-4 border border-slate-100">
-                    <h4 className="text-xs font-semibold uppercase text-slate-500 mb-2 tracking-wide">New Milestone</h4>
+                  <div className="bg-slate-50/60 rounded-lg p-4 border border-slate-200/60">
+                    <h4 className="text-[11px] font-semibold uppercase text-slate-500 mb-2 tracking-wider">New Milestone</h4>
                     <p className="text-xs text-slate-400 mb-2">Track progress since last review</p>
                     <button
                       onClick={handleNewAssessment}
                       disabled={creating}
-                      className="w-full py-2.5 bg-emerald-600 text-white text-xs font-bold rounded-xl hover:bg-emerald-500 active:scale-[0.98] transition-all flex items-center justify-center gap-1 disabled:opacity-50 shadow-sm"
+                      className="w-full py-2.5 bg-emerald-600 text-white text-xs font-semibold rounded-lg hover:bg-emerald-700 transition-all flex items-center justify-center gap-1 disabled:opacity-50"
                     >
                       {creating ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />} Create
                     </button>
                   </div>
                 )}
                 {/* Count */}
-                <div className="bg-slate-50/80 rounded-xl p-4 border border-slate-100">
-                  <h4 className="text-xs font-semibold uppercase text-slate-500 mb-2 tracking-wide">Total Assessments</h4>
-                  <p className="text-3xl font-black text-slate-900">{milestones.length}</p>
+                <div className="bg-slate-50/60 rounded-lg p-4 border border-slate-200/60">
+                  <h4 className="text-[11px] font-semibold uppercase text-slate-500 mb-2 tracking-wider">Total Assessments</h4>
+                  <p className="text-3xl font-bold text-slate-900">{milestones.length}</p>
                 </div>
               </div>
             </SectionWrapper>
@@ -329,38 +325,19 @@ export default function PortalDashboard() {
               onExportPdf={() => exportToPdf('Progress Charts', sectionRefs.current.charts)}
             >
               <div className="grid lg:grid-cols-2 gap-6">
-                <div className="bg-slate-50/80 rounded-xl p-4 border border-slate-100/60">
-                  <h4 className="text-xs font-semibold uppercase text-slate-500 mb-4 flex items-center gap-1.5 tracking-wide">
+                <div className="bg-slate-50/60 rounded-lg p-4 border border-slate-200/60">
+                  <h4 className="text-[11px] font-semibold uppercase text-slate-500 mb-4 flex items-center gap-1.5 tracking-wider">
                     <TrendingUp size={14} /> Overall Score Trend
                   </h4>
                   <OverallProgressChart milestones={filteredMilestones} />
                 </div>
-                <div className="bg-slate-50/80 rounded-xl p-4 border border-slate-100/60">
-                  <h4 className="text-xs font-semibold uppercase text-slate-500 mb-4 flex items-center gap-1.5 tracking-wide">
+                <div className="bg-slate-50/60 rounded-lg p-4 border border-slate-200/60">
+                  <h4 className="text-[11px] font-semibold uppercase text-slate-500 mb-4 flex items-center gap-1.5 tracking-wider">
                     <Activity size={14} /> Category Breakdown
                   </h4>
                   <CategoryProgressChart milestones={filteredMilestones} categories={filteredCategories} />
                 </div>
               </div>
-            </SectionWrapper>
-          </div>
-        );
-
-      case 'scores':
-        if (!filteredLatest?.scores?.overall) return null;
-        return (
-          <div key={sectionId} ref={setRef} {...dragProps}>
-            <SectionWrapper
-              id="scores"
-              title="AI Recommendations"
-              icon={<ClipboardList size={18} />}
-              accent="amber"
-              onExportCsv={() => {
-                exportToCsv(getRecommendationsExportData(filteredLatest, filteredCategories), 'ai-recommendations.csv');
-              }}
-              onExportPdf={() => exportToPdf('AI Recommendations', sectionRefs.current.scores)}
-            >
-              <AIRecommendations latest={filteredLatest} categories={filteredCategories} />
             </SectionWrapper>
           </div>
         );
@@ -404,66 +381,37 @@ export default function PortalDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 via-slate-50 to-blue-50/30">
-        <Loader2 size={32} className="animate-spin text-blue-900 mb-3" />
+      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50">
+        <Loader2 size={28} className="animate-spin text-blue-900 mb-3" />
         <p className="text-sm text-slate-400 font-medium">Loading portal…</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-50 to-blue-50/30">
-      {/* Header */}
-      <header className="bg-white/90 backdrop-blur-xl border-b border-slate-200/80 sticky top-0 z-40 shadow-card">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3.5 flex items-center justify-between gap-2">
+    <div className="min-h-screen bg-slate-50">
+      <header className="bg-blue-950/95 backdrop-blur-xl border-b border-white/[0.08] sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 sm:gap-4 min-w-0">
-            <img src={logo} alt="JMC Solutions" className="h-10 sm:h-16 w-auto shrink-0" />
-            <div className="border-l border-slate-200 pl-2 sm:pl-4 min-w-0">
-              <h1 className="text-xs sm:text-base font-bold text-slate-900 tracking-tight truncate">{client?.name || 'Client Portal'}</h1>
-              <p className="text-[10px] sm:text-[11px] text-slate-400 font-medium whitespace-nowrap">
-                <span className="hidden sm:inline">AI Adoption & Readiness Portal</span>
-                <span className="sm:hidden">AI Readiness Portal</span>
-              </p>
+            <a href="/" title="Back to JMC Solutions homepage"><img src={logo} alt="JMC Solutions" className="h-10 sm:h-14 w-auto shrink-0" /></a>
+            <div className="border-l border-white/10 pl-2 sm:pl-4 min-w-0">
+              <h1 className="text-sm sm:text-base font-semibold text-white tracking-tight truncate">{client?.name || 'Client Portal'}</h1>
             </div>
           </div>
           <div className="flex items-center gap-0.5 sm:gap-1 shrink-0">
-            <a
-              href="/"
-              className="hidden sm:inline-block text-sm font-medium text-slate-500 hover:text-slate-700 transition-colors px-3 py-2 rounded-lg hover:bg-slate-100"
-            >
-              JMC Home
-            </a>
-            <a
-              href="/"
-              className="sm:hidden text-slate-400 hover:text-slate-600 transition-colors p-2 rounded-lg hover:bg-slate-100"
-              title="JMC Home"
-            >
-              <ChevronRight size={18} />
-            </a>
-            <button
-              onClick={() => setShowSecurity(true)}
-              className="text-slate-400 hover:text-slate-600 transition-colors p-2 rounded-lg hover:bg-slate-100"
-              title="Security settings"
-            >
-              <Shield size={18} />
-            </button>
-            <button
-              onClick={logout}
-              className="text-slate-400 hover:text-slate-600 transition-colors p-2 rounded-lg hover:bg-slate-100"
-              title="Sign out"
-            >
-              <LogOut size={18} />
-            </button>
+            <a href="/" className="hidden sm:inline-block text-xs font-medium text-blue-200/80 hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-white/5">JMC Home</a>
+            <a href="/" className="sm:hidden text-blue-200/80 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/5" title="JMC Home"><ChevronRight size={18} /></a>
+            <button onClick={() => setShowSecurity(true)} className="text-blue-200/80 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/5" title="Security settings"><Shield size={18} /></button>
+            <button onClick={logout} className="text-blue-200/80 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/5" title="Sign out"><LogOut size={18} /></button>
           </div>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-6 py-8 space-y-6 animate-fade-in">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-5 animate-fade-in">
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700 animate-fade-in">{error}</div>
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700 animate-fade-in">{error}</div>
         )}
 
-        {/* Hero Score Card — always visible, not draggable */}
         <HeroScoreCard
           milestones={filteredMilestones}
           categories={filteredCategories}
@@ -473,15 +421,13 @@ export default function PortalDashboard() {
           offerings={OFFERING_LABELS}
         />
 
-        {/* Drag-reorderable sections */}
-        <p className="text-[10px] text-slate-400 text-center font-medium tracking-wide">
-          Drag sections to reorder &middot; Click header to collapse
+        <p className="text-[10px] text-slate-400/50 text-center font-medium tracking-wide">
+          Drag sections to reorder · Click header to collapse
         </p>
 
-        {sectionOrder.map((id, idx) => renderSection(id, idx))}
+        {sectionOrder.filter((id) => id !== 'scores').map((id, idx) => renderSection(id, idx))}
       </div>
 
-      {/* Security Settings Modal */}
       {showSecurity && <SecuritySettings onClose={() => setShowSecurity(false)} />}
     </div>
   );

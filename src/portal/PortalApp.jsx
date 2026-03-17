@@ -15,7 +15,7 @@ function RequireAuth({ children }) {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <Loader2 size={32} className="animate-spin text-blue-900" />
+        <Loader2 size={28} className="animate-spin text-blue-900" />
       </div>
     );
   }
@@ -33,7 +33,7 @@ function PortalRoutes() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <Loader2 size={32} className="animate-spin text-blue-900" />
+        <Loader2 size={28} className="animate-spin text-blue-900" />
       </div>
     );
   }

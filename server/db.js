@@ -145,6 +145,19 @@ export async function initDb() {
     )
   `);
 
+  // ── client_users: additional users linked to a client account ──────────────
+  db.run(`
+    CREATE TABLE IF NOT EXISTS client_users (
+      id              INTEGER PRIMARY KEY AUTOINCREMENT,
+      client_id       INTEGER NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+      name            TEXT    NOT NULL,
+      email           TEXT    NOT NULL UNIQUE,
+      password_hash   TEXT    NOT NULL,
+      must_reset_password INTEGER NOT NULL DEFAULT 0,
+      created_at      TEXT    NOT NULL DEFAULT (datetime('now'))
+    )
+  `);
+
   // ── Auto-migration: add levels column to questions table ───────────────────
   try { db.run('ALTER TABLE questions ADD COLUMN levels TEXT DEFAULT NULL'); } catch (_) {}
 

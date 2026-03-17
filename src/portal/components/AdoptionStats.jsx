@@ -46,10 +46,10 @@ const STATS = [
 ];
 
 const COLOR_MAP = {
-  blue: { bar: 'bg-blue-400', bg: 'bg-blue-50', text: 'text-blue-900', icon: 'text-blue-600' },
-  violet: { bar: 'bg-violet-400', bg: 'bg-violet-50', text: 'text-violet-900', icon: 'text-violet-600' },
-  emerald: { bar: 'bg-emerald-400', bg: 'bg-emerald-50', text: 'text-emerald-900', icon: 'text-emerald-600' },
-  amber: { bar: 'bg-amber-400', bg: 'bg-amber-50', text: 'text-amber-900', icon: 'text-amber-600' },
+  blue: { bar: 'bg-blue-400', bg: 'bg-slate-50 border border-slate-200/60', text: 'text-blue-900', icon: 'text-blue-600' },
+  violet: { bar: 'bg-violet-400', bg: 'bg-slate-50 border border-slate-200/60', text: 'text-violet-900', icon: 'text-violet-600' },
+  emerald: { bar: 'bg-emerald-400', bg: 'bg-slate-50 border border-slate-200/60', text: 'text-emerald-900', icon: 'text-emerald-600' },
+  amber: { bar: 'bg-amber-400', bg: 'bg-slate-50 border border-slate-200/60', text: 'text-amber-900', icon: 'text-amber-600' },
 };
 
 export default function AdoptionStats() {
@@ -68,7 +68,7 @@ export default function AdoptionStats() {
             </div>
             <div className="flex items-end justify-between">
               <div>
-                <p className={`text-3xl font-black ${c.text}`}>{stat.value}</p>
+                <p className={`text-3xl font-bold ${c.text}`}>{stat.value}</p>
                 {stat.change !== null && (
                   <span className="text-xs font-bold text-emerald-600">+{stat.change}%</span>
                 )}
@@ -87,9 +87,7 @@ export default function AdoptionStats() {
           </div>
         );
       })}
-      <p className="sm:col-span-2 text-[10px] text-slate-400 text-center mt-1">
-        Placeholder data. Connect to your analytics source to populate live metrics
-      </p>
+
     </div>
   );
 }

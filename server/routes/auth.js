@@ -68,43 +68,70 @@ router.post('/login', loginRateLimit, (req, res) => {
     return res.status(400).json({ error: 'Email and password are required.' });
   }
 
-  const client = queryOne('SELECT * FROM clients WHERE email = ?', [email.toLowerCase().trim()]);
+  const normalizedEmail = email.toLowerCase().trim();
 
+  // Check primary clients table first
+  let client = queryOne('SELECT * FROM clients WHERE email = ?', [normalizedEmail]);
+  let isAliasUser = false;
+
+  // If not found in clients, check client_users (alias users)
   if (!client) {
-    return res.status(401).json({ error: 'Invalid email or password.' });
+    const aliasUser = queryOne('SELECT * FROM client_users WHERE email = ?', [normalizedEmail]);
+    if (!aliasUser) {
+      return res.status(401).json({ error: 'Invalid email or password.' });
+    }
+    const valid = bcrypt.compareSync(password, aliasUser.password_hash);
+    if (!valid) {
+      return res.status(401).json({ error: 'Invalid email or password.' });
+    }
+    // Load the parent client account
+    client = queryOne('SELECT * FROM clients WHERE id = ?', [aliasUser.client_id]);
+    if (!client) {
+      return res.status(401).json({ error: 'Invalid email or password.' });
+    }
+    isAliasUser = true;
+    // Override email in the client object for JWT so it reflects the alias user's email
+    client = { ...client, _loginEmail: aliasUser.email };
+  } else {
+    const valid = bcrypt.compareSync(password, client.password_hash);
+    if (!valid) {
+      return res.status(401).json({ error: 'Invalid email or password.' });
+    }
   }
 
-  const valid = bcrypt.compareSync(password, client.password_hash);
-  if (!valid) {
-    return res.status(401).json({ error: 'Invalid email or password.' });
-  }
+  // For alias users, skip must_reset_password on the parent, and skip MFA for now
+  // (MFA is account-level — shared across all users of the account)
+  const loginEmail = client._loginEmail || client.email;
+
+  // Build a virtual client object for token signing
+  const tokenClient = { id: client.id, name: client.name, email: loginEmail };
 
   // Check if MFA is enabled
   if (client.mfa_enabled) {
     if (isTrustedDevice(client.id, trustedDeviceToken)) {
-      return res.json(authSuccessResponse(client, false));
+      return res.json(authSuccessResponse(tokenClient, false));
     }
 
     // Issue a short-lived MFA challenge token (5 minutes)
     const mfaToken = jwt.sign(
-      { clientId: client.id, email: client.email, purpose: 'mfa-challenge' },
+      { clientId: client.id, email: loginEmail, purpose: 'mfa-challenge' },
       JWT_SECRET,
       { expiresIn: '5m' }
     );
     return res.json({ requiresMfa: true, mfaToken });
   }
 
-  // Check if forced password reset is required
-  if (client.must_reset_password) {
+  // Check if forced password reset is required (only for primary account holder)
+  if (!isAliasUser && client.must_reset_password) {
     const resetToken = jwt.sign(
-      { clientId: client.id, email: client.email, purpose: 'forced-reset' },
+      { clientId: client.id, email: loginEmail, purpose: 'forced-reset' },
       JWT_SECRET,
       { expiresIn: '15m' }
     );
     return res.json({ requiresPasswordReset: true, resetToken });
   }
 
-  return res.json(authSuccessResponse(client, false));
+  return res.json(authSuccessResponse(tokenClient, false));
 });
 
 // ── POST /api/portal/auth/mfa-verify ────────────────────────────────────────
@@ -173,7 +200,18 @@ router.post('/request-reset', loginRateLimit, (req, res) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ error: 'Email is required.' });
 
-  const client = queryOne('SELECT id, email FROM clients WHERE email = ?', [email.toLowerCase().trim()]);
+  const normalizedEmail = email.toLowerCase().trim();
+
+  // Check primary clients table
+  let client = queryOne('SELECT id, email FROM clients WHERE email = ?', [normalizedEmail]);
+
+  // If not found, check alias users — resolve to their parent client
+  if (!client) {
+    const aliasUser = queryOne('SELECT client_id, email FROM client_users WHERE email = ?', [normalizedEmail]);
+    if (aliasUser) {
+      client = queryOne('SELECT id, email FROM clients WHERE id = ?', [aliasUser.client_id]);
+    }
+  }
 
   // Always return success to prevent user enumeration
   if (!client) {
@@ -274,6 +312,18 @@ router.post('/change-password', requireAuth, (req, res) => {
     return res.status(400).json({ error: 'Password must be at least 8 characters with at least one letter and one number.' });
   }
 
+  // Check if user is an alias user first
+  const aliasUser = queryOne('SELECT id, password_hash FROM client_users WHERE email = ?', [req.client.email]);
+  if (aliasUser) {
+    if (!bcrypt.compareSync(currentPassword, aliasUser.password_hash)) {
+      return res.status(401).json({ error: 'Current password is incorrect.' });
+    }
+    const hash = bcrypt.hashSync(newPassword, 12);
+    execute('UPDATE client_users SET password_hash = ? WHERE id = ?', [hash, aliasUser.id]);
+    return res.json({ success: true, message: 'Password changed successfully.' });
+  }
+
+  // Fall through to primary client
   const client = queryOne('SELECT id, password_hash FROM clients WHERE id = ?', [req.client.clientId]);
   if (!client) return res.status(404).json({ error: 'Client not found.' });
 

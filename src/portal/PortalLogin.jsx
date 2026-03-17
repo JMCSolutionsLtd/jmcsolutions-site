@@ -35,7 +35,7 @@ function MfaStep({ onComplete, onCancel, error: parentError }) {
   return (
     <div className="space-y-5">
       <div className="text-center">
-        <div className="mx-auto w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-3">
+        <div className="mx-auto w-14 h-14 bg-blue-50 rounded-lg flex items-center justify-center mb-3">
           <Shield size={28} className="text-blue-900" />
         </div>
         <h2 className="text-lg font-bold text-slate-900">Two-Factor Authentication</h2>
@@ -64,7 +64,7 @@ function MfaStep({ onComplete, onCancel, error: parentError }) {
             value={code}
             onChange={(e) => setCode(e.target.value.replace(/[^a-zA-Z0-9]/g, ''))}
             placeholder="000000"
-            className="w-full px-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm text-center text-2xl tracking-[0.3em] font-mono text-slate-900 placeholder:text-slate-400"
+            className="w-full px-4 py-3 bg-slate-50/80 border border-slate-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm text-center text-2xl tracking-[0.3em] font-mono text-slate-900 placeholder:text-slate-400"
           />
           <p className="text-xs text-slate-400 text-center mt-1">Or enter a backup code</p>
         </div>
@@ -82,7 +82,7 @@ function MfaStep({ onComplete, onCancel, error: parentError }) {
         <button
           type="submit"
           disabled={loading || !code.trim()}
-          className="w-full py-3 bg-blue-900 text-white font-bold rounded-xl hover:bg-blue-800 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-blue-900/25 text-sm"
+          className="w-full py-3 bg-blue-900 text-white font-bold rounded-lg hover:bg-blue-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm"
         >
           {loading ? (
             <><Loader2 size={18} className="animate-spin" /> Verifying…</>
@@ -133,7 +133,7 @@ function ForcedResetStep({ onComplete, onCancel }) {
   return (
     <div className="space-y-5">
       <div className="text-center">
-        <div className="mx-auto w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mb-3">
+        <div className="mx-auto w-14 h-14 bg-amber-50 rounded-lg flex items-center justify-center mb-3">
           <KeyRound size={28} className="text-amber-600" />
         </div>
         <h2 className="text-lg font-bold text-slate-900">Password Reset Required</h2>
@@ -160,7 +160,7 @@ function ForcedResetStep({ onComplete, onCancel }) {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full pl-10 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm text-slate-900 placeholder:text-slate-400"
+              className="w-full pl-10 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm text-slate-900 placeholder:text-slate-400"
             />
           </div>
         </div>
@@ -175,7 +175,7 @@ function ForcedResetStep({ onComplete, onCancel }) {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full pl-10 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm text-slate-900 placeholder:text-slate-400"
+              className="w-full pl-10 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm text-slate-900 placeholder:text-slate-400"
             />
           </div>
         </div>
@@ -183,7 +183,7 @@ function ForcedResetStep({ onComplete, onCancel }) {
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 bg-blue-900 text-white font-bold rounded-xl hover:bg-blue-800 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-blue-900/25 text-sm"
+          className="w-full py-3 bg-blue-900 text-white font-bold rounded-lg hover:bg-blue-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm"
         >
           {loading ? (
             <><Loader2 size={18} className="animate-spin" /> Resetting…</>
@@ -240,12 +240,12 @@ function ForgotPasswordStep({ onBack }) {
     if (resetDone) {
       return (
         <div className="space-y-5 text-center">
-          <div className="mx-auto w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mb-3">
+          <div className="mx-auto w-14 h-14 bg-green-50 rounded-lg flex items-center justify-center mb-3">
             <CheckCircle2 size={28} className="text-green-600" />
           </div>
           <h2 className="text-lg font-bold text-slate-900">Password Reset!</h2>
           <p className="text-sm text-slate-500">You can now sign in with your new password.</p>
-          <button onClick={onBack} className="w-full py-3 bg-blue-900 text-white font-bold rounded-xl hover:bg-blue-800 transition-all text-sm">
+          <button onClick={onBack} className="w-full py-3 bg-blue-900 text-white font-bold rounded-lg hover:bg-blue-800 transition-all text-sm">
             Back to Sign In
           </button>
         </div>
@@ -255,7 +255,7 @@ function ForgotPasswordStep({ onBack }) {
     return (
       <div className="space-y-5">
         <div className="text-center">
-          <div className="mx-auto w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-3">
+          <div className="mx-auto w-14 h-14 bg-blue-50 rounded-lg flex items-center justify-center mb-3">
             <KeyRound size={28} className="text-blue-900" />
           </div>
           <h2 className="text-lg font-bold text-slate-900">Set New Password</h2>
@@ -268,13 +268,13 @@ function ForgotPasswordStep({ onBack }) {
           )}
           <div className="space-y-1.5">
             <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">New Password</label>
-            <input type="password" required value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder="••••••••" className="w-full px-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm text-slate-900 placeholder:text-slate-400" />
+            <input type="password" required value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder="••••••••" className="w-full px-4 py-3 bg-slate-50/80 border border-slate-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm text-slate-900 placeholder:text-slate-400" />
           </div>
           <div className="space-y-1.5">
             <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Confirm Password</label>
-            <input type="password" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="••••••••" className="w-full px-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm text-slate-900 placeholder:text-slate-400" />
+            <input type="password" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="••••••••" className="w-full px-4 py-3 bg-slate-50/80 border border-slate-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm text-slate-900 placeholder:text-slate-400" />
           </div>
-          <button type="submit" disabled={loading} className="w-full py-3 bg-blue-900 text-white font-bold rounded-xl hover:bg-blue-800 transition-all disabled:opacity-50 text-sm">
+          <button type="submit" disabled={loading} className="w-full py-3 bg-blue-900 text-white font-bold rounded-lg hover:bg-blue-800 transition-all disabled:opacity-50 text-sm">
             {loading ? <><Loader2 size={18} className="animate-spin" /> Resetting…</> : 'Reset Password'}
           </button>
         </form>
@@ -307,14 +307,14 @@ function ForgotPasswordStep({ onBack }) {
   if (success) {
     return (
       <div className="space-y-5 text-center">
-        <div className="mx-auto w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mb-3">
+        <div className="mx-auto w-14 h-14 bg-green-50 rounded-lg flex items-center justify-center mb-3">
           <Mail size={28} className="text-green-600" />
         </div>
         <h2 className="text-lg font-bold text-slate-900">Check Your Email</h2>
         <p className="text-sm text-slate-500">
           If an account exists with that email, we&apos;ve sent password reset instructions.
         </p>
-        <button onClick={onBack} className="w-full py-3 bg-blue-900 text-white font-bold rounded-xl hover:bg-blue-800 transition-all text-sm">
+        <button onClick={onBack} className="w-full py-3 bg-blue-900 text-white font-bold rounded-lg hover:bg-blue-800 transition-all text-sm">
           Back to Sign In
         </button>
       </div>
@@ -324,7 +324,7 @@ function ForgotPasswordStep({ onBack }) {
   return (
     <div className="space-y-5">
       <div className="text-center">
-        <div className="mx-auto w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-3">
+        <div className="mx-auto w-14 h-14 bg-blue-50 rounded-lg flex items-center justify-center mb-3">
           <Mail size={28} className="text-blue-900" />
         </div>
         <h2 className="text-lg font-bold text-slate-900">Reset Password</h2>
@@ -341,10 +341,10 @@ function ForgotPasswordStep({ onBack }) {
           <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Email</label>
           <div className="relative">
             <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-            <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@company.com" className="w-full pl-10 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm text-slate-900 placeholder:text-slate-400" />
+            <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@company.com" className="w-full pl-10 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm text-slate-900 placeholder:text-slate-400" />
           </div>
         </div>
-        <button type="submit" disabled={loading} className="w-full py-3 bg-blue-900 text-white font-bold rounded-xl hover:bg-blue-800 transition-all disabled:opacity-50 text-sm">
+        <button type="submit" disabled={loading} className="w-full py-3 bg-blue-900 text-white font-bold rounded-lg hover:bg-blue-800 transition-all disabled:opacity-50 text-sm">
           {loading ? <><Loader2 size={18} className="animate-spin" /> Sending…</> : 'Send Reset Link'}
         </button>
       </form>
@@ -430,7 +430,7 @@ export default function PortalLogin() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@company.com"
-                className="w-full pl-10 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm text-slate-900 placeholder:text-slate-400"
+                className="w-full pl-10 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm text-slate-900 placeholder:text-slate-400"
               />
             </div>
           </div>
@@ -445,7 +445,7 @@ export default function PortalLogin() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-10 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm text-slate-900 placeholder:text-slate-400"
+                className="w-full pl-10 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm text-slate-900 placeholder:text-slate-400"
               />
             </div>
           </div>
@@ -453,7 +453,7 @@ export default function PortalLogin() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-blue-900 text-white font-bold rounded-xl hover:bg-blue-800 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-blue-900/25 text-sm"
+            className="w-full py-3 bg-blue-900 text-white font-semibold rounded-lg hover:bg-blue-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm"
           >
             {loading ? (
               <><Loader2 size={18} className="animate-spin" /> Signing in…</>
@@ -478,25 +478,22 @@ export default function PortalLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 flex items-center justify-center px-4 relative overflow-hidden">
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl" />
+    <div className="min-h-screen bg-gradient-to-br from-blue-950 via-blue-900 to-slate-900 flex items-center justify-center px-4 relative overflow-hidden">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
 
       <div className="w-full max-w-md relative z-10 animate-fade-in">
-        {/* Logo / Brand */}
         <div className="text-center mb-8">
-          <img src={logo} alt="JMC Solutions" className="h-28 w-auto mx-auto mb-5 drop-shadow-2xl" />
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">Client Portal</h1>
-          <p className="text-blue-200/70 mt-1.5 text-sm">Sign in to access your portal</p>
+          <a href="/"><img src={logo} alt="JMC Solutions" className="h-28 w-auto mx-auto mb-5" /></a>
+          <h1 className="text-xl font-extrabold text-white tracking-tight">Client Portal</h1>
+          <p className="text-blue-300/50 mt-1.5 text-sm">Sign in to access your portal</p>
         </div>
 
-        {/* Login Card */}
-        <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-elevated border border-white/20 p-8">
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl border border-white/10 shadow-xl p-7 sm:p-8">
           {content}
         </div>
 
-        <p className="text-center text-xs text-blue-200/40 mt-6">
+        <p className="text-center text-xs text-blue-300/30 mt-6">
           &copy; {new Date().getFullYear()} JMC Solutions Ltd.
         </p>
       </div>

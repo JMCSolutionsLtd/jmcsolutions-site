@@ -238,7 +238,7 @@ function OverallProgress({ tasks }) {
       <div className="flex-1">
         <div className="flex items-center justify-between mb-1">
           <span className="text-xs font-bold text-slate-500">{done} of {total} tasks complete</span>
-          <span className="text-xs font-black text-slate-700">{pct}%</span>
+          <span className="text-xs font-bold text-slate-700">{pct}%</span>
         </div>
         <div className="h-2.5 bg-slate-100 rounded-full overflow-hidden">
           <div

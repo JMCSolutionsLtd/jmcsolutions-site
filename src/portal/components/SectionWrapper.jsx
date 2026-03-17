@@ -21,38 +21,35 @@ export default function SectionWrapper({
   const exportRef = useRef(null);
 
   const accentMap = {
-    blue: 'from-blue-900 to-blue-700',
-    emerald: 'from-emerald-700 to-emerald-500',
-    violet: 'from-violet-700 to-violet-500',
-    amber: 'from-amber-600 to-amber-400',
-    rose: 'from-rose-600 to-rose-400',
-    cyan: 'from-cyan-700 to-cyan-500',
-    sky: 'from-sky-700 to-sky-500',
-    slate: 'from-slate-700 to-slate-500',
+    blue: 'bg-blue-900',
+    emerald: 'bg-emerald-700',
+    violet: 'bg-violet-700',
+    amber: 'bg-amber-600',
+    rose: 'bg-rose-600',
+    cyan: 'bg-cyan-700',
+    sky: 'bg-sky-700',
+    slate: 'bg-slate-600',
   };
 
   return (
     <div
-      className="bg-white rounded-2xl border border-slate-200/80 shadow-card overflow-hidden transition-all duration-300 hover:shadow-card-hover"
+      className="bg-white rounded-lg border border-slate-200/60 shadow-card overflow-hidden transition-shadow duration-200 hover:shadow-card-hover"
       data-section-id={id}
     >
-      {/* Header */}
-      <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-100/80">
-        {/* Drag handle */}
+      <div className="flex items-center gap-3 px-4 sm:px-5 py-3.5 border-b border-slate-100">
         <div
           {...(dragHandleProps || {})}
-          className="cursor-grab active:cursor-grabbing text-slate-300 hover:text-slate-500 transition-colors touch-none"
+          className="cursor-grab active:cursor-grabbing text-slate-300 hover:text-slate-400 transition-colors touch-none"
           title="Drag to reorder"
         >
-          <GripVertical size={18} />
+          <GripVertical size={16} />
         </div>
 
-        {/* Accent strip + icon */}
-        <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${accentMap[accent] || accentMap.blue} flex items-center justify-center text-white shrink-0`}>
-          {icon}
+        <div className={`w-7 h-7 rounded-md ${accentMap[accent] || accentMap.blue} flex items-center justify-center text-white shrink-0`}>
+          {React.cloneElement(icon, { size: 14 })}
         </div>
 
-        <h2 className="font-bold text-slate-900 flex-1 text-sm sm:text-base">{title}</h2>
+        <h2 className="font-bold text-slate-800 flex-1 text-sm">{title}</h2>
 
         {/* Export dropdown */}
         {(onExportCsv || onExportPdf) && (

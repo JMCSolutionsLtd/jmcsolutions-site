@@ -16,16 +16,16 @@ export function getScoreColor(percent) {
 }
 
 const colorClasses = {
-  red: 'bg-red-100 text-red-800 border-red-300',
-  yellow: 'bg-yellow-100 text-yellow-800 border-yellow-300',
-  green: 'bg-green-100 text-green-800 border-green-300',
-  gray: 'bg-slate-100 text-slate-500 border-slate-300',
+  red: 'bg-red-50 text-red-700 border-red-200',
+  yellow: 'bg-amber-50 text-amber-700 border-amber-200',
+  green: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  gray: 'bg-slate-50 text-slate-500 border-slate-200',
 };
 
 const dotClasses = {
   red: 'bg-red-500',
-  yellow: 'bg-yellow-500',
-  green: 'bg-green-500',
+  yellow: 'bg-amber-500',
+  green: 'bg-emerald-500',
   gray: 'bg-slate-400',
 };
 
@@ -33,13 +33,13 @@ export default function ScoreBadge({ percent, label, size = 'md' }) {
   const color = getScoreColor(percent);
   const isNull = percent === null || percent === undefined;
 
-  const sizeClasses = size === 'lg' ? 'px-4 py-2 text-base' : 'px-3 py-1 text-sm';
+  const sizeClasses = size === 'lg' ? 'px-3 py-1.5 text-sm' : 'px-2.5 py-1 text-xs';
 
   return (
     <span
-      className={`inline-flex items-center gap-2 rounded-full border font-semibold ${colorClasses[color]} ${sizeClasses}`}
+      className={`inline-flex items-center gap-1.5 rounded-md border font-semibold ${colorClasses[color]} ${sizeClasses}`}
     >
-      <span className={`w-2.5 h-2.5 rounded-full ${dotClasses[color]}`} />
+      <span className={`w-1.5 h-1.5 rounded-full ${dotClasses[color]}`} />
       {isNull ? 'Not started' : `${percent}%`}
       {label && <span className="font-normal opacity-70">· {label}</span>}
     </span>

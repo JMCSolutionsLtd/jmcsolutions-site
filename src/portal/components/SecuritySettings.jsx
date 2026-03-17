@@ -35,7 +35,7 @@ export default function SecuritySettings({ onClose }) {
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
 
       {/* Modal */}
-      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto animate-fade-in">
+      <div className="relative bg-white rounded-lg shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto animate-fade-in">
         {/* Header */}
         <div className="sticky top-0 bg-white border-b border-slate-100 px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
           <div className="flex items-center gap-3">
@@ -137,7 +137,7 @@ function MfaSetupView({ onEnabled }) {
   if (step === 'start') {
     return (
       <div className="text-center space-y-4">
-        <div className="mx-auto w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center">
+        <div className="mx-auto w-16 h-16 bg-blue-50 rounded-lg flex items-center justify-center">
           <Smartphone size={32} className="text-blue-900" />
         </div>
         <div>
@@ -146,7 +146,7 @@ function MfaSetupView({ onEnabled }) {
             Add an extra layer of security by requiring a code from Microsoft Authenticator when you sign in.
           </p>
         </div>
-        <div className="bg-slate-50 rounded-xl p-4 text-left">
+        <div className="bg-slate-50 rounded-lg p-4 text-left">
           <p className="text-xs font-semibold text-slate-700 mb-2">You&apos;ll need:</p>
           <ul className="text-xs text-slate-600 space-y-1">
             <li className="flex items-start gap-2">
@@ -167,7 +167,7 @@ function MfaSetupView({ onEnabled }) {
         <button
           onClick={startSetup}
           disabled={loading}
-          className="w-full py-3 bg-blue-900 text-white font-bold rounded-xl hover:bg-blue-800 transition-all disabled:opacity-50 text-sm flex items-center justify-center gap-2"
+          className="w-full py-3 bg-blue-900 text-white font-bold rounded-lg hover:bg-blue-800 transition-all disabled:opacity-50 text-sm flex items-center justify-center gap-2"
         >
           {loading ? <Loader2 size={18} className="animate-spin" /> : <Shield size={18} />}
           {loading ? 'Setting up…' : 'Begin Setup'}
@@ -188,13 +188,13 @@ function MfaSetupView({ onEnabled }) {
 
         {qrData && (
           <div className="flex justify-center">
-            <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+            <div className="bg-white p-3 rounded-lg border border-slate-200 shadow-sm">
               <img src={qrData.qrCode} alt="QR Code for Microsoft Authenticator" className="w-48 h-48" />
             </div>
           </div>
         )}
 
-        <div className="bg-slate-50 rounded-xl p-3">
+        <div className="bg-slate-50 rounded-lg p-3">
           <p className="text-xs font-semibold text-slate-500 mb-1">Can&apos;t scan? Enter this code manually:</p>
           <code className="text-xs font-mono text-slate-900 break-all select-all bg-white px-2 py-1 rounded border border-slate-200 block">
             {qrData?.secret}
@@ -215,7 +215,7 @@ function MfaSetupView({ onEnabled }) {
               value={code}
               onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))}
               placeholder="000000"
-              className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none text-sm text-center text-2xl tracking-[0.3em] font-mono"
+              className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none text-sm text-center text-2xl tracking-[0.3em] font-mono"
             />
           </div>
           {error && (
@@ -226,7 +226,7 @@ function MfaSetupView({ onEnabled }) {
           <button
             type="submit"
             disabled={loading || code.length < 6}
-            className="w-full py-3 bg-blue-900 text-white font-bold rounded-xl hover:bg-blue-800 transition-all disabled:opacity-50 text-sm flex items-center justify-center gap-2"
+            className="w-full py-3 bg-blue-900 text-white font-bold rounded-lg hover:bg-blue-800 transition-all disabled:opacity-50 text-sm flex items-center justify-center gap-2"
           >
             {loading ? <><Loader2 size={18} className="animate-spin" /> Verifying…</> : 'Verify & Enable'}
           </button>
@@ -239,7 +239,7 @@ function MfaSetupView({ onEnabled }) {
     return (
       <div className="space-y-4">
         <div className="text-center">
-          <div className="mx-auto w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mb-3">
+          <div className="mx-auto w-14 h-14 bg-green-50 rounded-lg flex items-center justify-center mb-3">
             <ShieldCheck size={28} className="text-green-600" />
           </div>
           <h3 className="text-base font-bold text-slate-900">MFA Enabled!</h3>
@@ -248,7 +248,7 @@ function MfaSetupView({ onEnabled }) {
           </p>
         </div>
 
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-amber-800 uppercase tracking-wider">Backup Codes</span>
             <button
@@ -267,7 +267,7 @@ function MfaSetupView({ onEnabled }) {
           </div>
         </div>
 
-        <div className="bg-red-50 border border-red-200 rounded-xl p-3">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-3">
           <p className="text-xs text-red-700 font-medium">
             Store these codes securely. They will NOT be shown again.
           </p>
@@ -275,7 +275,7 @@ function MfaSetupView({ onEnabled }) {
 
         <button
           onClick={() => { setStep('done'); onEnabled(); }}
-          className="w-full py-3 bg-blue-900 text-white font-bold rounded-xl hover:bg-blue-800 transition-all text-sm"
+          className="w-full py-3 bg-blue-900 text-white font-bold rounded-lg hover:bg-blue-800 transition-all text-sm"
         >
           I&apos;ve Saved My Codes
         </button>
@@ -286,7 +286,7 @@ function MfaSetupView({ onEnabled }) {
   // done
   return (
     <div className="text-center space-y-4">
-      <div className="mx-auto w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center">
+      <div className="mx-auto w-16 h-16 bg-green-50 rounded-lg flex items-center justify-center">
         <ShieldCheck size={32} className="text-green-600" />
       </div>
       <h3 className="text-base font-bold text-slate-900">Two-Factor Authentication Active</h3>
@@ -322,7 +322,7 @@ function MfaDisableView({ onDisabled }) {
   if (success) {
     return (
       <div className="text-center space-y-4">
-        <div className="mx-auto w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center">
+        <div className="mx-auto w-16 h-16 bg-amber-50 rounded-lg flex items-center justify-center">
           <ShieldOff size={32} className="text-amber-600" />
         </div>
         <h3 className="text-base font-bold text-slate-900">MFA Disabled</h3>
@@ -335,7 +335,7 @@ function MfaDisableView({ onDisabled }) {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-3 bg-green-50 rounded-xl p-4 border border-green-200">
+      <div className="flex items-center gap-3 bg-green-50 rounded-lg p-4 border border-green-200">
         <ShieldCheck size={24} className="text-green-600 shrink-0" />
         <div>
           <p className="text-sm font-bold text-green-900">MFA is Active</p>
@@ -356,7 +356,7 @@ function MfaDisableView({ onDisabled }) {
             value={code}
             onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))}
             placeholder="000000"
-            className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:border-red-500 focus:ring-2 focus:ring-red-500/20 outline-none text-sm text-center text-xl tracking-[0.3em] font-mono"
+            className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:border-red-500 focus:ring-2 focus:ring-red-500/20 outline-none text-sm text-center text-xl tracking-[0.3em] font-mono"
           />
           {error && (
             <div className="bg-red-50 border border-red-200 rounded-lg p-3 flex items-start gap-2 text-sm text-red-700">
@@ -366,7 +366,7 @@ function MfaDisableView({ onDisabled }) {
           <button
             type="submit"
             disabled={loading || code.length < 6}
-            className="w-full py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-all disabled:opacity-50 text-sm flex items-center justify-center gap-2"
+            className="w-full py-3 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-all disabled:opacity-50 text-sm flex items-center justify-center gap-2"
           >
             {loading ? <><Loader2 size={18} className="animate-spin" /> Disabling…</> : 'Disable MFA'}
           </button>
@@ -413,7 +413,7 @@ function PasswordChangeView() {
   return (
     <div className="space-y-4">
       {success && (
-        <div className="bg-green-50 border border-green-200 rounded-xl p-3 flex items-center gap-2 text-sm text-green-700 animate-fade-in">
+        <div className="bg-green-50 border border-green-200 rounded-lg p-3 flex items-center gap-2 text-sm text-green-700 animate-fade-in">
           <CheckCircle2 size={16} className="shrink-0" />
           Password changed successfully.
         </div>
@@ -430,7 +430,7 @@ function PasswordChangeView() {
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm"
+              className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm"
             />
           </div>
         </div>
@@ -445,7 +445,7 @@ function PasswordChangeView() {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm"
+              className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm"
             />
           </div>
           <p className="text-xs text-slate-400">Min 8 characters, at least 1 letter and 1 number</p>
@@ -461,7 +461,7 @@ function PasswordChangeView() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm"
+              className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm"
             />
           </div>
         </div>
@@ -475,7 +475,7 @@ function PasswordChangeView() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 bg-blue-900 text-white font-bold rounded-xl hover:bg-blue-800 transition-all disabled:opacity-50 text-sm flex items-center justify-center gap-2"
+          className="w-full py-3 bg-blue-900 text-white font-bold rounded-lg hover:bg-blue-800 transition-all disabled:opacity-50 text-sm flex items-center justify-center gap-2"
         >
           {loading ? <><Loader2 size={18} className="animate-spin" /> Changing…</> : 'Change Password'}
         </button>

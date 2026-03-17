@@ -12,7 +12,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ReferenceArea,
   ReferenceLine,
 } from 'recharts';
@@ -117,44 +116,51 @@ export function CategoryProgressChart({ milestones, categories }) {
   const shortLabel = (cat) => cat.replace('AI Readiness: ', '');
 
   return (
-    <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
-      <LineChart data={data} margin={{ top: 10, right: 20, bottom: 25, left: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-        <XAxis
-          dataKey="name"
-          tickFormatter={milestoneTick}
-          tick={{ fontSize: 11, fill: '#94a3b8' }}
-          axisLine={{ stroke: '#e2e8f0' }}
-          tickLine={false}
-          label={{ value: 'Milestone', position: 'insideBottom', offset: -15, fontSize: 11, fill: '#94a3b8' }}
-        />
-        <YAxis
-          domain={[0, 100]}
-          tick={{ fontSize: 11, fill: '#94a3b8' }}
-          axisLine={false}
-          tickLine={false}
-          unit="%"
-        />
-        <Tooltip content={<ChartTooltip />} />
-        <Legend
-          formatter={(value) => shortLabel(value)}
-          wrapperStyle={{ fontSize: '10px', paddingTop: '20px' }}
-          iconSize={8}
-          iconType="circle"
-        />
-        {categories.map((cat, idx) => (
-          <Line
-            key={cat}
-            type="monotone"
-            dataKey={cat}
-            stroke={CATEGORY_COLORS[idx % CATEGORY_COLORS.length]}
-            strokeWidth={2}
-            dot={{ r: 3, strokeWidth: 2, stroke: '#fff' }}
-            activeDot={{ r: 5 }}
-            connectNulls
+    <>
+      <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
+        <LineChart data={data} margin={{ top: 10, right: 20, bottom: 25, left: 0 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+          <XAxis
+            dataKey="name"
+            tickFormatter={milestoneTick}
+            tick={{ fontSize: 11, fill: '#94a3b8' }}
+            axisLine={{ stroke: '#e2e8f0' }}
+            tickLine={false}
+            label={{ value: 'Milestone', position: 'insideBottom', offset: -15, fontSize: 11, fill: '#94a3b8' }}
           />
+          <YAxis
+            domain={[0, 100]}
+            tick={{ fontSize: 11, fill: '#94a3b8' }}
+            axisLine={false}
+            tickLine={false}
+            unit="%"
+          />
+          <Tooltip content={<ChartTooltip />} />
+          {categories.map((cat, idx) => (
+            <Line
+              key={cat}
+              type="monotone"
+              dataKey={cat}
+              stroke={CATEGORY_COLORS[idx % CATEGORY_COLORS.length]}
+              strokeWidth={2}
+              dot={{ r: 3, strokeWidth: 2, stroke: '#fff' }}
+              activeDot={{ r: 5 }}
+              connectNulls
+            />
+          ))}
+        </LineChart>
+      </ResponsiveContainer>
+      <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 pt-4 px-1">
+        {categories.map((cat, idx) => (
+          <div key={cat} className="flex items-center gap-2 min-w-0">
+            <span
+              className="shrink-0 rounded-full"
+              style={{ width: 10, height: 10, backgroundColor: CATEGORY_COLORS[idx % CATEGORY_COLORS.length] }}
+            />
+            <span className="text-[11px] text-slate-500 truncate">{shortLabel(cat)}</span>
+          </div>
         ))}
-      </LineChart>
-    </ResponsiveContainer>
+      </div>
+    </>
   );
 }
