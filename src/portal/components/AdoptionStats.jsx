@@ -11,7 +11,7 @@ const STATS = [
     key: 'active_users',
     label: 'Active Copilot Users',
     icon: Users,
-    value: '—',
+    value: '-',
     change: null,
     color: 'blue',
     bars: [30, 45, 35, 55, 50, 65, 60],
@@ -20,7 +20,7 @@ const STATS = [
     key: 'automations',
     label: 'Automations Running',
     icon: Zap,
-    value: '—',
+    value: '-',
     change: null,
     color: 'violet',
     bars: [20, 30, 25, 40, 35, 45, 50],
@@ -29,7 +29,7 @@ const STATS = [
     key: 'prompt_usage',
     label: 'Avg. Prompts / Day',
     icon: MessageSquareText,
-    value: '—',
+    value: '-',
     change: null,
     color: 'emerald',
     bars: [40, 35, 50, 45, 60, 55, 70],
@@ -38,7 +38,7 @@ const STATS = [
     key: 'time_saved',
     label: 'Time Saved (hrs/mo)',
     icon: Clock,
-    value: '—',
+    value: '-',
     change: null,
     color: 'amber',
     bars: [25, 30, 40, 35, 50, 45, 55],
@@ -88,7 +88,7 @@ export default function AdoptionStats() {
         );
       })}
       <p className="sm:col-span-2 text-[10px] text-slate-400 text-center mt-1">
-        Placeholder data — connect to your analytics source to populate live metrics
+        Placeholder data. Connect to your analytics source to populate live metrics
       </p>
     </div>
   );

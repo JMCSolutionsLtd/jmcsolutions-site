@@ -205,7 +205,7 @@ export default function AssessmentView() {
                 </h1>
                 <p className="text-xs text-slate-500">
                   {answeredCount} of {totalQuestions} questions answered ({progressPercent}%)
-                  {!isEditable && ' — Completed'}
+                  {!isEditable && ' (Completed)'}
                 </p>
               </div>
             </div>
@@ -276,7 +276,7 @@ export default function AssessmentView() {
                 <p className="text-xs font-bold text-slate-500 truncate" title={cat}>
                   {cat.replace('AI Readiness: ', '')}
                 </p>
-                <p className="text-xl font-bold text-slate-900 mt-1">{pct !== null ? `${pct}%` : '—'}</p>
+                <p className="text-xl font-bold text-slate-900 mt-1">{pct !== null ? `${pct}%` : '-'}</p>
               </div>
             );
           })}

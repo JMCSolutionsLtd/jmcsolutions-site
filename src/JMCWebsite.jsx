@@ -30,7 +30,9 @@ import {
   GraduationCap,
   RefreshCw,
   BrainCircuit,
-  Package
+  Package,
+  User,
+  ExternalLink
 } from 'lucide-react';
 import logo from './assets/JMC Solutions_v2_1.png';
 import footerLogo from './assets/JMC Solutions_v2_4.png';
@@ -185,10 +187,10 @@ const JMCWebsite = () => {
   };
 
   const bundles = {
-    core: ['foundations', 'copilot', 'training', 'retainer'],
-    plus: ['foundations', 'copilot', 'training', 'automations', 'retainer'],
-    max: ['foundations', 'copilot', 'training', 'automations', 'agentic', 'retainer'],
-    complete: ['foundations', 'copilot', 'training', 'automations', 'agentic', 'ml', 'retainer']
+    training: ['training', 'retainer'],
+    airollout: ['foundations', 'copilot', 'training', 'retainer'],
+    automate: ['foundations', 'copilot', 'training', 'automations', 'retainer'],
+    complete: ['foundations', 'copilot', 'training', 'automations', 'ml', 'retainer']
   };
 
   // Determine active bundle based on current selections
@@ -250,13 +252,15 @@ const JMCWebsite = () => {
     },
     {
       id: 'training',
-      title: 'AI Training and Effective Adoption',
+      title: 'AI Training & Effective Adoption',
       icon: GraduationCap,
-      summary: 'Ensure your investment pays off with role-based training and structured adoption programmes.',
-      desc: 'Deployment is not adoption. We train your staff on how to actually use these tools in their specific roles to drive real productivity gains.',
+      summary: 'Ensure your investment pays off with tiered, role-based training and structured adoption programmes, tailored to your organisation.',
+      desc: 'Deployment is not adoption. We offer multiple tiers of training, from foundational awareness sessions through to advanced, role-specific enablement. Every programme can be tailored to your organisation\'s needs, ensuring your staff learn how to use AI tools effectively in their specific roles to drive real, measurable productivity gains.',
       includes: [
-        'Role-based Team Training Sessions',
+        'Tiered Training Programmes (Foundation to Advanced)',
+        'Role-specific & Bespoke Training Sessions',
         '30-day Adoption Tracking & Analytics',
+        'Department-level Prompt Libraries & Use Cases',
         'Usage Optimisation Workshops',
         'Change Management Support'
       ]
@@ -265,24 +269,15 @@ const JMCWebsite = () => {
       id: 'automations',
       title: 'AI Automations',
       icon: Zap,
-      summary: 'Replace repetitive, manual work with intelligent workflows across Microsoft and external platforms.',
-      desc: 'Replace repetitive, manual work with intelligent automation. This pack includes any appropriate AI-driven automation, across Microsoft and external platforms.',
+      summary: 'Replace repetitive work with intelligent workflows and deploy secure, context-aware AI agents across Microsoft and external platforms.',
+      desc: 'Eliminate manual, repetitive work with intelligent automation and purpose-built AI agents. From workflow automation and document processing to governed, context-aware agents capable of acting on behalf of your organisation, this service covers the full spectrum of AI-driven efficiency.',
       includes: [
         'Process Mapping & ROI Prioritisation',
         'Power Automate Workflows & Document Processing',
         'Voice Agents & Messaging Bots',
-        'Cross-system Integrations & Website Creation'
-      ]
-    },
-    {
-      id: 'agentic',
-      title: 'Agentic AI',
-      icon: Bot,
-      summary: 'Design and deploy secure, context-aware AI agents that act on behalf of your organisation using Copilot Studio.',
-      desc: 'Design and deploy secure, context-aware AI agents that act on behalf of the organisation. These are not chatbots; they are governed agents capable of execution.',
-      includes: [
+        'Cross-system Integrations & Website Creation',
         'Agent Blueprinting & Persona Design',
-        'Knowledge Retrieval & Task Execution Skills',
+        'Knowledge Retrieval & Task Execution',
         'Secure Connectors (Salesforce, SQL, etc.)',
         'Guardrails & Safety Governance'
       ]
@@ -499,11 +494,10 @@ We are a premium AI consultancy helping SMEs implement Microsoft Copilot, Power 
 Our Services:
 1. AI Foundations: Data audits, security, and governance.
 2. Copilot 365 Enablement: Technical setup and configuration.
-3. AI Training and Effective Adoption: Role-based training and adoption tracking.
-4. AI Automations: Workflows, voice agents, and process automation.
-5. Agentic AI: Custom autonomous agents using Copilot Studio.
-6. Machine Learning & Advanced Analytics: Bespoke models and predictive analytics.
-7. Ongoing Support & Optimisation: Continuous optimization and updates.
+3. AI Training & Effective Adoption: Tiered, role-based training programmes tailored to client needs, plus adoption tracking.
+4. AI Automations: Intelligent workflow automation, AI agents, voice agents, and process automation across Microsoft and external platforms.
+5. Machine Learning & Advanced Analytics: Bespoke models and predictive analytics.
+6. Ongoing Support & Optimisation: Continuous optimization and updates.
 
 Goal: Answer questions briefly and professionally. Always encourage the user to 'Book a Discovery Call' for complex queries.
 Keep responses under 50 words if possible.`;
@@ -596,21 +590,21 @@ Keep responses under 50 words if possible.`;
   };
 
   const bundleConfig = {
-    core: { 
-      label: 'Core', 
-      desc: 'AI Set-Up & Adoption',
+    training: { 
+      label: 'Training', 
+      desc: 'Training & Ongoing Support',
       colorClass: 'bg-red-50 border-red-200 hover:border-red-400',
       activeClass: 'ring-2 ring-red-500 border-red-500 bg-red-100'
     },
-    plus: { 
-      label: 'Automate Plus', 
-      desc: 'Core + Automations',
+    airollout: { 
+      label: 'AI Rollout', 
+      desc: 'Foundations + Copilot + Training',
       colorClass: 'bg-orange-50 border-orange-200 hover:border-orange-400',
       activeClass: 'ring-2 ring-orange-500 border-orange-500 bg-orange-100'
     },
-    max: { 
-      label: 'Automate Max', 
-      desc: 'Plus + Agentic AI',
+    automate: { 
+      label: 'Automate', 
+      desc: 'AI Rollout + Automations',
       colorClass: 'bg-yellow-50 border-yellow-200 hover:border-yellow-400',
       activeClass: 'ring-2 ring-yellow-500 border-yellow-500 bg-yellow-100'
     },
@@ -641,8 +635,7 @@ Keep responses under 50 words if possible.`;
           <div className="hidden md:flex items-center gap-8">
             {[
               { name: 'About', id: 'about' },
-              { name: 'Services & Approach', id: 'approach' },
-              { name: 'Outcomes', id: 'outcomes' }
+              { name: 'Services & Approach', id: 'approach' }
             ].map((item) => (
               <button
                 key={item.name}
@@ -678,7 +671,6 @@ Keep responses under 50 words if possible.`;
             {[
               { name: 'About', id: 'about' },
               { name: 'Services & Approach', id: 'approach' },
-              { name: 'Outcomes', id: 'outcomes' },
               { name: 'Contact', id: 'contact' }
             ].map((item) => (
               <button
@@ -754,7 +746,7 @@ Keep responses under 50 words if possible.`;
                   </span>
                 </h1>
                 <p className="text-lg sm:text-xl text-blue-50 max-w-2xl leading-relaxed mb-8">
-                  As a Microsoft Partner, we help SMEs adopt AI safely and compliantly, making your organisation future-ready with Microsoft 365 Copilot, smart automations, and agentic assistants built around your data.
+                  As a Microsoft Partner, we help SMEs adopt AI safely and compliantly, making your organisation future-ready with Microsoft 365 Copilot training and enablement, as well as smart automations built around your data.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4">
@@ -854,15 +846,15 @@ Keep responses under 50 words if possible.`;
             </div>
           </section>
 
-          {/* About (Moved Here) */}
-          <section id="about" className="py-16 bg-slate-50 relative overflow-hidden">
+          {/* Why Choose JMC */}
+          <section className="py-16 bg-slate-50 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-900 via-blue-600 to-blue-900" />
             <div className="max-w-7xl mx-auto px-6">
               <div className="text-center max-w-3xl mx-auto mb-12">
-                <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">Who We Are</h2>
-                <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-6">We’re a specialist AI consulting team.</h3>
+                <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">Why Choose JMC</h2>
+                <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-6">Practical AI, Built Around Your People.</h3>
                 <p className="text-lg text-slate-600 leading-relaxed">
-                  With experience delivering AI implementation, workflow automation, and digital transformation across 15+ organisations, our team now brings that enterprise-grade expertise to you.
+                  We combine practical technical delivery with real-world adoption and change support, ensuring AI is implemented safely and ethically, used effectively, and delivers genuine commercial value.
                 </p>
               </div>
 
@@ -1135,19 +1127,81 @@ Keep responses under 50 words if possible.`;
                   <div className="w-12 h-12 bg-blue-50 flex items-center justify-center mb-6 text-blue-800">
                     <Zap size={24} />
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-slate-900">Automate the Routine</h3>
+                  <h3 className="text-xl font-bold mb-3 text-slate-900">Automate & Centralise</h3>
                   <p className="text-slate-600 leading-relaxed">
-                    Workflow automation eliminates repetitive tasks. Let your team focus on strategy while our systems handle the manual labour.
+                    Intelligent automation eliminates repetitive tasks while centralising your business knowledge into an accessible, searchable hub, giving your team a competitive advantage in both speed and strategic focus.
                   </p>
                 </div>
                 <div className="bg-white p-8 rounded-none border-l-4 border-blue-400 shadow-sm hover:shadow-md transition-all">
                   <div className="w-12 h-12 bg-blue-50 flex items-center justify-center mb-6 text-blue-600">
-                    <Bot size={24} />
+                    <GraduationCap size={24} />
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-slate-900">Centralised Intelligence</h3>
+                  <h3 className="text-xl font-bold mb-3 text-slate-900">Empower Employees</h3>
                   <p className="text-slate-600 leading-relaxed">
-                    An internal assistant centralises business knowledge, giving early adopters a major competitive advantage in speed and accuracy.
+                    Equip your team with structured, role-specific training, practical use cases, and tailored prompt libraries that turn AI tools into everyday productivity gains.
                   </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* About Us - Founders */}
+          <section id="about" className="py-16 bg-white relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-900 via-blue-600 to-blue-900" />
+            <div className="max-w-7xl mx-auto px-6">
+              <div className="text-center max-w-3xl mx-auto mb-14">
+                <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">About Us</h2>
+                <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-6">Meet the Founders</h3>
+                <p className="text-lg text-slate-600 leading-relaxed">
+                  JMC Solutions combines deep technical AI expertise with practical change management and business transformation experience, ensuring your AI initiatives are not only well-built, but genuinely adopted.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-10 lg:gap-16 max-w-5xl mx-auto">
+                {/* Finlay - Headshot placeholder: replace the div below with an <img> when ready */}
+                <div className="bg-slate-50 rounded-xl border border-slate-200 p-8 shadow-sm hover:shadow-lg transition-all flex flex-col items-center text-center">
+                  <div className="w-36 h-36 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center mb-6 shadow-inner border-4 border-white">
+                    <User size={56} className="text-blue-400" />
+                  </div>
+                  <h4 className="text-xl font-bold text-slate-900 mb-1">Finlay Coles</h4>
+                  <p className="text-sm font-medium text-blue-600 mb-4">Co-Founder</p>
+                  <ul className="text-sm text-slate-600 leading-relaxed mb-6 space-y-2 text-left">
+                    <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Six years of hands-on AI implementation and data automation across global enterprises in finance, insurance, and technology</li>
+                    <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Formally trained in applied AI, machine learning, change management, and agile delivery</li>
+                    <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Led complex modernisation projects from strategy through to production</li>
+                    <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Combines rigorous technical capability with a practical understanding of how organisations adopt new technology safely and effectively</li>
+                  </ul>
+                  <a
+                    href="https://www.linkedin.com/in/finlay-coles-9776b3161/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium text-blue-700 hover:text-blue-900 hover:underline transition-colors"
+                  >
+                    View LinkedIn Profile
+                  </a>
+                </div>
+
+                {/* Amit - Headshot placeholder: replace the div below with an <img> when ready */}
+                <div className="bg-slate-50 rounded-xl border border-slate-200 p-8 shadow-sm hover:shadow-lg transition-all flex flex-col items-center text-center">
+                  <div className="w-36 h-36 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center mb-6 shadow-inner border-4 border-white">
+                    <User size={56} className="text-blue-400" />
+                  </div>
+                  <h4 className="text-xl font-bold text-slate-900 mb-1">Amit Jaitly</h4>
+                  <p className="text-sm font-medium text-blue-600 mb-4">Co-Founder</p>
+                  <ul className="text-sm text-slate-600 leading-relaxed mb-6 space-y-2 text-left">
+                    <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Extensive experience in operations leadership, organisational change, and business transformation</li>
+                    <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Worked across stakeholder management, process improvement, and workforce change in regulated and consulting-led environments</li>
+                    <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Delivered training workshops to help teams adopt new ways of working with confidence</li>
+                    <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Grounded understanding of process, people, and implementation that ensures AI initiatives succeed in practice</li>
+                  </ul>
+                  <a
+                    href="https://www.linkedin.com/in/amit-jaitly-63ab4218a/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium text-blue-700 hover:text-blue-900 hover:underline transition-colors"
+                  >
+                    View LinkedIn Profile
+                  </a>
                 </div>
               </div>
             </div>
@@ -1199,9 +1253,9 @@ Keep responses under 50 words if possible.`;
               <div className="flex items-center justify-center">
                 <button
                   onClick={() => scrollToSection('contact')}
-                  className="w-full sm:w-auto px-10 py-4 bg-blue-900 text-white font-bold text-lg hover:bg-blue-800 transition-all shadow-xl shadow-blue-900/20"
+                  className="w-full sm:w-auto px-10 py-4 rounded-lg bg-blue-900 text-white font-bold text-lg hover:bg-blue-800 transition-all shadow-xl shadow-blue-900/20"
                 >
-                  Book a Discovery Call
+                  Speak To Us Today
                 </button>
               </div>
             </div>
@@ -1223,14 +1277,9 @@ Keep responses under 50 words if possible.`;
                         <div className="w-10 h-10 bg-blue-50 flex items-center justify-center text-blue-900 rounded-full">
                           <Briefcase size={20} />
                         </div>
-                        <span className="text-slate-700">fin@jmcsolutions.ai</span>
+                        <a href="mailto:contact@jmcsolutions.ai" className="text-slate-700 hover:text-blue-900 transition-colors">contact@jmcsolutions.ai</a>
                       </div>
-                      <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-blue-50 flex items-center justify-center text-blue-900 rounded-full">
-                          <Users size={20} />
-                        </div>
-                        <span className="text-slate-700">+44 (0) 7827337189</span>
-                      </div>
+
                     </div>
                   </div>
 

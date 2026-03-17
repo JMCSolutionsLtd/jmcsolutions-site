@@ -26,7 +26,7 @@ const RECOMMENDATIONS = {
       'Benchmark your AI adoption against competitors in your sector to identify areas where you could gain a strategic edge.',
     ],
     green: [
-      'Strong strategic alignment — continue to iterate on your AI roadmap and share wins across the organisation to maintain momentum.',
+      'Strong strategic alignment. Continue to iterate on your AI roadmap and share wins across the organisation to maintain momentum.',
       'Consider publishing an internal AI strategy update each quarter to keep all levels of the organisation engaged.',
     ],
   },
@@ -34,23 +34,23 @@ const RECOMMENDATIONS = {
     red: [
       'Cultural readiness is a significant barrier. Launch an AI awareness programme to demystify AI and address employee concerns.',
       'Change management for AI is critical. Appoint AI champions in each department to drive grassroots adoption.',
-      'Resistance to AI is high — focus on quick-win use cases that demonstrate tangible benefits to frontline staff.',
+      'Resistance to AI is high. Focus on quick-win use cases that demonstrate tangible benefits to frontline staff.',
     ],
     amber: [
-      'Progress on culture but gaps remain. Expand AI training beyond technical teams — non-technical staff need targeted learning paths.',
+      'Progress on culture but gaps remain. Expand AI training beyond technical teams; non-technical staff need targeted learning paths.',
       'Cross-department collaboration on AI is developing. Formalise AI working groups with representatives from key business units.',
       'Document and celebrate AI success stories internally to build confidence and reduce remaining resistance.',
     ],
     green: [
       'Excellent cultural foundation. Focus on retaining AI talent and ensuring knowledge transfer as your AI programme scales.',
-      'Your team is receptive — consider introducing advanced AI literacy programmes for power users and department leads.',
+      'Your team is receptive. Consider introducing advanced AI literacy programmes for power users and department leads.',
     ],
   },
   'AI Strategy': {
     red: [
       'Your organisation lacks AI project experience. Start with a low-risk pilot (e.g., Copilot for Microsoft 365) to build confidence and generate learnings.',
       'Previous AI/automation lessons are undocumented. Create a lessons-learned register to prevent repeating mistakes in future projects.',
-      'Evaluate your current use of AI assistants and workflow automation — quick deployment of existing tools can build a strong foundation.',
+      'Evaluate your current use of AI assistants and workflow automation. Quick deployment of existing tools can build a strong foundation.',
     ],
     amber: [
       'You have some AI experience but haven\'t scaled successfully. Review what blocked previous projects and create a playbook for future rollouts.',
@@ -58,7 +58,7 @@ const RECOMMENDATIONS = {
       'Document your AI project pipeline and assign owners to each initiative to maintain momentum.',
     ],
     green: [
-      'Solid AI experience — focus on standardising your deployment processes and building reusable templates for future projects.',
+      'Solid AI experience. Focus on standardising your deployment processes and building reusable templates for future projects.',
       'Consider establishing an AI Centre of Excellence to codify best practices across the organisation.',
     ],
   },
@@ -70,7 +70,7 @@ const RECOMMENDATIONS = {
     ],
     amber: [
       'Data foundations are developing. Focus on improving data quality metrics and establishing automated data validation processes.',
-      'Review data access permissions — ensure the right teams can access the data they need without compromising security.',
+      'Review data access permissions and ensure the right teams can access the data they need without compromising security.',
       'Consider implementing a data catalogue so teams can discover and understand available datasets for AI use cases.',
     ],
     green: [
@@ -203,7 +203,7 @@ export default function AIRecommendations({ latest, categories }) {
               <Icon size={16} className={cfg.iconColor} />
               <span className="text-sm font-bold text-slate-800">{key}</span>
               <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${cfg.badge} ml-auto`}>
-                {pct}% — {cfg.label}
+                {pct}% · {cfg.label}
               </span>
             </div>
             <ul className="space-y-2">
@@ -233,7 +233,7 @@ export function getRecommendationsExportData(latest, categories) {
       const pool = RECOMMENDATIONS[key]?.[tier] || [];
       return pool.slice(0, 2).map((rec) => ({
         Category: key,
-        Score: pct != null ? `${pct}%` : '—',
+        Score: pct != null ? `${pct}%` : '-',
         Status: TIER_CONFIG[tier].label,
         Recommendation: rec,
       }));

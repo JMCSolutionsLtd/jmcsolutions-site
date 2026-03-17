@@ -41,7 +41,7 @@ export default function ScoreBadge({ percent, label, size = 'md' }) {
     >
       <span className={`w-2.5 h-2.5 rounded-full ${dotClasses[color]}`} />
       {isNull ? 'Not started' : `${percent}%`}
-      {label && <span className="font-normal opacity-70">— {label}</span>}
+      {label && <span className="font-normal opacity-70">· {label}</span>}
     </span>
   );
 }

@@ -79,7 +79,7 @@ export function getMilestoneExportData(milestones) {
   return [...milestones].reverse().map((m) => ({
     Title: m.title,
     Status: m.status,
-    'Overall Score': m.scores?.overall?.percent != null ? `${m.scores.overall.percent}%` : '—',
+    'Overall Score': m.scores?.overall?.percent != null ? `${m.scores.overall.percent}%` : '-',
     Created: new Date(m.created_at).toLocaleDateString('en-GB'),
     Updated: new Date(m.updated_at).toLocaleDateString('en-GB'),
   }));

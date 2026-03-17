@@ -48,16 +48,15 @@ const SERVICE_CATEGORIES = {
   foundations: ['AI Readiness: Business Strategy', 'AI Readiness: Data Foundations'],
   copilot:    ['AI Readiness: AI Strategy and Experience'],
   training:   ['AI Readiness: Organization and Culture'],
-  automations: ['AI Readiness: Technology and Infrastructure'],
-  agentic:    ['AI Readiness: AI Governance and Security'],
+  automations: ['AI Readiness: Technology and Infrastructure', 'AI Readiness: AI Governance and Security'],
   ml:         ['AI Readiness: Technology and Infrastructure'],
 };
 
 const BUNDLES = {
-  core:     { label: 'Core',          modules: ['foundations', 'copilot', 'training', 'retainer'] },
-  plus:     { label: 'Automate Plus', modules: ['foundations', 'copilot', 'training', 'automations', 'retainer'] },
-  max:      { label: 'Automate Max',  modules: ['foundations', 'copilot', 'training', 'automations', 'agentic', 'retainer'] },
-  complete: { label: 'Complete',      modules: ['foundations', 'copilot', 'training', 'automations', 'agentic', 'ml', 'retainer'] },
+  training:  { label: 'Training',     modules: ['training', 'retainer'] },
+  airollout: { label: 'AI Rollout',   modules: ['foundations', 'copilot', 'training', 'retainer'] },
+  automate:  { label: 'Automate',     modules: ['foundations', 'copilot', 'training', 'automations', 'retainer'] },
+  complete:  { label: 'Complete',     modules: ['foundations', 'copilot', 'training', 'automations', 'ml', 'retainer'] },
 };
 
 const OFFERING_LABELS = {
@@ -65,7 +64,6 @@ const OFFERING_LABELS = {
   copilot:    'Copilot 365',
   training:   'Training & Adoption',
   automations: 'AI Automations',
-  agentic:    'Agentic AI',
   ml:         'ML & Analytics',
 };
 
@@ -215,7 +213,7 @@ export default function PortalDashboard() {
                 if (!latest?.scores?.categories) return;
                 const rows = CATEGORIES.map((c) => {
                   const s = latest.scores.categories[c];
-                  return { Category: c.replace('AI Readiness: ', ''), Score: s ? `${s.percent}%` : '—', Answered: s?.answered ?? 0 };
+                  return { Category: c.replace('AI Readiness: ', ''), Score: s ? `${s.percent}%` : '-', Answered: s?.answered ?? 0 };
                 });
                 exportToCsv(rows, 'ai-readiness-scores.csv');
               }}

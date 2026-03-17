@@ -47,7 +47,7 @@ function RadialGauge({ percent, size = 180 }) {
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span className="text-4xl font-black text-slate-900">
-          {percent !== null && percent !== undefined ? `${percent}%` : '—'}
+          {percent !== null && percent !== undefined ? `${percent}%` : '-'}
         </span>
         <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mt-1">Overall Score</span>
       </div>
@@ -70,7 +70,7 @@ function CategoryBar({ name, percent }) {
         />
       </div>
       <span className="text-xs font-bold text-slate-700 w-10 text-right">
-        {percent !== null && percent !== undefined ? `${percent}%` : '—'}
+        {percent !== null && percent !== undefined ? `${percent}%` : '-'}
       </span>
     </div>
   );
@@ -155,7 +155,7 @@ export default function HeroScoreCard({ milestones, categories, bundleFilter, on
             <StatCard
               icon={Clock}
               label="Last Updated"
-              value={lastUpdated ? new Date(lastUpdated).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : '—'}
+              value={lastUpdated ? new Date(lastUpdated).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : '-'}
               color="amber"
             />
           </div>
