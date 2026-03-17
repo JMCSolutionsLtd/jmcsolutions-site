@@ -299,7 +299,7 @@ const JMCWebsite = () => {
       id: 'retainer',
       title: 'Ongoing Support & Optimisation',
       icon: RefreshCw,
-      summary: 'Continuous training, optimisation, and governance to ensure long-term value as your organisation evolves.',
+      summary: 'Monthly training updates, with continuous optimisation and governance to ensure long-term value as your organisation evolves.',
       desc: 'AI does not deliver value through one-off deployment. Ongoing training, optimisation, and governance are essential to ensure AI systems remain accurate. We also keep you updated with the latest AI releases so you remain at the forefront of innovation.',
       includes: [
         'Regular Refresher Training',
@@ -592,19 +592,19 @@ Keep responses under 50 words if possible.`;
   const bundleConfig = {
     training: { 
       label: 'Training', 
-      desc: 'Training & Ongoing Support',
+      desc: 'Training & Support',
       colorClass: 'bg-red-50 border-red-200 hover:border-red-400',
       activeClass: 'ring-2 ring-red-500 border-red-500 bg-red-100'
     },
     airollout: { 
       label: 'AI Rollout', 
-      desc: 'Foundations + Copilot + Training',
+      desc: 'Copilot Setup & Training',
       colorClass: 'bg-orange-50 border-orange-200 hover:border-orange-400',
       activeClass: 'ring-2 ring-orange-500 border-orange-500 bg-orange-100'
     },
     automate: { 
       label: 'Automate', 
-      desc: 'AI Rollout + Automations',
+      desc: 'AI Rollout & Automations',
       colorClass: 'bg-yellow-50 border-yellow-200 hover:border-yellow-400',
       activeClass: 'ring-2 ring-yellow-500 border-yellow-500 bg-yellow-100'
     },
