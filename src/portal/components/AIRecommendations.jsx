@@ -114,11 +114,11 @@ const RECOMMENDATIONS = {
 
 const CATEGORY_KEY_MAP = {
   'AI Readiness: Business Strategy': 'Business Strategy',
-  'AI Readiness: Organization and Culture': 'Org & Culture',
-  'AI Readiness: AI Strategy and Experience': 'AI Strategy',
+  'AI Readiness: Organisation & Culture': 'Org & Culture',
+  'AI Readiness: AI Strategy & Experience': 'AI Strategy',
   'AI Readiness: Data Foundations': 'Data Foundations',
-  'AI Readiness: AI Governance and Security': 'Governance',
-  'AI Readiness: Technology and Infrastructure': 'Infrastructure',
+  'AI Readiness: AI Governance & Security': 'Governance',
+  'AI Readiness: Technology & Infrastructure': 'Infrastructure',
 };
 
 function getTier(pct) {

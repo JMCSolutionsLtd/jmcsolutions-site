@@ -6,11 +6,11 @@ import { TrendingUp, Target, Clock, ChevronDown } from 'lucide-react';
 
 const CATEGORY_SHORT = {
   'AI Readiness: Business Strategy': 'Business Strategy',
-  'AI Readiness: Organization and Culture': 'Org & Culture',
-  'AI Readiness: AI Strategy and Experience': 'AI Strategy',
+  'AI Readiness: Organisation & Culture': 'Org & Culture',
+  'AI Readiness: AI Strategy & Experience': 'AI Strategy',
   'AI Readiness: Data Foundations': 'Data Foundations',
-  'AI Readiness: AI Governance and Security': 'Governance',
-  'AI Readiness: Technology and Infrastructure': 'Tech & Infra',
+  'AI Readiness: AI Governance & Security': 'Governance',
+  'AI Readiness: Technology & Infrastructure': 'Tech & Infra',
 };
 
 /** Return a colour on the red → yellow → green gradient based on percentage */

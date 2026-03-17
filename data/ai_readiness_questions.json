@@ -1,82 +1,671 @@
 {
-  "_comment": "AI Readiness Assessment — 72 questions across 6 categories. Replace prompts with real content; keep id, category, and order fields intact.",
+  "_comment": "JMC Solutions AI Readiness Assessment — 60 questions across 6 sections (10 per section). Each question includes readiness level descriptions for scores 1–5.",
   "questions": [
-    { "id": "bs-01", "category": "AI Readiness: Business Strategy", "order": 1, "prompt": "How clearly has your organisation defined AI as a component of its overall business strategy?" },
-    { "id": "bs-02", "category": "AI Readiness: Business Strategy", "order": 2, "prompt": "To what extent has senior leadership committed budget and resources for AI initiatives?" },
-    { "id": "bs-03", "category": "AI Readiness: Business Strategy", "order": 3, "prompt": "How well-defined are the business outcomes you expect AI to deliver?" },
-    { "id": "bs-04", "category": "AI Readiness: Business Strategy", "order": 4, "prompt": "Does your organisation have a roadmap for AI adoption over the next 12–24 months?" },
-    { "id": "bs-05", "category": "AI Readiness: Business Strategy", "order": 5, "prompt": "How effectively are AI projects aligned with key performance indicators (KPIs)?" },
-    { "id": "bs-06", "category": "AI Readiness: Business Strategy", "order": 6, "prompt": "To what degree do you evaluate competitive AI adoption in your market sector?" },
-    { "id": "bs-07", "category": "AI Readiness: Business Strategy", "order": 7, "prompt": "How well-communicated is the AI strategy across all levels of the organisation?" },
-    { "id": "bs-08", "category": "AI Readiness: Business Strategy", "order": 8, "prompt": "Does leadership regularly review and adjust the AI strategy based on outcomes?" },
-    { "id": "bs-09", "category": "AI Readiness: Business Strategy", "order": 9, "prompt": "How mature is your process for identifying high-value AI use cases?" },
-    { "id": "bs-10", "category": "AI Readiness: Business Strategy", "order": 10, "prompt": "To what extent does your organisation measure return on investment from AI projects?" },
 
-    { "id": "oc-01", "category": "AI Readiness: Organization and Culture", "order": 1, "prompt": "How supportive is your organisational culture towards adopting new AI technologies?" },
-    { "id": "oc-02", "category": "AI Readiness: Organization and Culture", "order": 2, "prompt": "To what degree do employees understand why AI is being introduced?" },
-    { "id": "oc-03", "category": "AI Readiness: Organization and Culture", "order": 3, "prompt": "How effective is your change management approach for AI-related initiatives?" },
-    { "id": "oc-04", "category": "AI Readiness: Organization and Culture", "order": 4, "prompt": "Do teams collaborate across departments on AI projects?" },
-    { "id": "oc-05", "category": "AI Readiness: Organization and Culture", "order": 5, "prompt": "How comfortable are staff with experimenting and learning from AI failures?" },
-    { "id": "oc-06", "category": "AI Readiness: Organization and Culture", "order": 6, "prompt": "To what extent is AI training available to non-technical employees?" },
-    { "id": "oc-07", "category": "AI Readiness: Organization and Culture", "order": 7, "prompt": "How clearly are AI roles and responsibilities defined in the organisation?" },
-    { "id": "oc-08", "category": "AI Readiness: Organization and Culture", "order": 8, "prompt": "Does your organisation have internal AI champions or advocates?" },
-    { "id": "oc-09", "category": "AI Readiness: Organization and Culture", "order": 9, "prompt": "How often does leadership communicate progress on AI initiatives to the wider team?" },
-    { "id": "oc-10", "category": "AI Readiness: Organization and Culture", "order": 10, "prompt": "To what degree is there resistance to AI adoption within the organisation?" },
-    { "id": "oc-11", "category": "AI Readiness: Organization and Culture", "order": 11, "prompt": "How well does your organisation retain AI talent and knowledge?" },
+    {
+      "id": "bs-01", "category": "AI Readiness: Business Strategy", "order": 1,
+      "prompt": "How clearly has your organisation defined AI as part of its overall business strategy?",
+      "levels": [
+        "AI hasn't been formally considered as part of business planning. There's limited awareness of how it could benefit the organisation.",
+        "There's some awareness of AI's potential, but it hasn't been formally included in the business strategy yet.",
+        "AI is included in the business strategy with specific goals and expected outcomes defined.",
+        "AI is a core part of the business strategy, with clear alignment to business objectives and regular review.",
+        "AI is deeply embedded in the business strategy. It drives innovation, competitive advantage, and continuous improvement across the organisation."
+      ]
+    },
+    {
+      "id": "bs-02", "category": "AI Readiness: Business Strategy", "order": 2,
+      "prompt": "How well-defined is your investment plan for AI adoption?",
+      "levels": [
+        "There's no formal budget or investment plan for AI. Costs are not well understood.",
+        "Initial cost estimates have been gathered, but a structured investment plan hasn't been formalised.",
+        "A clear investment plan is in place, covering tools, training, infrastructure, and expected returns.",
+        "The investment plan is actively managed, with regular reviews against actual costs and outcomes.",
+        "AI investment is continuously optimised for cost-effectiveness, with clear evidence of return on investment."
+      ]
+    },
+    {
+      "id": "bs-03", "category": "AI Readiness: Business Strategy", "order": 3,
+      "prompt": "How well-defined are the business outcomes you expect AI to deliver?",
+      "levels": [
+        "Expected outcomes from AI haven't been clearly defined. The focus is still on exploring possibilities.",
+        "Some potential outcomes have been discussed, but they haven't been clearly documented or measured.",
+        "Specific business outcomes are defined and linked to AI initiatives, with measurable targets in place.",
+        "AI outcomes are actively tracked against performance targets, with regular reporting to leadership.",
+        "AI consistently delivers measurable business value. Outcomes are reviewed and refined as part of a continuous improvement cycle."
+      ]
+    },
+    {
+      "id": "bs-04", "category": "AI Readiness: Business Strategy", "order": 4,
+      "prompt": "Does your organisation have a roadmap for AI adoption over the next 12–24 months?",
+      "levels": [
+        "There is no AI adoption roadmap. AI activity is ad hoc or hasn't started.",
+        "Early planning is underway, but a structured roadmap with milestones hasn't been created.",
+        "A phased AI adoption roadmap exists, with clear milestones and timelines for the next 12–24 months.",
+        "The roadmap is actively managed and regularly updated based on progress and changing priorities.",
+        "The roadmap is mature and adaptive, guiding AI adoption across the entire organisation with continuous iteration."
+      ]
+    },
+    {
+      "id": "bs-05", "category": "AI Readiness: Business Strategy", "order": 5,
+      "prompt": "How effectively has your organisation identified and prioritised AI use cases?",
+      "levels": [
+        "No AI use cases have been formally identified or documented.",
+        "Some potential use cases have been discussed or brainstormed, but none have been formally evaluated or prioritised.",
+        "Use cases have been identified, evaluated, and prioritised based on business impact and feasibility.",
+        "Approved use cases are actively being developed or deployed, with clear ownership and timelines.",
+        "There's a continuous pipeline of AI use cases, regularly reviewed and prioritised as part of business planning."
+      ]
+    },
+    {
+      "id": "bs-06", "category": "AI Readiness: Business Strategy", "order": 6,
+      "prompt": "How well are AI projects aligned with your key performance indicators?",
+      "levels": [
+        "AI projects are not connected to any specific business KPIs.",
+        "There's some awareness that AI should link to KPIs, but no formal alignment has been established.",
+        "AI projects are linked to relevant KPIs, with targets defined for each initiative.",
+        "AI performance against KPIs is regularly tracked and reported, with adjustments made as needed.",
+        "AI is a core driver of KPI improvement, with a proven track record of delivering results."
+      ]
+    },
+    {
+      "id": "bs-07", "category": "AI Readiness: Business Strategy", "order": 7,
+      "prompt": "To what extent does your organisation consider competitive AI adoption in your market?",
+      "levels": [
+        "There's little awareness of how competitors or peers are using AI.",
+        "There's some informal awareness of competitor AI activity, but no structured benchmarking.",
+        "The organisation actively monitors AI adoption in its sector and uses this to inform strategy.",
+        "Competitive AI intelligence is systematically gathered and used as input for strategic planning.",
+        "The organisation leads AI adoption in its market, using competitive insight to maintain a strategic edge."
+      ]
+    },
+    {
+      "id": "bs-08", "category": "AI Readiness: Business Strategy", "order": 8,
+      "prompt": "How well-communicated is the AI strategy across all levels of the organisation?",
+      "levels": [
+        "The AI strategy hasn't been communicated beyond senior leadership, if at all.",
+        "Leadership has acknowledged AI's importance, but a clear vision hasn't been shared widely.",
+        "The AI strategy has been communicated across the organisation, with initial engagement from teams.",
+        "There's strong, consistent communication about AI, with teams understanding their role in delivery.",
+        "AI is part of the organisational culture. Leadership actively fosters understanding and enthusiasm for AI at every level."
+      ]
+    },
+    {
+      "id": "bs-09", "category": "AI Readiness: Business Strategy", "order": 9,
+      "prompt": "Does leadership regularly review and adjust the AI strategy based on outcomes?",
+      "levels": [
+        "There's no formal review process for AI strategy or outcomes.",
+        "Leadership is aware of AI progress informally, but there's no structured review cycle.",
+        "Regular review meetings are in place where AI progress is assessed against strategic goals.",
+        "AI strategy reviews are embedded in the leadership cycle, with data-driven adjustments made routinely.",
+        "Continuous strategic refinement is the norm. AI priorities are dynamically adjusted based on real-time performance data and market changes."
+      ]
+    },
+    {
+      "id": "bs-10", "category": "AI Readiness: Business Strategy", "order": 10,
+      "prompt": "How effectively does your organisation measure return on investment from AI projects?",
+      "levels": [
+        "AI ROI is not being measured. There's no framework for tracking value delivered.",
+        "There's awareness that ROI should be tracked, but no formal measurement approach is in place.",
+        "Basic ROI tracking is in place for key AI projects, linked to defined business outcomes.",
+        "ROI is systematically measured across all AI initiatives, with regular reporting to stakeholders.",
+        "AI ROI measurement is mature and embedded, with value continuously optimised and clearly demonstrated to the business."
+      ]
+    },
 
-    { "id": "as-01", "category": "AI Readiness: AI Strategy and Experience", "order": 1, "prompt": "Has your organisation previously run any AI pilot projects or proof-of-concepts?" },
-    { "id": "as-02", "category": "AI Readiness: AI Strategy and Experience", "order": 2, "prompt": "How well-documented are learnings from previous AI or automation projects?" },
-    { "id": "as-03", "category": "AI Readiness: AI Strategy and Experience", "order": 3, "prompt": "To what extent do you leverage Microsoft 365 Copilot or similar AI assistants today?" },
-    { "id": "as-04", "category": "AI Readiness: AI Strategy and Experience", "order": 4, "prompt": "How mature is your use of workflow automation (e.g., Power Automate, Zapier)?" },
-    { "id": "as-05", "category": "AI Readiness: AI Strategy and Experience", "order": 5, "prompt": "Does your AI strategy differentiate between quick-win and long-term initiatives?" },
-    { "id": "as-06", "category": "AI Readiness: AI Strategy and Experience", "order": 6, "prompt": "How effectively do you scale successful AI pilots into production?" },
-    { "id": "as-07", "category": "AI Readiness: AI Strategy and Experience", "order": 7, "prompt": "To what degree do you use external partners or consultants for AI work?" },
-    { "id": "as-08", "category": "AI Readiness: AI Strategy and Experience", "order": 8, "prompt": "How well does your organisation understand the difference between AI, ML, and automation?" },
-    { "id": "as-09", "category": "AI Readiness: AI Strategy and Experience", "order": 9, "prompt": "Do you have a formal process for evaluating and selecting AI tools and vendors?" },
-    { "id": "as-10", "category": "AI Readiness: AI Strategy and Experience", "order": 10, "prompt": "How much experience does your team have with prompt engineering and AI interaction?" },
+    {
+      "id": "oc-01", "category": "AI Readiness: Organisation & Culture", "order": 1,
+      "prompt": "How supportive is your organisational culture towards adopting AI?",
+      "levels": [
+        "There's significant resistance or indifference to AI. Most staff see it as irrelevant or a threat.",
+        "Some openness exists, but there are widespread concerns about AI replacing jobs or being too complex.",
+        "The culture is generally supportive. Most teams are open to exploring AI, though some hesitation remains.",
+        "AI is widely accepted. Teams actively engage with AI initiatives and see it as an opportunity.",
+        "AI is embraced as part of how the organisation works. There's genuine enthusiasm and a culture of innovation around AI."
+      ]
+    },
+    {
+      "id": "oc-02", "category": "AI Readiness: Organisation & Culture", "order": 2,
+      "prompt": "To what extent do employees understand why AI is being introduced?",
+      "levels": [
+        "Most employees have little or no understanding of why the organisation is adopting AI.",
+        "Some high-level messaging has gone out, but most staff couldn't explain the reasons behind AI adoption.",
+        "There's a clear narrative about why AI is being introduced, and most employees have been briefed.",
+        "Employees across all levels understand the purpose of AI and how it relates to their role and the business.",
+        "Understanding is deep and widespread. Staff can articulate the business case for AI and actively contribute ideas."
+      ]
+    },
+    {
+      "id": "oc-03", "category": "AI Readiness: Organisation & Culture", "order": 3,
+      "prompt": "How effective is your change management approach for AI-related initiatives?",
+      "levels": [
+        "There's no change management approach for AI. New tools or processes are introduced ad hoc.",
+        "Some informal change management happens, but it's inconsistent and reactive.",
+        "A structured change management approach is used for AI rollouts, covering communication, training, and support.",
+        "Change management is well-embedded and proactive, with feedback loops to adapt the approach as needed.",
+        "Change management for AI is a core competency. It's continuous, data-informed, and tightly integrated with project delivery."
+      ]
+    },
+    {
+      "id": "oc-04", "category": "AI Readiness: Organisation & Culture", "order": 4,
+      "prompt": "Do teams collaborate across departments on AI projects?",
+      "levels": [
+        "AI work is siloed within one team or department. There's no cross-functional collaboration.",
+        "Some informal collaboration happens, but it's not structured or encouraged.",
+        "Cross-department collaboration on AI projects is actively encouraged and happening on key initiatives.",
+        "Formal cross-functional working groups or AI steering committees are in place and effective.",
+        "Collaboration is the norm. Teams across the business routinely work together on AI, sharing insights and resources."
+      ]
+    },
+    {
+      "id": "oc-05", "category": "AI Readiness: Organisation & Culture", "order": 5,
+      "prompt": "How comfortable are staff with experimenting and learning from AI failures?",
+      "levels": [
+        "There's a strong fear of failure. Staff avoid experimenting with AI or raising issues.",
+        "Some willingness to experiment exists, but failures are typically seen as setbacks rather than learning opportunities.",
+        "There's a growing culture of experimentation. Teams are encouraged to pilot AI ideas and learn from what doesn't work.",
+        "Experimentation is actively supported. Failures are documented, shared, and used to improve future initiatives.",
+        "A mature test-and-learn culture is in place. Rapid experimentation with AI is normal, and lessons are systematically captured."
+      ]
+    },
+    {
+      "id": "oc-06", "category": "AI Readiness: Organisation & Culture", "order": 6,
+      "prompt": "How readily available is AI training for employees at all levels?",
+      "levels": [
+        "No AI training is available. Employees are expected to learn on their own, if at all.",
+        "Some training resources exist, but they're limited, inconsistent, or only for technical staff.",
+        "Structured AI training is available for both technical and non-technical employees.",
+        "A comprehensive AI skills programme is in place, with role-specific learning paths and credentials.",
+        "Continuous AI learning is embedded in the culture. Training is regularly updated, and staff are encouraged and supported to keep growing."
+      ]
+    },
+    {
+      "id": "oc-07", "category": "AI Readiness: Organisation & Culture", "order": 7,
+      "prompt": "How clearly are AI-related roles and responsibilities defined?",
+      "levels": [
+        "There are no defined roles or responsibilities for AI. It's unclear who owns AI work.",
+        "Some individuals are informally involved in AI, but roles aren't formally defined.",
+        "Key AI roles and responsibilities are defined and assigned, with clarity on who leads what.",
+        "A well-defined AI team structure is in place, with clear ownership, accountability, and reporting lines.",
+        "AI roles are embedded across the business. Responsibility for AI success is shared and understood at every level."
+      ]
+    },
+    {
+      "id": "oc-08", "category": "AI Readiness: Organisation & Culture", "order": 8,
+      "prompt": "Does your organisation have internal AI champions or advocates?",
+      "levels": [
+        "There are no identified AI champions or advocates within the organisation.",
+        "A few individuals are informally enthusiastic about AI, but they don't have a formal role.",
+        "AI champions have been identified and are actively promoting AI adoption within their teams.",
+        "A formal AI champion network exists across departments, driving grassroots engagement and feedback.",
+        "AI champions are a core part of the adoption strategy, with dedicated time, support, and influence."
+      ]
+    },
+    {
+      "id": "oc-09", "category": "AI Readiness: Organisation & Culture", "order": 9,
+      "prompt": "How agile are decision-making processes when it comes to AI opportunities?",
+      "levels": [
+        "Decision-making around AI is slow, bureaucratic, or non-existent.",
+        "Decisions are made eventually, but the process is cumbersome and often delays AI progress.",
+        "Decision-making is reasonably efficient, with clear approval pathways for AI initiatives.",
+        "The organisation can move quickly on AI opportunities, with streamlined decision-making and empowered teams.",
+        "Decision-making is highly agile. The organisation rapidly evaluates and acts on new AI opportunities as they arise."
+      ]
+    },
+    {
+      "id": "oc-10", "category": "AI Readiness: Organisation & Culture", "order": 10,
+      "prompt": "How well does your organisation retain AI knowledge and expertise?",
+      "levels": [
+        "AI knowledge is at risk. Key people could leave and take critical know-how with them.",
+        "Some knowledge is documented, but there's no structured approach to retaining AI expertise.",
+        "AI knowledge is actively documented and shared, with some processes for knowledge transfer.",
+        "A strong knowledge management approach is in place for AI, with documented processes, playbooks, and shared resources.",
+        "AI expertise is deeply embedded. Knowledge is continuously captured, shared, and built upon regardless of personnel changes."
+      ]
+    },
 
-    { "id": "df-01", "category": "AI Readiness: Data Foundations", "order": 1, "prompt": "How well-organised is data stored in SharePoint, OneDrive, and Teams?" },
-    { "id": "df-02", "category": "AI Readiness: Data Foundations", "order": 2, "prompt": "To what extent is your business data centralised and easy to locate?" },
-    { "id": "df-03", "category": "AI Readiness: Data Foundations", "order": 3, "prompt": "How confident are you in the accuracy and consistency of your data?" },
-    { "id": "df-04", "category": "AI Readiness: Data Foundations", "order": 4, "prompt": "Do you have documented data classification and labelling standards?" },
-    { "id": "df-05", "category": "AI Readiness: Data Foundations", "order": 5, "prompt": "How effectively are duplicate and outdated files managed?" },
-    { "id": "df-06", "category": "AI Readiness: Data Foundations", "order": 6, "prompt": "To what degree do you have metadata and tagging practices in place?" },
-    { "id": "df-07", "category": "AI Readiness: Data Foundations", "order": 7, "prompt": "How mature is your data lifecycle management (creation, retention, deletion)?" },
-    { "id": "df-08", "category": "AI Readiness: Data Foundations", "order": 8, "prompt": "Do you have clear data ownership assigned for key datasets?" },
-    { "id": "df-09", "category": "AI Readiness: Data Foundations", "order": 9, "prompt": "How readily available is historical data for analytics and AI training?" },
-    { "id": "df-10", "category": "AI Readiness: Data Foundations", "order": 10, "prompt": "To what extent do you monitor data quality on an ongoing basis?" },
-    { "id": "df-11", "category": "AI Readiness: Data Foundations", "order": 11, "prompt": "How well-integrated are your data sources across business systems?" },
+    {
+      "id": "as-01", "category": "AI Readiness: AI Strategy & Experience", "order": 1,
+      "prompt": "Has your organisation previously run any AI pilot projects or proof-of-concepts?",
+      "levels": [
+        "No AI pilots or proof-of-concepts have been attempted.",
+        "There's been some informal experimentation, but no structured pilot projects.",
+        "At least one formal AI pilot has been completed, with documented results.",
+        "Multiple AI pilots have been run successfully, with learnings applied to subsequent projects.",
+        "The organisation regularly runs structured AI pilots and has a proven track record of moving from pilot to production."
+      ]
+    },
+    {
+      "id": "as-02", "category": "AI Readiness: AI Strategy & Experience", "order": 2,
+      "prompt": "How well-documented are learnings from previous AI or automation projects?",
+      "levels": [
+        "No documentation exists. Lessons from past projects have been lost or were never captured.",
+        "Some informal notes exist, but there's no structured approach to capturing learnings.",
+        "Key learnings from AI projects are documented and available to relevant teams.",
+        "A formal lessons-learned process is in place, with insights actively feeding into future project planning.",
+        "A comprehensive knowledge base of AI project learnings exists, and teams routinely consult it before starting new work."
+      ]
+    },
+    {
+      "id": "as-03", "category": "AI Readiness: AI Strategy & Experience", "order": 3,
+      "prompt": "To what extent do you use AI assistants or copilots in daily work?",
+      "levels": [
+        "AI assistants are not used at all in the organisation.",
+        "A few individuals may use AI tools informally, but there's no organisational adoption.",
+        "AI assistants are being piloted or used by specific teams with management awareness.",
+        "AI assistants are widely deployed and actively used across multiple teams and workflows.",
+        "AI assistants are embedded in daily operations, with high adoption, measurable productivity gains, and ongoing optimisation."
+      ]
+    },
+    {
+      "id": "as-04", "category": "AI Readiness: AI Strategy & Experience", "order": 4,
+      "prompt": "How mature is your use of workflow automation?",
+      "levels": [
+        "Little to no workflow automation is in place. Most processes are manual.",
+        "Some basic automation exists (e.g., email rules, simple templates), but it's limited in scope.",
+        "Structured workflow automation is in place for key processes, using tools like Power Automate, Zapier, or similar.",
+        "Automation is widespread and well-managed, with a clear approach to identifying and automating repetitive tasks.",
+        "Automation is a core capability. The organisation continuously identifies and implements automation opportunities, with strong governance."
+      ]
+    },
+    {
+      "id": "as-05", "category": "AI Readiness: AI Strategy & Experience", "order": 5,
+      "prompt": "Does your AI strategy clearly distinguish between quick-win and long-term initiatives?",
+      "levels": [
+        "There's no AI strategy, or no distinction is made between short-term and long-term goals.",
+        "Some awareness exists that AI projects vary in complexity, but there's no formal categorisation.",
+        "The AI strategy clearly separates quick-win projects from longer-term, more complex initiatives.",
+        "Quick wins are being actively delivered while long-term initiatives progress on a defined timeline.",
+        "A balanced portfolio of quick-win and strategic AI projects is managed continuously, delivering both immediate and lasting value."
+      ]
+    },
+    {
+      "id": "as-06", "category": "AI Readiness: AI Strategy & Experience", "order": 6,
+      "prompt": "How effectively do you scale successful AI pilots into broader use?",
+      "levels": [
+        "No AI pilots have been scaled. There's no process for moving from pilot to production.",
+        "Scaling has been attempted but faced significant blockers (budget, skills, infrastructure, or buy-in).",
+        "At least one pilot has been successfully scaled, with a basic process for managing the transition.",
+        "A clear scaling process exists, and multiple AI solutions have been moved from pilot to production.",
+        "Scaling AI is a well-oiled process. The organisation consistently takes successful pilots and deploys them at scale with speed and confidence."
+      ]
+    },
+    {
+      "id": "as-07", "category": "AI Readiness: AI Strategy & Experience", "order": 7,
+      "prompt": "To what extent do you use external partners or consultants for AI work?",
+      "levels": [
+        "No external AI support has been engaged. Everything is attempted internally or not at all.",
+        "Some informal external input has been sought, but there's no structured partner relationship.",
+        "One or more external partners are engaged for specific AI projects, with clear scope and deliverables.",
+        "A strong external partner network supports AI initiatives, complementing internal capabilities.",
+        "External partnerships are strategic and well-managed, providing specialist expertise while internal capabilities continue to grow."
+      ]
+    },
+    {
+      "id": "as-08", "category": "AI Readiness: AI Strategy & Experience", "order": 8,
+      "prompt": "How well does your organisation understand the different types of AI and where they apply?",
+      "levels": [
+        "There's little understanding of the differences between AI, machine learning, automation, and generative AI.",
+        "Some awareness exists, but most staff couldn't confidently explain the different types of AI or when to use them.",
+        "Key decision-makers understand the different AI approaches and can identify which is most relevant for a given use case.",
+        "There's broad organisational understanding, with teams able to evaluate and recommend the right AI approach for their needs.",
+        "AI literacy is high across the organisation. Staff at all levels understand what different AI types do and where they add value."
+      ]
+    },
+    {
+      "id": "as-09", "category": "AI Readiness: AI Strategy & Experience", "order": 9,
+      "prompt": "Do you have a formal process for evaluating and selecting AI tools and vendors?",
+      "levels": [
+        "No formal process exists. AI tools are chosen informally or not evaluated at all.",
+        "Some informal comparison happens, but there's no structured evaluation framework.",
+        "A basic evaluation process is in place, covering criteria like cost, capability, security, and compatibility.",
+        "A robust vendor evaluation framework exists, with clear scoring criteria and stakeholder input.",
+        "Tool and vendor selection is rigorous, repeatable, and continuously refined based on experience and market developments."
+      ]
+    },
+    {
+      "id": "as-10", "category": "AI Readiness: AI Strategy & Experience", "order": 10,
+      "prompt": "How much practical experience does your team have with prompting and interacting with AI tools?",
+      "levels": [
+        "Little to no experience. Staff have barely used AI tools, if at all.",
+        "A few individuals have experimented, but there's no shared understanding of how to get the best out of AI tools.",
+        "Several team members have practical experience and can use AI tools effectively for their work.",
+        "Most relevant staff are confident using AI tools, with shared techniques and best practices in place.",
+        "The team is highly skilled at working with AI. Prompt engineering and AI interaction are understood as a core competency."
+      ]
+    },
 
-    { "id": "gs-01", "category": "AI Readiness: AI Governance and Security", "order": 1, "prompt": "Does your organisation have a formal AI governance framework or policy?" },
-    { "id": "gs-02", "category": "AI Readiness: AI Governance and Security", "order": 2, "prompt": "How well-defined are data access permissions across your Microsoft 365 environment?" },
-    { "id": "gs-03", "category": "AI Readiness: AI Governance and Security", "order": 3, "prompt": "Do you regularly audit who has access to sensitive data and AI tools?" },
-    { "id": "gs-04", "category": "AI Readiness: AI Governance and Security", "order": 4, "prompt": "How effectively do you manage external sharing and guest access?" },
-    { "id": "gs-05", "category": "AI Readiness: AI Governance and Security", "order": 5, "prompt": "To what extent do you use Data Loss Prevention (DLP) policies?" },
-    { "id": "gs-06", "category": "AI Readiness: AI Governance and Security", "order": 6, "prompt": "How well does your organisation comply with GDPR and relevant data regulations?" },
-    { "id": "gs-07", "category": "AI Readiness: AI Governance and Security", "order": 7, "prompt": "Do you have an ethical AI usage policy covering bias, transparency, and accountability?" },
-    { "id": "gs-08", "category": "AI Readiness: AI Governance and Security", "order": 8, "prompt": "How mature is your incident response plan for AI-related security events?" },
-    { "id": "gs-09", "category": "AI Readiness: AI Governance and Security", "order": 9, "prompt": "To what degree are AI outputs reviewed and validated by humans?" },
-    { "id": "gs-10", "category": "AI Readiness: AI Governance and Security", "order": 10, "prompt": "How well-documented are your AI risk assessment procedures?" },
+    {
+      "id": "df-01", "category": "AI Readiness: Data Foundations", "order": 1,
+      "prompt": "How well-organised and easy to find is your business data?",
+      "levels": [
+        "Data is scattered across multiple locations with no clear structure. Finding information is time-consuming and unreliable.",
+        "Some organisation exists, but data is still spread across systems with inconsistent naming and folder structures.",
+        "Data is reasonably well-organised, with a clear structure covering the most important areas.",
+        "Data is well-organised and easy to find, with consistent structures and search capabilities across key systems.",
+        "Data is highly organised, centrally managed, and easy to locate. Staff can quickly find what they need across the organisation."
+      ]
+    },
+    {
+      "id": "df-02", "category": "AI Readiness: Data Foundations", "order": 2,
+      "prompt": "How confident are you in the accuracy and consistency of your data?",
+      "levels": [
+        "Data quality is poor or unknown. There are likely duplicates, outdated records, and inconsistencies.",
+        "Some data is reliable, but quality varies significantly across systems and teams.",
+        "Data quality is reasonable for key datasets, with some validation processes in place.",
+        "Data is consistently accurate and validated, with clear processes maintaining quality across the organisation.",
+        "Data quality is excellent and actively maintained. Automated checks and clear ownership ensure accuracy and consistency."
+      ]
+    },
+    {
+      "id": "df-03", "category": "AI Readiness: Data Foundations", "order": 3,
+      "prompt": "Does your organisation have clear data governance and ownership?",
+      "levels": [
+        "There's no formal data governance. Nobody is clearly responsible for data quality or management.",
+        "Some informal ownership exists, but governance policies and responsibilities are not documented.",
+        "Basic data governance is in place, with assigned data owners for key datasets and documented policies.",
+        "A mature data governance framework operates, with clear roles, policies, and regular review cycles.",
+        "Data governance is embedded in the culture. Policies are well-understood, consistently followed, and continuously improved."
+      ]
+    },
+    {
+      "id": "df-04", "category": "AI Readiness: Data Foundations", "order": 4,
+      "prompt": "Do you have standards for classifying and labelling your data?",
+      "levels": [
+        "No data classification or labelling standards exist. Data is stored without consistent categorisation.",
+        "Some informal labelling practices exist, but they're inconsistent and not widely adopted.",
+        "Basic classification and labelling standards are defined and applied to the most important data.",
+        "Comprehensive standards are in place, consistently applied, and supported by tooling.",
+        "Classification and labelling are automated where possible, consistently enforced, and regularly reviewed to stay current."
+      ]
+    },
+    {
+      "id": "df-05", "category": "AI Readiness: Data Foundations", "order": 5,
+      "prompt": "How well do you manage the lifecycle of your data — from creation through to deletion?",
+      "levels": [
+        "Data lifecycle is not managed. Old data accumulates without clear retention or deletion practices.",
+        "Some ad hoc cleanup happens, but there's no formal retention or deletion policy.",
+        "Basic data lifecycle policies are in place, covering creation, retention, and deletion for key data types.",
+        "A well-defined data lifecycle is managed consistently, with automated archiving and deletion where appropriate.",
+        "Data lifecycle management is mature and largely automated. The organisation keeps only what it needs, maintains it well, and disposes of it responsibly."
+      ]
+    },
+    {
+      "id": "df-06", "category": "AI Readiness: Data Foundations", "order": 6,
+      "prompt": "How effectively do you manage who can access what data?",
+      "levels": [
+        "Data access is loosely managed. Most people can access most things, with little control.",
+        "Some access controls exist, but they're inconsistent and not regularly reviewed.",
+        "Data access is managed with clear policies, role-based permissions, and regular reviews.",
+        "Access controls are robust, regularly audited, and well-aligned with data privacy requirements.",
+        "Data access is tightly managed with automated controls, continuous monitoring, and full compliance with privacy regulations."
+      ]
+    },
+    {
+      "id": "df-07", "category": "AI Readiness: Data Foundations", "order": 7,
+      "prompt": "How well-connected are your data sources across business systems?",
+      "levels": [
+        "Data is siloed. Systems don't talk to each other, and moving data between them is manual.",
+        "Some basic integrations exist, but most data flows are manual or fragmented.",
+        "Key systems are integrated, with data flowing between them in a structured way.",
+        "Data integration is comprehensive, with reliable pipelines connecting most business systems.",
+        "Data flows seamlessly across the business. Integrations are automated, monitored, and scalable."
+      ]
+    },
+    {
+      "id": "df-08", "category": "AI Readiness: Data Foundations", "order": 8,
+      "prompt": "How available is your data for analytics and AI use?",
+      "levels": [
+        "Data is not readily available for analytics or AI. It would require significant effort to get it into a usable state.",
+        "Some data could be used, but it needs cleaning, restructuring, or consolidation before it's useful.",
+        "Key datasets are available and in a usable format for analytics and AI projects.",
+        "A wide range of data is readily available, well-documented, and accessible for AI and analytics use cases.",
+        "Data is AI-ready across the organisation. Datasets are clean, documented, accessible, and continuously maintained for optimal use."
+      ]
+    },
+    {
+      "id": "df-09", "category": "AI Readiness: Data Foundations", "order": 9,
+      "prompt": "Do you actively monitor and maintain data quality over time?",
+      "levels": [
+        "Data quality is not monitored. Problems are only discovered when something visibly breaks.",
+        "Some manual checks happen occasionally, but there's no systematic monitoring.",
+        "Basic data quality monitoring is in place for the most important datasets.",
+        "Data quality is proactively monitored with automated tools and clear escalation processes.",
+        "Continuous, automated data quality monitoring is in place across the organisation, with proactive alerting and rapid remediation."
+      ]
+    },
+    {
+      "id": "df-10", "category": "AI Readiness: Data Foundations", "order": 10,
+      "prompt": "How strong are your data security and protection measures?",
+      "levels": [
+        "Data protection is minimal. Sensitive data may not be properly secured or its location fully known.",
+        "Basic security measures are in place, but they may not cover all sensitive data or comply with regulations.",
+        "Data security controls are established and cover the most critical datasets, with policies documented.",
+        "Robust data security is in place, with encryption, access controls, and regular audits covering all sensitive data.",
+        "Data security is comprehensive and continuously improved. The organisation follows best practices and meets all regulatory requirements."
+      ]
+    },
 
-    { "id": "ti-01", "category": "AI Readiness: Technology and Infrastructure", "order": 1, "prompt": "How up-to-date are your Microsoft 365 licences for AI features (e.g., Copilot licences)?" },
-    { "id": "ti-02", "category": "AI Readiness: Technology and Infrastructure", "order": 2, "prompt": "To what extent does your cloud infrastructure support AI workloads?" },
-    { "id": "ti-03", "category": "AI Readiness: Technology and Infrastructure", "order": 3, "prompt": "How reliable and performant is your network connectivity for cloud-based AI services?" },
-    { "id": "ti-04", "category": "AI Readiness: Technology and Infrastructure", "order": 4, "prompt": "Do you have the compute resources required for AI model training or inference?" },
-    { "id": "ti-05", "category": "AI Readiness: Technology and Infrastructure", "order": 5, "prompt": "How well-integrated is your identity and access management (e.g., Azure AD / Entra ID)?" },
-    { "id": "ti-06", "category": "AI Readiness: Technology and Infrastructure", "order": 6, "prompt": "To what degree do you use API integrations to connect business systems?" },
-    { "id": "ti-07", "category": "AI Readiness: Technology and Infrastructure", "order": 7, "prompt": "How mature is your DevOps or MLOps pipeline for deploying AI solutions?" },
-    { "id": "ti-08", "category": "AI Readiness: Technology and Infrastructure", "order": 8, "prompt": "Do you have monitoring and alerting in place for AI services and automations?" },
-    { "id": "ti-09", "category": "AI Readiness: Technology and Infrastructure", "order": 9, "prompt": "How well does your infrastructure handle scaling AI workloads as demand grows?" },
-    { "id": "ti-10", "category": "AI Readiness: Technology and Infrastructure", "order": 10, "prompt": "To what extent do you have sandbox or staging environments for testing AI features?" },
-    { "id": "ti-11", "category": "AI Readiness: Technology and Infrastructure", "order": 11, "prompt": "Does your organisation track which AI models are in use and their versions?" },
-    { "id": "ti-12", "category": "AI Readiness: Technology and Infrastructure", "order": 12, "prompt": "How well-documented are the inputs, outputs, and limitations of each AI model?" },
-    { "id": "ti-13", "category": "AI Readiness: Technology and Infrastructure", "order": 13, "prompt": "To what extent do you monitor AI model performance and accuracy over time?" },
-    { "id": "ti-14", "category": "AI Readiness: Technology and Infrastructure", "order": 14, "prompt": "How mature is your process for retraining or updating AI models?" },
-    { "id": "ti-15", "category": "AI Readiness: Technology and Infrastructure", "order": 15, "prompt": "Do you have rollback procedures if an AI model produces unacceptable results?" },
-    { "id": "ti-16", "category": "AI Readiness: Technology and Infrastructure", "order": 16, "prompt": "How effectively do you validate AI outputs before they reach end users?" },
-    { "id": "ti-17", "category": "AI Readiness: Technology and Infrastructure", "order": 17, "prompt": "To what extent do you track bias and fairness metrics in your AI models?" },
-    { "id": "ti-18", "category": "AI Readiness: Technology and Infrastructure", "order": 18, "prompt": "How well-defined is your model lifecycle management (build, deploy, monitor, retire)?" },
-    { "id": "ti-19", "category": "AI Readiness: Technology and Infrastructure", "order": 19, "prompt": "Do you have a model registry or catalogue for organisational AI assets?" },
-    { "id": "ti-20", "category": "AI Readiness: Technology and Infrastructure", "order": 20, "prompt": "How confident are you that your deployed models comply with regulatory requirements?" }
+    {
+      "id": "gs-01", "category": "AI Readiness: AI Governance & Security", "order": 1,
+      "prompt": "Does your organisation have a formal AI governance framework or policy?",
+      "levels": [
+        "There's no AI governance framework. AI usage is unmanaged and ungoverned.",
+        "There's awareness that governance is needed, but no formal framework has been developed.",
+        "A basic AI governance framework exists, covering key areas like usage policies, approvals, and risk.",
+        "A mature governance framework is in place, actively enforced, and regularly reviewed.",
+        "AI governance is comprehensive, embedded in the organisation, and recognised as a competitive strength."
+      ]
+    },
+    {
+      "id": "gs-02", "category": "AI Readiness: AI Governance & Security", "order": 2,
+      "prompt": "How well-defined are data access permissions across your digital environment?",
+      "levels": [
+        "Data access permissions are poorly defined. It's unclear who has access to what.",
+        "Some basic permissions are in place, but they're inconsistent and not regularly reviewed.",
+        "Access permissions are defined for key systems and datasets, with role-based controls in place.",
+        "Permissions are consistently managed, regularly audited, and well-aligned with the principle of least privilege.",
+        "Access management is automated, continuously monitored, and tightly controlled, with real-time visibility into who has access to what."
+      ]
+    },
+    {
+      "id": "gs-03", "category": "AI Readiness: AI Governance & Security", "order": 3,
+      "prompt": "How effectively do you manage external data sharing and third-party access?",
+      "levels": [
+        "External sharing is uncontrolled. Data may be shared without oversight or security checks.",
+        "Some controls exist, but they're inconsistently applied and not regularly reviewed.",
+        "External sharing is governed by clear policies, with controls in place for key data and systems.",
+        "Third-party access and data sharing are well-managed, with agreements, monitoring, and regular reviews.",
+        "External sharing is tightly controlled, fully audited, and managed through a mature security and compliance framework."
+      ]
+    },
+    {
+      "id": "gs-04", "category": "AI Readiness: AI Governance & Security", "order": 4,
+      "prompt": "How well does your organisation comply with data protection regulations (e.g., GDPR)?",
+      "levels": [
+        "Compliance is not actively managed. The organisation may not fully understand its obligations.",
+        "There's awareness of regulations, but compliance practices are incomplete or inconsistent.",
+        "The organisation meets core regulatory requirements, with documented policies and basic compliance processes.",
+        "Compliance is well-managed, with regular audits, documented processes, and designated responsibility.",
+        "Regulatory compliance is proactive and mature. The organisation stays ahead of changing requirements and treats compliance as a business priority."
+      ]
+    },
+    {
+      "id": "gs-05", "category": "AI Readiness: AI Governance & Security", "order": 5,
+      "prompt": "Do you have an ethical AI usage policy covering fairness, transparency, and accountability?",
+      "levels": [
+        "No ethical AI policy exists. Use of AI is not guided by ethical principles.",
+        "There's some awareness of ethical considerations, but no formal policy has been developed.",
+        "A basic ethical AI policy is in place, covering key principles like fairness, transparency, and accountability.",
+        "The ethical AI policy is actively enforced, with training and clear accountability for compliance.",
+        "Ethical AI use is deeply embedded in the culture. The policy is comprehensive, regularly updated, and a point of organisational pride."
+      ]
+    },
+    {
+      "id": "gs-06", "category": "AI Readiness: AI Governance & Security", "order": 6,
+      "prompt": "How transparent and explainable are the AI tools and outputs used in your organisation?",
+      "levels": [
+        "AI transparency is not considered. Users don't know how AI tools reach their outputs.",
+        "There's some awareness of the need for transparency, but no practical steps have been taken.",
+        "Basic transparency measures are in place. Key AI tools are documented and outputs are explained at a high level.",
+        "AI transparency is well-managed. Users understand how AI tools work and can challenge or question outputs.",
+        "AI explainability is excellent. All AI tools are clearly documented, outputs are transparent, and there's a culture of questioning and verifying AI decisions."
+      ]
+    },
+    {
+      "id": "gs-07", "category": "AI Readiness: AI Governance & Security", "order": 7,
+      "prompt": "To what extent are AI outputs reviewed and validated by humans before action is taken?",
+      "levels": [
+        "AI outputs are used without human review. There's no oversight or validation process.",
+        "Some ad hoc review happens, but it's inconsistent and depends on the individual.",
+        "Key AI outputs are reviewed by a designated person before they're acted on or shared externally.",
+        "Human review is built into AI workflows, with clear roles, criteria, and escalation paths.",
+        "Robust human-in-the-loop processes ensure all significant AI outputs are validated. Oversight is continuous and systematically embedded."
+      ]
+    },
+    {
+      "id": "gs-08", "category": "AI Readiness: AI Governance & Security", "order": 8,
+      "prompt": "How well-documented are your AI risk assessment procedures?",
+      "levels": [
+        "No AI risk assessment procedures exist. Risks from AI are not formally considered.",
+        "Some informal risk awareness exists, but there's no structured assessment process.",
+        "A basic AI risk assessment process is in place, applied to new AI projects before they go live.",
+        "AI risk assessments are thorough, consistently applied, and feed into governance and compliance processes.",
+        "AI risk management is mature and proactive. Risks are continuously monitored, assessed, and mitigated across all AI initiatives."
+      ]
+    },
+    {
+      "id": "gs-09", "category": "AI Readiness: AI Governance & Security", "order": 9,
+      "prompt": "How mature is your incident response plan for AI-related issues?",
+      "levels": [
+        "There's no plan for dealing with AI-related incidents. Issues would be handled reactively.",
+        "Some awareness exists, but there's no documented plan for AI-specific incidents.",
+        "A basic incident response process covers AI-related issues, with assigned responsibilities and escalation paths.",
+        "AI incident response is well-defined, regularly tested, and integrated with the broader security incident process.",
+        "AI incident response is mature, tested regularly, and continuously improved. The team can respond rapidly and effectively to any AI-related issue."
+      ]
+    },
+    {
+      "id": "gs-10", "category": "AI Readiness: AI Governance & Security", "order": 10,
+      "prompt": "How clearly do you communicate to users how AI is used and what its limitations are?",
+      "levels": [
+        "Users are not informed about AI use or its limitations. There's no communication in place.",
+        "Some basic messaging exists, but it's incomplete or hard to find.",
+        "Users receive clear information about where AI is used, how it works, and what its limitations are.",
+        "Communication is comprehensive, covering use cases, expected behaviour, limitations, and feedback channels.",
+        "Users are fully informed and actively engaged. Communication is ongoing, transparent, and treated as a core part of responsible AI use."
+      ]
+    },
+
+    {
+      "id": "ti-01", "category": "AI Readiness: Technology & Infrastructure", "order": 1,
+      "prompt": "How up-to-date are your software licences for AI-enabled features and tools?",
+      "levels": [
+        "Licences don't currently include AI features. There's no plan to upgrade.",
+        "There's awareness of what AI-enabled licences are available, but current plans don't include them.",
+        "The organisation has begun adopting AI-enabled licences for key teams and use cases.",
+        "AI-enabled licences are deployed across the relevant parts of the organisation, with a plan to expand.",
+        "Licensing is fully aligned with AI needs. The organisation regularly reviews and optimises its licence portfolio to support evolving AI initiatives."
+      ]
+    },
+    {
+      "id": "ti-02", "category": "AI Readiness: Technology & Infrastructure", "order": 2,
+      "prompt": "Does your cloud infrastructure support AI workloads effectively?",
+      "levels": [
+        "There's no cloud infrastructure in place, or it's not set up to support AI workloads.",
+        "Basic cloud services are in use, but they haven't been evaluated or configured for AI.",
+        "Cloud infrastructure supports initial AI workloads, with some capacity for growth.",
+        "Cloud infrastructure is reliable, scalable, and actively managed to support AI initiatives.",
+        "Cloud infrastructure is optimised for AI, with strong performance, scalability, and cost management built in."
+      ]
+    },
+    {
+      "id": "ti-03", "category": "AI Readiness: Technology & Infrastructure", "order": 3,
+      "prompt": "How reliable is your network connectivity for cloud-based AI services?",
+      "levels": [
+        "Network connectivity is unreliable or insufficient for cloud-based AI services.",
+        "Connectivity is adequate for basic use, but performance issues may affect AI tools.",
+        "Network connectivity is generally reliable and sufficient for current AI workloads.",
+        "Connectivity is strong and actively managed, with bandwidth and performance that support AI tools well.",
+        "Network infrastructure is excellent, with high reliability, low latency, and proactive monitoring for AI-specific performance requirements."
+      ]
+    },
+    {
+      "id": "ti-04", "category": "AI Readiness: Technology & Infrastructure", "order": 4,
+      "prompt": "How well-integrated is your identity and access management?",
+      "levels": [
+        "Identity management is basic or fragmented. Users may have inconsistent access across systems.",
+        "Some identity management is in place, but it's not consistently applied across all platforms and AI tools.",
+        "A centralised identity and access management system is in place, covering key platforms and AI tools.",
+        "Identity management is well-integrated, with single sign-on, role-based access, and regular reviews.",
+        "Identity and access management is comprehensive, automated, and continuously monitored, ensuring secure and seamless access across all systems."
+      ]
+    },
+    {
+      "id": "ti-05", "category": "AI Readiness: Technology & Infrastructure", "order": 5,
+      "prompt": "To what extent do you use integrations and APIs to connect business systems?",
+      "levels": [
+        "Systems are largely disconnected. There are few or no integrations between business tools.",
+        "Some manual or basic integrations exist, but most data transfer between systems is manual.",
+        "Key systems are connected via APIs or integration platforms, with data flowing between them.",
+        "Integrations are widespread, well-documented, and actively managed.",
+        "A comprehensive integration architecture is in place, with automated data flows, monitoring, and strong governance."
+      ]
+    },
+    {
+      "id": "ti-06", "category": "AI Readiness: Technology & Infrastructure", "order": 6,
+      "prompt": "Do you have testing or staging environments for evaluating AI features before deployment?",
+      "levels": [
+        "No testing environments exist. Changes go straight to production.",
+        "Some informal testing happens, but there's no dedicated staging environment.",
+        "A basic testing or staging environment is available for evaluating AI features before they go live.",
+        "Well-managed testing environments are used consistently, with clear processes for validating AI features.",
+        "Robust testing and staging environments mirror production, with automated testing pipelines for AI features and models."
+      ]
+    },
+    {
+      "id": "ti-07", "category": "AI Readiness: Technology & Infrastructure", "order": 7,
+      "prompt": "Do you have monitoring and alerting in place for AI services and automations?",
+      "levels": [
+        "No monitoring exists for AI tools or automations. Issues are only discovered when users report them.",
+        "Some basic monitoring is in place, but it doesn't specifically cover AI services or provide proactive alerts.",
+        "Monitoring covers key AI services, with alerts set up for critical issues.",
+        "Comprehensive monitoring is in place for AI tools and automations, with proactive alerting and clear response processes.",
+        "AI-specific monitoring is mature, covering performance, accuracy, availability, and usage. Alerts drive rapid response and continuous improvement."
+      ]
+    },
+    {
+      "id": "ti-08", "category": "AI Readiness: Technology & Infrastructure", "order": 8,
+      "prompt": "How well do you track and manage the AI models and tools deployed in your organisation?",
+      "levels": [
+        "There's no visibility into which AI tools or models are in use across the organisation.",
+        "Some informal tracking exists, but there's no central register or oversight of deployed AI.",
+        "A basic register of AI tools and models exists, with key details documented.",
+        "AI models and tools are centrally tracked, with clear documentation of purpose, inputs, outputs, and limitations.",
+        "A comprehensive AI asset registry is actively maintained, with full lifecycle management from deployment through to retirement."
+      ]
+    },
+    {
+      "id": "ti-09", "category": "AI Readiness: Technology & Infrastructure", "order": 9,
+      "prompt": "How effectively do you validate AI outputs and manage model quality?",
+      "levels": [
+        "AI outputs are not systematically validated. There's no process for checking quality or accuracy.",
+        "Some ad hoc checking happens, but there's no formal quality management for AI outputs.",
+        "Basic validation processes are in place for key AI outputs, with some quality metrics tracked.",
+        "AI output quality is systematically managed, with clear accuracy benchmarks, bias monitoring, and escalation procedures.",
+        "AI quality management is mature. Validation is automated where possible, with continuous monitoring, bias detection, and model improvement built in."
+      ]
+    },
+    {
+      "id": "ti-10", "category": "AI Readiness: Technology & Infrastructure", "order": 10,
+      "prompt": "How well does your infrastructure handle scaling AI workloads as demand grows?",
+      "levels": [
+        "Scalability hasn't been considered. Current infrastructure would struggle with increased AI demand.",
+        "Some scaling capability exists, but it's manual and limited.",
+        "Infrastructure can handle moderate growth in AI workloads, with basic scaling options available.",
+        "Infrastructure scales effectively to meet growing AI demands, with cost-efficient resource management.",
+        "Infrastructure is highly scalable and elastic, with automated scaling, performance optimisation, and cost monitoring for AI workloads."
+      ]
+    }
   ]
 }

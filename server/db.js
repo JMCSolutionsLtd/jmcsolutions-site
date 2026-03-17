@@ -145,23 +145,24 @@ export async function initDb() {
     )
   `);
 
-  // ── Seed questions from JSON if table is empty ────────────────────────────
-  const countResult = db.exec('SELECT COUNT(*) AS cnt FROM questions');
-  const questionCount = countResult[0]?.values[0]?.[0] || 0;
+  // ── Auto-migration: add levels column to questions table ───────────────────
+  try { db.run('ALTER TABLE questions ADD COLUMN levels TEXT DEFAULT NULL'); } catch (_) {}
 
-  if (questionCount === 0) {
-    const questionsPath = path.join(__dirname, '..', 'data', 'ai_readiness_questions.json');
-    if (fs.existsSync(questionsPath)) {
-      const data = JSON.parse(fs.readFileSync(questionsPath, 'utf-8'));
-      const stmt = db.prepare('INSERT OR IGNORE INTO questions (id, category, prompt, "order", is_active) VALUES (?, ?, ?, ?, 1)');
-      for (const q of data.questions) {
-        stmt.run([q.id, q.category, q.prompt, q.order]);
-      }
-      stmt.free();
-      console.log(`[db] Seeded ${data.questions.length} questions from JSON.`);
-    } else {
-      console.warn('[db] Question seed file not found at', questionsPath);
+  // ── Sync questions from JSON on every startup ─────────────────────────────
+  const questionsPath = path.join(__dirname, '..', 'data', 'ai_readiness_questions.json');
+  if (fs.existsSync(questionsPath)) {
+    const data = JSON.parse(fs.readFileSync(questionsPath, 'utf-8'));
+    // Deactivate all existing questions first
+    db.run('UPDATE questions SET is_active = 0');
+    // Upsert every question from the JSON
+    const stmt = db.prepare('INSERT OR REPLACE INTO questions (id, category, prompt, "order", levels, is_active) VALUES (?, ?, ?, ?, ?, 1)');
+    for (const q of data.questions) {
+      stmt.run([q.id, q.category, q.prompt, q.order, q.levels ? JSON.stringify(q.levels) : null]);
     }
+    stmt.free();
+    console.log(`[db] Synced ${data.questions.length} questions from JSON.`);
+  } else {
+    console.warn('[db] Question seed file not found at', questionsPath);
   }
 
   persist();

@@ -65,8 +65,11 @@ router.get('/', (req, res) => {
 // ── GET /api/portal/assessments/questions — all active questions ─────────────
 router.get('/questions', (_req, res) => {
   const questions = queryAll(
-    'SELECT id, category, prompt, "order" FROM questions WHERE is_active = 1 ORDER BY category, "order"'
-  );
+    'SELECT id, category, prompt, "order", levels FROM questions WHERE is_active = 1 ORDER BY category, "order"'
+  ).map((q) => ({
+    ...q,
+    levels: q.levels ? JSON.parse(q.levels) : [],
+  }));
   return res.json({ questions });
 });
 

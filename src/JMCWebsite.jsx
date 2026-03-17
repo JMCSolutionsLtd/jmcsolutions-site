@@ -742,7 +742,7 @@ Keep responses under 50 words if possible.`;
                 <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-white mb-8 drop-shadow-lg">
                   Secure AI Implementation <br className="hidden lg:block" />
                   <span className="text-blue-100">
-                    Across Your Business.
+                    Across Your Business
                   </span>
                 </h1>
                 <p className="text-lg sm:text-xl text-blue-50 max-w-2xl leading-relaxed mb-8">
@@ -772,7 +772,7 @@ Keep responses under 50 words if possible.`;
                   </div>
                   <h2 className="text-3xl lg:text-5xl font-bold text-slate-900 mb-6">
                     See What AI Can Do<br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-blue-600">For Your Industry.</span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-900 to-blue-600">For Your Industry</span>
                   </h2>
                   <p className="text-lg text-slate-600 mb-8">
                     Not sure where to start? Enter your industry below, and our AI assistant will generate four high-impact use cases tailored specifically for you.
@@ -852,7 +852,7 @@ Keep responses under 50 words if possible.`;
             <div className="max-w-7xl mx-auto px-6">
               <div className="text-center max-w-3xl mx-auto mb-12">
                 <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">Why Choose JMC</h2>
-                <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-6">Practical AI, Built Around Your People.</h3>
+                <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-6">Practical AI, Built Around Your People</h3>
                 <p className="text-lg text-slate-600 leading-relaxed">
                   We combine practical technical delivery with real-world adoption and change support, ensuring AI is implemented safely and ethically, used effectively, and delivers genuine commercial value.
                 </p>
@@ -977,7 +977,7 @@ Keep responses under 50 words if possible.`;
             <div className="max-w-7xl mx-auto px-6">
               <div className="text-center max-w-3xl mx-auto mb-12">
                 <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">Our Services & Approach</h2>
-                <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">Full Service Capabilities.</h3>
+                <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">Full Service Capabilities</h3>
                 <p className="text-lg text-slate-600">
                   From laying the secure foundations to deploying advanced machine learning, we cover every stage of your AI journey.
                 </p>
@@ -1246,7 +1246,7 @@ Keep responses under 50 words if possible.`;
           {/* CTA */}
           <section className="py-16 bg-slate-50">
             <div className="max-w-4xl mx-auto px-6 text-center">
-              <h2 className="text-3xl lg:text-5xl font-bold text-slate-900 mb-6">Every Business Is Different.</h2>
+              <h2 className="text-3xl lg:text-5xl font-bold text-slate-900 mb-6">Every Business Is Different</h2>
               <p className="text-xl text-slate-600 mb-10">
                 We don't sell cookie-cutter solutions. Book a discovery call for a tailored plan aimed at your specific operational needs.
               </p>

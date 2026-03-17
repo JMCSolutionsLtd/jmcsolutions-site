@@ -1,6 +1,7 @@
 /**
- * AssessmentView — render the 72-question assessment grouped by category.
+ * AssessmentView — render the 60-question JMC Solutions AI Readiness Assessment grouped by category.
  * Supports editing (draft) and read-only (completed) modes.
+ * Each question is expandable to show readiness level descriptions (1–5).
  * Computes live scores client-side and persists server-side on save.
  */
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
@@ -14,16 +15,18 @@ import {
   ArrowLeft,
   ChevronDown,
   ChevronUp,
+  ChevronRight,
   FileText,
+  Info,
 } from 'lucide-react';
 
 const CATEGORIES = [
   'AI Readiness: Business Strategy',
-  'AI Readiness: Organization and Culture',
-  'AI Readiness: AI Strategy and Experience',
+  'AI Readiness: Organisation & Culture',
+  'AI Readiness: AI Strategy & Experience',
   'AI Readiness: Data Foundations',
-  'AI Readiness: AI Governance and Security',
-  'AI Readiness: Technology and Infrastructure',
+  'AI Readiness: AI Governance & Security',
+  'AI Readiness: Technology & Infrastructure',
 ];
 
 function computeClientScores(responses, questions) {
@@ -69,6 +72,7 @@ export default function AssessmentView() {
   const [saving, setSaving] = useState(false);
   const [saveMsg, setSaveMsg] = useState(null);
   const [expandedSections, setExpandedSections] = useState(new Set(CATEGORIES));
+  const [expandedQuestions, setExpandedQuestions] = useState(new Set());
   const saveMsgTimeout = useRef(null);
 
   // Load data
@@ -144,6 +148,15 @@ export default function AssessmentView() {
       return next;
     });
   };
+
+  const toggleQuestion = useCallback((qId) => {
+    setExpandedQuestions((prev) => {
+      const next = new Set(prev);
+      if (next.has(qId)) next.delete(qId);
+      else next.add(qId);
+      return next;
+    });
+  }, []);
 
   const isEditable = milestone?.status !== 'completed';
 
@@ -319,6 +332,8 @@ export default function AssessmentView() {
                 <div className="border-t border-slate-100 divide-y divide-slate-50">
                   {catQuestions.map((q, idx) => {
                     const r = responses[q.id] || {};
+                    const isQExpanded = expandedQuestions.has(q.id);
+                    const hasLevels = q.levels && q.levels.length === 5;
                     return (
                       <div key={q.id} className="px-6 py-4 hover:bg-slate-50/50 transition-colors">
                         <div className="flex items-start gap-4">
@@ -326,7 +341,19 @@ export default function AssessmentView() {
                             {idx + 1}
                           </span>
                           <div className="flex-1 space-y-3">
-                            <p className="text-sm text-slate-800 leading-relaxed">{q.prompt}</p>
+                            {/* Question text — clickable to expand levels */}
+                            <button
+                              type="button"
+                              onClick={() => hasLevels && toggleQuestion(q.id)}
+                              className={`w-full text-left flex items-start gap-2 group ${hasLevels ? 'cursor-pointer' : 'cursor-default'}`}
+                            >
+                              <p className="text-sm text-slate-800 leading-relaxed flex-1">{q.prompt}</p>
+                              {hasLevels && (
+                                <span className="mt-0.5 shrink-0 text-slate-300 group-hover:text-blue-500 transition-colors">
+                                  {isQExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                                </span>
+                              )}
+                            </button>
 
                             {/* Score Selection */}
                             <div className="flex items-center gap-2">
@@ -354,6 +381,53 @@ export default function AssessmentView() {
                                 {r.score ? '' : 'Not answered'}
                               </span>
                             </div>
+
+                            {/* Selected level hint (shown when collapsed and a score is selected) */}
+                            {!isQExpanded && r.score && hasLevels && (
+                              <div className="flex items-start gap-2 text-xs text-slate-500">
+                                <Info size={12} className="mt-0.5 shrink-0 text-slate-400" />
+                                <p className="italic leading-relaxed">
+                                  <span className="font-semibold not-italic text-slate-600">Level {r.score}:</span>{' '}
+                                  {q.levels[r.score - 1]}
+                                </p>
+                              </div>
+                            )}
+
+                            {/* Expanded: all 5 level descriptions */}
+                            {isQExpanded && hasLevels && (
+                              <div className="bg-slate-50/80 border border-slate-200/80 rounded-xl p-4 space-y-2.5">
+                                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Readiness Levels</p>
+                                {q.levels.map((desc, i) => {
+                                  const level = i + 1;
+                                  const isActive = r.score === level;
+                                  return (
+                                    <div
+                                      key={i}
+                                      className={`flex items-start gap-3 rounded-lg px-3 py-2 transition-colors ${
+                                        isActive
+                                          ? 'bg-blue-50 border border-blue-200'
+                                          : 'hover:bg-white'
+                                      }`}
+                                    >
+                                      <span
+                                        className={`w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 ${
+                                          isActive
+                                            ? 'bg-blue-900 text-white'
+                                            : 'bg-slate-200 text-slate-500'
+                                        }`}
+                                      >
+                                        {level}
+                                      </span>
+                                      <p className={`text-xs leading-relaxed ${
+                                        isActive ? 'text-blue-900 font-medium' : 'text-slate-600'
+                                      }`}>
+                                        {desc}
+                                      </p>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            )}
 
                             {/* Notes (optional) */}
                             {isEditable ? (

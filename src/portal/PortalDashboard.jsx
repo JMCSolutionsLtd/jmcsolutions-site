@@ -36,20 +36,20 @@ import logo from '../assets/JMC Solutions_v2_1.png';
 
 const CATEGORIES = [
   'AI Readiness: Business Strategy',
-  'AI Readiness: Organization and Culture',
-  'AI Readiness: AI Strategy and Experience',
+  'AI Readiness: Organisation & Culture',
+  'AI Readiness: AI Strategy & Experience',
   'AI Readiness: Data Foundations',
-  'AI Readiness: AI Governance and Security',
-  'AI Readiness: Technology and Infrastructure',
+  'AI Readiness: AI Governance & Security',
+  'AI Readiness: Technology & Infrastructure',
 ];
 
 /* ── Bundle → Assessment Category mapping ── */
 const SERVICE_CATEGORIES = {
   foundations: ['AI Readiness: Business Strategy', 'AI Readiness: Data Foundations'],
-  copilot:    ['AI Readiness: AI Strategy and Experience'],
-  training:   ['AI Readiness: Organization and Culture'],
-  automations: ['AI Readiness: Technology and Infrastructure', 'AI Readiness: AI Governance and Security'],
-  ml:         ['AI Readiness: Technology and Infrastructure'],
+  copilot:    ['AI Readiness: AI Strategy & Experience'],
+  training:   ['AI Readiness: Organisation & Culture'],
+  automations: ['AI Readiness: Technology & Infrastructure', 'AI Readiness: AI Governance & Security'],
+  ml:         ['AI Readiness: Technology & Infrastructure'],
 };
 
 const BUNDLES = {
