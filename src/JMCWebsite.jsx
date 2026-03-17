@@ -731,7 +731,7 @@ Keep responses under 50 words if possible.`;
       {showHome && (
         <>
           {/* Hero Section */}
-          <section id="hero" className="relative pt-[108px] sm:pt-24 pb-12 lg:pt-36 lg:pb-20 overflow-hidden bg-blue-900">
+          <section id="hero" className="relative pt-[124px] sm:pt-28 pb-16 lg:pt-40 lg:pb-24 overflow-hidden bg-blue-900">
             <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-b from-blue-900 to-blue-950 -z-10 opacity-30" />
             <div className="absolute top-20 right-10 w-64 h-64 bg-blue-700 rounded-full blur-3xl -z-10 opacity-25" />
             <div className="absolute bottom-20 left-10 w-96 h-96 bg-blue-800 rounded-full blur-3xl -z-10 opacity-20" />
@@ -740,16 +740,16 @@ Keep responses under 50 words if possible.`;
             <div className="max-w-7xl mx-auto px-6 relative z-10">
               <div className="max-w-4xl">
                 <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-white mb-8 drop-shadow-lg">
-                  Secure AI Implementation <br className="hidden lg:block" />
+                  Helping SMEs Adopt AI <br className="hidden lg:block" />
                   <span className="text-blue-100">
-                    Across Your Business
+                    Safely and Effectively
                   </span>
                 </h1>
                 <p className="text-lg sm:text-xl text-blue-50 max-w-2xl leading-relaxed mb-8">
-                  As a Microsoft Partner, we help SMEs adopt AI safely and compliantly, making your organisation future-ready with Microsoft 365 Copilot training and enablement, as well as smart automations built around your data.
+                  As a Microsoft Partner, we help to make your organisation future-ready with Microsoft 365 Copilot training and enablement, as well as through smart automations built compliantly around your data.
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-4 mt-3">
                   <button
                     onClick={() => scrollToSection('contact')}
                     className="px-8 py-4 bg-white text-blue-900 font-bold hover:bg-blue-50 transition-all shadow-2xl flex items-center justify-center gap-2 rounded-lg"
