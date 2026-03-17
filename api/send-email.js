@@ -24,7 +24,7 @@ export default async function handler(req, res) {
   try {
     // Send email via Resend
     const data = await resend.emails.send({
-      from: 'onboarding@resend.dev', // Start with Resend's default sender; update after verifying your domain
+      from: 'contact@jmcsolutions.ai', 
       to: 'contact@jmcsolutions.ai',
       replyTo: email,
       subject: `New Discovery Call Request from ${firstName} ${lastName} (${company})`,
