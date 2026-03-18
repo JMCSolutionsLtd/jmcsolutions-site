@@ -1180,7 +1180,7 @@ Keep responses under 50 words if possible.`;
             <div className="max-w-7xl mx-auto px-6 relative z-10">
               <div className="text-center mb-12">
                 <h2 className="text-sm font-bold text-blue-300 uppercase tracking-wider mb-2">The AI Opportunity</h2>
-                <h3 className="text-3xl lg:text-4xl font-bold text-white">The Window to Act Is Now</h3>
+                <h3 className="text-3xl lg:text-4xl font-bold text-white">The Window To Act Is Now</h3>
               </div>
               <div className="grid md:grid-cols-3 gap-8 text-center">
                 <div className="p-6">
@@ -1213,7 +1213,7 @@ Keep responses under 50 words if possible.`;
             <div className="max-w-7xl mx-auto px-6">
               <div className="text-center max-w-3xl mx-auto mb-14">
                 <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">About Us</h2>
-                <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-6">Meet the Founders</h3>
+                <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-6">Meet The Founders</h3>
                 <p className="text-lg text-slate-600 leading-relaxed">
                   JMC Solutions combines deep technical AI expertise with practical change management and business transformation experience, ensuring your AI initiatives are not only well-built, but genuinely adopted.
                 </p>
