@@ -1324,7 +1324,6 @@ Keep responses under 50 words if possible.`;
 
           {/* About Us - Founders */}
           <section id="about" className="py-16 bg-white relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-900 via-blue-600 to-blue-900" />
             <div className="max-w-7xl mx-auto px-6">
               <div className="text-center max-w-3xl mx-auto mb-14">
                 <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">About Us</h2>
@@ -1448,7 +1447,7 @@ Keep responses under 50 words if possible.`;
           </section>
 
           {/* Contact */}
-          <section id="contact" className="py-16 bg-white border-t border-slate-100">
+          <section id="contact" className="py-16 bg-white">
             <div className="max-w-7xl mx-auto px-6">
               <div className="grid lg:grid-cols-2 gap-16">
                 <div className="flex flex-col h-full justify-between">
@@ -1594,7 +1593,8 @@ Keep responses under 50 words if possible.`;
           </section>
 
           {/* FAQ */}
-          <section className="py-16 bg-slate-50">
+          <section className="py-16 bg-slate-50 relative">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-900 via-blue-600 to-blue-900" />
             <div className="max-w-4xl mx-auto px-6">
               <div className="text-center mb-12">
                 <h2 className="text-sm font-bold text-blue-700 uppercase tracking-wider mb-2">Common Questions</h2>
@@ -1607,7 +1607,7 @@ Keep responses under 50 words if possible.`;
                   { q: "Do we need to already have Microsoft 365 Copilot licences?", a: "No. We can advise on licensing as part of our engagement, and our AI Foundations module prepares your environment before you activate Copilot. If you already have licences, we can start enablement immediately." },
                   { q: "How long does a typical engagement take?", a: "It depends on your scope. A focused Copilot rollout (Foundations + Enablement + Training) typically spans 6-10 weeks. More complex programmes including automations or machine learning are scoped individually on your Discovery Call." },
                   { q: "What does a Discovery Call involve?", a: "It's a free, no-obligation 30-minute conversation to understand your current environment, your goals, and the challenges you're facing. From there, we'll outline the most appropriate approach and a clear next step." },
-                  { q: "We're a small business - is this right for us?", a: "Absolutely. We specialise in helping SMEs access the same calibre of AI capability as enterprise organisations, without the overhead. Our services are modular so you can start small and scale as confidence and ROI grows." },
+                  { q: "We're a small business, are JMC right for us?", a: "Absolutely. We specialise in helping SMEs access the same calibre of AI capability as enterprise organisations, without the overhead. Our services are modular so you can start small and scale as confidence and ROI grows." },
                   { q: "How is JMC Solutions different from going directly to Microsoft?", a: "Microsoft provides the tools - we provide the strategy, governance, training, and change management to ensure those tools actually get used and deliver measurable value. Many organisations buy Copilot and see low adoption without structured enablement support." },
                 ].map((faq, i) => (
                   <div key={i} className="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm">
