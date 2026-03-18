@@ -19,21 +19,23 @@ import {
 } from 'lucide-react';
 
 const CATEGORIES = [
-  'AI Readiness: Business Strategy',
-  'AI Readiness: Organisation & Culture',
-  'AI Readiness: AI Strategy & Experience',
-  'AI Readiness: Data Foundations',
-  'AI Readiness: AI Governance & Security',
-  'AI Readiness: Technology & Infrastructure',
+  'Business Strategy & Goals',
+  'People & Culture',
+  'AI Experience & Readiness',
+  'Data & Content Foundations',
+  'Governance & Risk',
+  'Technology & Microsoft 365 Readiness',
+  'Rollout & Adoption Planning',
 ];
 
 const CATEGORY_SHORT = {
-  'AI Readiness: Business Strategy': 'Business Strategy',
-  'AI Readiness: Organisation & Culture': 'Organisation & Culture',
-  'AI Readiness: AI Strategy & Experience': 'AI Strategy & Experience',
-  'AI Readiness: Data Foundations': 'Data Foundations',
-  'AI Readiness: AI Governance & Security': 'Governance & Security',
-  'AI Readiness: Technology & Infrastructure': 'Technology & Infrastructure',
+  'Business Strategy & Goals': 'Business Strategy',
+  'People & Culture': 'People & Culture',
+  'AI Experience & Readiness': 'AI Experience',
+  'Data & Content Foundations': 'Data Foundations',
+  'Governance & Risk': 'Governance & Risk',
+  'Technology & Microsoft 365 Readiness': 'Tech & M365',
+  'Rollout & Adoption Planning': 'Rollout Planning',
 };
 
 function computeClientScores(responses, questions) {
