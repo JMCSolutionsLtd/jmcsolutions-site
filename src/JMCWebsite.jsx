@@ -1180,7 +1180,7 @@ Keep responses under 50 words if possible.`;
             <div className="max-w-7xl mx-auto px-6 relative z-10">
               <div className="text-center mb-12">
                 <h2 className="text-sm font-bold text-blue-300 uppercase tracking-wider mb-2">The AI Opportunity</h2>
-                <h3 className="text-3xl lg:text-4xl font-bold text-white">The Window To Act Is Now</h3>
+                <h3 className="text-3xl lg:text-4xl font-bold text-white">The Time To Adapt Is Now</h3>
               </div>
               <div className="grid md:grid-cols-3 gap-8 text-center">
                 <div className="p-6">
@@ -1269,6 +1269,24 @@ Keep responses under 50 words if possible.`;
             </div>
           </section>
 
+          {/* CTA */}
+          <section className="py-16 bg-slate-50">
+            <div className="max-w-4xl mx-auto px-6 text-center">
+              <h2 className="text-3xl lg:text-5xl font-bold text-slate-900 mb-6">Every Business Is Different</h2>
+              <p className="text-xl text-slate-600 mb-10">
+                We don't sell cookie-cutter solutions. Book a discovery call for a tailored plan aimed at your specific operational needs.
+              </p>
+              <div className="flex items-center justify-center">
+                <button
+                  onClick={() => scrollToSection('contact')}
+                  className="w-full sm:w-auto px-10 py-4 rounded-lg bg-blue-900 text-white font-bold text-lg hover:bg-blue-800 transition-all shadow-xl shadow-blue-900/20"
+                >
+                  Speak To Us Today
+                </button>
+              </div>
+            </div>
+          </section>
+
           {/* FAQ */}
           <section className="py-16 bg-white border-t border-slate-100">
             <div className="max-w-3xl mx-auto px-6">
@@ -1337,26 +1355,8 @@ Keep responses under 50 words if possible.`;
             </div>
           </section>
 
-          {/* CTA */}
-          <section className="py-16 bg-slate-50">
-            <div className="max-w-4xl mx-auto px-6 text-center">
-              <h2 className="text-3xl lg:text-5xl font-bold text-slate-900 mb-6">Every Business Is Different</h2>
-              <p className="text-xl text-slate-600 mb-10">
-                We don't sell cookie-cutter solutions. Book a discovery call for a tailored plan aimed at your specific operational needs.
-              </p>
-              <div className="flex items-center justify-center">
-                <button
-                  onClick={() => scrollToSection('contact')}
-                  className="w-full sm:w-auto px-10 py-4 rounded-lg bg-blue-900 text-white font-bold text-lg hover:bg-blue-800 transition-all shadow-xl shadow-blue-900/20"
-                >
-                  Speak To Us Today
-                </button>
-              </div>
-            </div>
-          </section>
-
           {/* Contact */}
-          <section id="contact" className="py-16 bg-white border-t border-slate-100">
+          <section id="contact" className="py-16 bg-slate-50 border-t border-slate-100">
             <div className="max-w-7xl mx-auto px-6">
               <div className="grid lg:grid-cols-2 gap-16">
                 <div className="flex flex-col h-full justify-between">
@@ -1419,7 +1419,7 @@ Keep responses under 50 words if possible.`;
                         type="text"
                         value={contactForm.firstName}
                         onChange={(e) => setContactForm({ ...contactForm, firstName: e.target.value })}
-                        className="w-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
+                        className="w-full p-3 bg-white border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
                       />
                     </div>
                     <div className="space-y-1">
@@ -1428,7 +1428,7 @@ Keep responses under 50 words if possible.`;
                         type="text"
                         value={contactForm.lastName}
                         onChange={(e) => setContactForm({ ...contactForm, lastName: e.target.value })}
-                        className="w-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
+                        className="w-full p-3 bg-white border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
                       />
                     </div>
                   </div>
@@ -1439,7 +1439,7 @@ Keep responses under 50 words if possible.`;
                       type="email"
                       value={contactForm.email}
                       onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
-                      className="w-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
+                      className="w-full p-3 bg-white border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
                     />
                   </div>
 
@@ -1449,7 +1449,7 @@ Keep responses under 50 words if possible.`;
                       type="text"
                       value={contactForm.company}
                       onChange={(e) => setContactForm({ ...contactForm, company: e.target.value })}
-                      className="w-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
+                      className="w-full p-3 bg-white border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
                     />
                   </div>
 
@@ -1469,7 +1469,7 @@ Keep responses under 50 words if possible.`;
                       rows={4}
                       value={contactMessage}
                       onChange={(e) => setContactMessage(e.target.value)}
-                      className="w-full h-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors min-h-[120px]"
+                      className="w-full h-full p-3 bg-white border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors min-h-[120px]"
                     />
                   </div>
 
