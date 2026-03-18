@@ -47,29 +47,38 @@ const PrivacyPolicy = ({ onBack }) => (
     <h1 className="text-4xl font-bold text-slate-900 mb-8">Privacy Policy</h1>
     <div className="prose prose-slate max-w-none text-slate-600 space-y-6">
       <p><strong>Last Updated:</strong> November 26, 2025</p>
-      <p>JMC Solutions Ltd ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclosure, and safeguard your information when you visit our website.</p>
+      <p>JMC Solutions Ltd ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website or engage with our consulting services.</p>
 
       <h3 className="text-xl font-bold text-slate-900 mt-8">1. Information We Collect</h3>
-      <p>We may collect information about you in a variety of ways. The information we may collect on the Site includes:</p>
+      <p>We may collect information about you in a variety of ways. The information we may collect includes:</p>
       <ul className="list-disc pl-6 space-y-2">
-        <li><strong>Personal Data:</strong> Personally identifiable information, such as your name, shipping address, email address, and telephone number, that you voluntarily give to us when you register with the Site or when you choose to participate in various activities related to the Site (such as the "Discovery Call" form).</li>
-        <li><strong>Derivative Data:</strong> Information our servers automatically collect when you access the Site, such as your IP address, your browser type, your operating system, your access times, and the pages you have viewed directly before and after accessing the Site.</li>
+        <li><strong>Contact and Enquiry Data:</strong> Personally identifiable information, such as your name, business email address, company name, and the content of your enquiry, that you voluntarily provide when submitting a Discovery Call request or contacting us directly.</li>
+        <li><strong>Client Portal Data:</strong> If you access our Client Portal, we collect your login credentials (stored securely using industry-standard hashing) and any assessment or project data you submit within the portal.</li>
+        <li><strong>Technical Data:</strong> Information our servers automatically collect when you access the Site, such as your IP address, browser type, operating system, access times, and pages viewed. This is used for security and service improvement purposes only.</li>
       </ul>
 
       <h3 className="text-xl font-bold text-slate-900 mt-8">2. Use of Your Information</h3>
-      <p>Having accurate information about you permits us to provide you with a smooth, efficient, and customized experience. Specifically, we may use information collected about you via the Site to:</p>
+      <p>We use the information we collect solely for legitimate business purposes related to our consulting services. Specifically, we may use your information to:</p>
       <ul className="list-disc pl-6 space-y-2">
-        <li>Compile anonymous statistical data and analysis for use internally.</li>
-        <li>Deliver targeted advertising, coupons, newsletters, and other information regarding promotions and the Site to you.</li>
-        <li>Email you regarding your account or order.</li>
-        <li>Fulfill and manage purchases, orders, payments, and other transactions related to the Site.</li>
+        <li>Respond to your enquiry and arrange a Discovery Call or follow-up consultation.</li>
+        <li>Deliver and manage the consulting services you have engaged us for.</li>
+        <li>Provide access to and maintain your Client Portal account, including assessments and project documentation.</li>
+        <li>Send service-related communications, such as project updates or account notifications.</li>
+        <li>Compile anonymised, aggregate statistical data for internal analysis and service improvement.</li>
       </ul>
+      <p>We do not sell, rent, or share your personal data with third parties for marketing purposes.</p>
 
-      <h3 className="text-xl font-bold text-slate-900 mt-8">3. Data Security</h3>
-      <p>We use administrative, technical, and physical security measures to help protect your personal information. While we have taken reasonable steps to secure the personal information you provide to us, please be aware that despite our efforts, no security measures are perfect or impenetrable, and no method of data transmission can be guaranteed against any interception or other type of misuse.</p>
+      <h3 className="text-xl font-bold text-slate-900 mt-8">3. Data Retention</h3>
+      <p>We retain your personal data only for as long as is necessary to fulfil the purposes for which it was collected, including meeting any legal, accounting, or reporting obligations. Client Portal data is retained for the duration of the engagement and for a reasonable period thereafter unless you request deletion.</p>
 
-      <h3 className="text-xl font-bold text-slate-900 mt-8">4. Contact Us</h3>
-      <p>If you have questions or comments about this Privacy Policy, please contact us at: <a href="mailto:contact@jmcsolutions.ai" className="text-blue-600 hover:underline">contact@jmcsolutions.ai</a></p>
+      <h3 className="text-xl font-bold text-slate-900 mt-8">4. Your Rights (UK GDPR)</h3>
+      <p>Under UK data protection law, you have rights including the right to access, correct, or request deletion of your personal data. To exercise any of these rights, please contact us at the address below. You also have the right to lodge a complaint with the Information Commissioner's Office (ICO) at <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">ico.org.uk</a>.</p>
+
+      <h3 className="text-xl font-bold text-slate-900 mt-8">5. Data Security</h3>
+      <p>We implement appropriate technical and organisational security measures to protect your personal information. These include encrypted storage of credentials, JWT-based authentication, and HTTPS-enforced data transmission. While we have taken reasonable steps to secure your data, no transmission method is guaranteed to be 100% secure.</p>
+
+      <h3 className="text-xl font-bold text-slate-900 mt-8">6. Contact Us</h3>
+      <p>If you have questions or comments about this Privacy Policy, or wish to exercise your data rights, please contact us at: <a href="mailto:contact@jmcsolutions.ai" className="text-blue-600 hover:underline">contact@jmcsolutions.ai</a></p>
     </div>
   </div>
 );
@@ -706,21 +715,30 @@ Keep responses under 50 words if possible.`;
           {activePage === 'cookies' && <CookiePolicy onBack={() => setActivePage('home')} />}
 
           <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
-            <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-              <div className="flex items-center">
-                <img src={footerLogo} alt="JMC Solutions logo" className="h-10 w-auto object-contain" />
+            <div className="max-w-7xl mx-auto px-6">
+              <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
+                <div className="flex items-center">
+                  <img src={footerLogo} alt="JMC Solutions logo" className="h-10 w-auto object-contain" />
+                </div>
+                <div className="flex gap-6 text-sm font-medium">
+                  <button onClick={() => setActivePage('privacy')} className="hover:text-white transition-colors">
+                    Privacy Policy
+                  </button>
+                  <button onClick={() => setActivePage('cookies')} className="hover:text-white transition-colors">
+                    Cookie Policy
+                  </button>
+                  <a href="https://www.linkedin.com/company/jmcsolutionsltd/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                    LinkedIn
+                  </a>
+                </div>
               </div>
-              <div className="text-sm">&copy; {new Date().getFullYear()} JMC Solutions Ltd. All rights reserved.</div>
-              <div className="flex gap-6 text-sm font-medium">
-                <button onClick={() => setActivePage('privacy')} className="hover:text-white transition-colors">
-                  Privacy Policy
-                </button>
-                <button onClick={() => setActivePage('cookies')} className="hover:text-white transition-colors">
-                  Cookie Policy
-                </button>
-                <a href="https://www.linkedin.com/company/jmcsolutionsltd/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                  LinkedIn
-                </a>
+              <div className="border-t border-slate-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-3 text-xs text-slate-500">
+                <div>&copy; {new Date().getFullYear()} JMC Solutions Ltd. All rights reserved.</div>
+                <div className="flex gap-4">
+                  <span>Registered in England &amp; Wales</span>
+                  <span>&middot;</span>
+                  <a href="mailto:contact@jmcsolutions.ai" className="hover:text-slate-300 transition-colors">contact@jmcsolutions.ai</a>
+                </div>
               </div>
             </div>
           </footer>
@@ -1159,23 +1177,30 @@ Keep responses under 50 words if possible.`;
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
+              <div className="text-center mb-12">
+                <h2 className="text-sm font-bold text-blue-300 uppercase tracking-wider mb-2">The AI Opportunity</h2>
+                <h3 className="text-3xl lg:text-4xl font-bold text-white">The Window to Act Is Now</h3>
+              </div>
               <div className="grid md:grid-cols-3 gap-8 text-center">
                 <div className="p-6">
                   <div className="text-5xl font-bold text-blue-300 mb-2">88%</div>
-                  <div className="text-lg font-medium opacity-90">Global organisations using AI</div>
+                  <div className="text-lg font-medium opacity-90 mb-2">Global organisations using AI</div>
+                  <div className="text-xs text-blue-400 opacity-75">McKinsey Global Survey, 2024</div>
                 </div>
                 <div className="p-6 border-t md:border-t-0 md:border-l border-blue-800">
                   <div className="text-5xl font-bold text-blue-300 mb-2">39%</div>
-                  <div className="text-lg font-medium opacity-90">Scaled AI enterprise-wide</div>
+                  <div className="text-lg font-medium opacity-90 mb-2">Scaled AI enterprise-wide</div>
+                  <div className="text-xs text-blue-400 opacity-75">McKinsey Global Survey, 2024</div>
                 </div>
                 <div className="p-6 border-t md:border-t-0 md:border-l border-blue-800">
                   <div className="text-5xl font-bold text-blue-300 mb-2">40h</div>
-                  <div className="text-lg font-medium opacity-90">Saved Per Dept / Month</div>
+                  <div className="text-lg font-medium opacity-90 mb-2">Saved per department / month</div>
+                  <div className="text-xs text-blue-400 opacity-75">Microsoft Copilot Impact Study, 2024</div>
                 </div>
               </div>
               <div className="text-center mt-12 pt-12 border-t border-blue-800">
-                <p className="text-xl font-light text-blue-100 max-w-2xl mx-auto">
-                  "Clean, secure data across the business with instant access to searchable company knowledge."
+                <p className="text-xl font-light text-blue-100 max-w-2xl mx-auto leading-relaxed">
+                  Organisations that act now gain a compounding advantage. Those that delay risk falling further behind as their competitors automate, accelerate, and scale.
                 </p>
               </div>
             </div>
@@ -1239,6 +1264,70 @@ Keep responses under 50 words if possible.`;
                     View LinkedIn Profile
                   </a>
                 </div>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQ */}
+          <section className="py-16 bg-white border-t border-slate-100">
+            <div className="max-w-3xl mx-auto px-6">
+              <div className="text-center mb-12">
+                <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">Common Questions</h2>
+                <h3 className="text-3xl lg:text-4xl font-bold text-slate-900">Frequently Asked Questions</h3>
+              </div>
+              <div className="space-y-3">
+                {[
+                  {
+                    q: "Do we need to already have Microsoft 365 Copilot licences?",
+                    a: "No. We can advise on licensing as part of our engagement, and our AI Foundations module prepares your environment before you activate Copilot. If you already have licences, we can start enablement immediately."
+                  },
+                  {
+                    q: "How long does a typical engagement take?",
+                    a: "It depends on your scope. A focused Copilot rollout (Foundations + Enablement + Training) typically spans 6–10 weeks. More complex programmes including automations or machine learning are scoped individually on your Discovery Call."
+                  },
+                  {
+                    q: "We're a small business — is this right for us?",
+                    a: "Absolutely. We specialise in helping SMEs access the same calibre of AI capability as enterprise organisations, without the overhead. Our services are modular so you can start small and scale."
+                  },
+                  {
+                    q: "How is JMC Solutions different from going directly to Microsoft?",
+                    a: "Microsoft provides the tools — we provide the strategy, governance, training, and change management to ensure those tools actually get used and deliver measurable value. Many organisations buy Copilot and see low adoption without structured enablement support."
+                  },
+                  {
+                    q: "Can you work with our existing IT team or MSP?",
+                    a: "Yes. We regularly work alongside in-house IT teams and managed service providers. We focus on the AI strategy, governance, and adoption layers, while your existing team retains control of infrastructure."
+                  },
+                  {
+                    q: "What does a Discovery Call involve?",
+                    a: "It's a free, no-obligation 30-minute conversation to understand your current environment, your goals, and the challenges you're facing. From there, we'll outline the most appropriate approach and a clear next step."
+                  }
+                ].map((item, idx) => (
+                  <div
+                    key={idx}
+                    className={`rounded-xl border transition-all duration-200 overflow-hidden ${
+                      activeFaq === idx ? 'border-blue-300 shadow-sm' : 'border-slate-200'
+                    }`}
+                  >
+                    <button
+                      onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
+                      className="w-full text-left px-6 py-5 flex justify-between items-center gap-4 hover:bg-slate-50 transition-colors"
+                      aria-expanded={activeFaq === idx}
+                    >
+                      <span className="font-semibold text-slate-900 text-base">{item.q}</span>
+                      <ChevronDown
+                        size={18}
+                        className={`text-slate-400 shrink-0 transition-transform duration-200 ${activeFaq === idx ? 'rotate-180' : ''}`}
+                      />
+                    </button>
+                    <div
+                      className={`transition-[max-height,opacity] duration-300 ease-in-out ${
+                        activeFaq === idx ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
+                      }`}
+                    >
+                      <p className="px-6 pb-6 text-slate-600 leading-relaxed text-sm">{item.a}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </section>
@@ -1403,15 +1492,24 @@ Keep responses under 50 words if possible.`;
 
           {/* Footer */}
           <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
-            <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-              <div className="flex items-center">
-                <img src={footerLogo} alt="JMC Solutions logo" className="h-10 w-auto object-contain" />
+            <div className="max-w-7xl mx-auto px-6">
+              <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
+                <div className="flex items-center">
+                  <img src={footerLogo} alt="JMC Solutions logo" className="h-10 w-auto object-contain" />
+                </div>
+                <div className="flex gap-6 text-sm font-medium">
+                  <button onClick={() => setActivePage('privacy')} className="hover:text-white transition-colors">Privacy Policy</button>
+                  <button onClick={() => setActivePage('cookies')} className="hover:text-white transition-colors">Cookie Policy</button>
+                  <a href="https://www.linkedin.com/company/jmcsolutionsltd/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
+                </div>
               </div>
-              <div className="text-sm">&copy; {new Date().getFullYear()} JMC Solutions Ltd. All rights reserved.</div>
-              <div className="flex gap-6 text-sm font-medium">
-                <button onClick={() => setActivePage('privacy')} className="hover:text-white transition-colors">Privacy Policy</button>
-                <button onClick={() => setActivePage('cookies')} className="hover:text-white transition-colors">Cookie Policy</button>
-                <a href="https://www.linkedin.com/company/jmcsolutionsltd/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
+              <div className="border-t border-slate-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-3 text-xs text-slate-500">
+                <div>&copy; {new Date().getFullYear()} JMC Solutions Ltd. All rights reserved.</div>
+                <div className="flex gap-4">
+                  <span>Registered in England &amp; Wales</span>
+                  <span>&middot;</span>
+                  <a href="mailto:contact@jmcsolutions.ai" className="hover:text-slate-300 transition-colors">contact@jmcsolutions.ai</a>
+                </div>
               </div>
             </div>
           </footer>
