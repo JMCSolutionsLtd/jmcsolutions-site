@@ -1325,11 +1325,11 @@ Keep responses under 50 words if possible.`;
                       />
                     </button>
                     <div
-                      className={`transition-[max-height,opacity] duration-300 ease-in-out ${
+                      className={`transition-[max-height,opacity] duration-300 ease-in-out flex items-center ${
                         activeFaq === idx ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
                       }`}
                     >
-                      <p className="px-6 pb-6 text-slate-600 leading-relaxed text-sm">{item.a}</p>
+                      <p className="px-6 py-4 text-slate-600 leading-relaxed text-sm">{item.a}</p>
                     </div>
                   </div>
                 ))}
@@ -1387,7 +1387,7 @@ Keep responses under 50 words if possible.`;
                     <img
                       src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=2070&auto=format&fit=crop"
                       alt="Professional consultation"
-                      className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                      className="absolute inset-0 w-full h-full object-cover object-[center_20%] hover:scale-105 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 to-transparent flex items-end p-6">
                       <p className="text-white font-medium text-sm">"We partner with you to ensure sustainable adoption."</p>
