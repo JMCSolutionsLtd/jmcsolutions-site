@@ -32,7 +32,8 @@ import {
   BrainCircuit,
   Package,
   User,
-  ExternalLink
+  ExternalLink,
+  Phone
 } from 'lucide-react';
 import logo from './assets/JMC Solutions_v2_1.png';
 import footerLogo from './assets/JMC Solutions_v2_4.png';
@@ -1278,6 +1279,10 @@ Keep responses under 50 words if possible.`;
               <div className="space-y-3">
                 {[
                   {
+                    q: "Do you offer different levels of training?",
+                    a: "Yes. We offer various training packages to suit your needs, including 2-hour, 4-hour, 8-hour, and 16-hour sessions delivered over a timeline of your choice. All packages can include hands-on lab sessions for practical experience. Both of our directors hold the AI Business Professional Certification (AB-730)."
+                  },
+                  {
                     q: "Do we need to already have Microsoft 365 Copilot licences?",
                     a: "No. We can advise on licensing as part of our engagement, and our AI Foundations module prepares your environment before you activate Copilot. If you already have licences, we can start enablement immediately."
                   },
@@ -1286,12 +1291,12 @@ Keep responses under 50 words if possible.`;
                     a: "It depends on your scope. A focused Copilot rollout (Foundations + Enablement + Training) typically spans 6–10 weeks. More complex programmes including automations or machine learning are scoped individually on your Discovery Call."
                   },
                   {
-                    q: "We're a small business — is this right for us?",
+                    q: "We're a small business - is this right for us?",
                     a: "Absolutely. We specialise in helping SMEs access the same calibre of AI capability as enterprise organisations, without the overhead. Our services are modular so you can start small and scale."
                   },
                   {
                     q: "How is JMC Solutions different from going directly to Microsoft?",
-                    a: "Microsoft provides the tools — we provide the strategy, governance, training, and change management to ensure those tools actually get used and deliver measurable value. Many organisations buy Copilot and see low adoption without structured enablement support."
+                    a: "Microsoft provides the tools - we provide the strategy, governance, training, and change management to ensure those tools actually get used and deliver measurable value. Many organisations buy Copilot and see low adoption without structured enablement support."
                   },
                   {
                     q: "Can you work with our existing IT team or MSP?",
@@ -1367,6 +1372,12 @@ Keep responses under 50 words if possible.`;
                           <Briefcase size={20} />
                         </div>
                         <a href="mailto:contact@jmcsolutions.ai" className="text-slate-700 hover:text-blue-900 transition-colors">contact@jmcsolutions.ai</a>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 bg-blue-50 flex items-center justify-center text-blue-900 rounded-full">
+                          <Phone size={20} />
+                        </div>
+                        <a href="tel:07827337189" className="text-slate-700 hover:text-blue-900 transition-colors">07827 337 189</a>
                       </div>
 
                     </div>
