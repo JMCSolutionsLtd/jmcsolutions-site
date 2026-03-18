@@ -1448,7 +1448,7 @@ Keep responses under 50 words if possible.`;
           </section>
 
           {/* Contact */}
-          <section id="contact" className="py-16 bg-slate-50 border-t border-slate-100">
+          <section id="contact" className="py-16 bg-white border-t border-slate-100">
             <div className="max-w-7xl mx-auto px-6">
               <div className="grid lg:grid-cols-2 gap-16">
                 <div className="flex flex-col h-full justify-between">
@@ -1511,7 +1511,7 @@ Keep responses under 50 words if possible.`;
                         type="text"
                         value={contactForm.firstName}
                         onChange={(e) => setContactForm({ ...contactForm, firstName: e.target.value })}
-                        className="w-full p-3 bg-white border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
+                        className="w-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
                       />
                     </div>
                     <div className="space-y-1">
@@ -1520,7 +1520,7 @@ Keep responses under 50 words if possible.`;
                         type="text"
                         value={contactForm.lastName}
                         onChange={(e) => setContactForm({ ...contactForm, lastName: e.target.value })}
-                        className="w-full p-3 bg-white border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
+                        className="w-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
                       />
                     </div>
                   </div>
@@ -1531,7 +1531,7 @@ Keep responses under 50 words if possible.`;
                       type="email"
                       value={contactForm.email}
                       onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
-                      className="w-full p-3 bg-white border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
+                      className="w-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
                     />
                   </div>
 
@@ -1541,7 +1541,7 @@ Keep responses under 50 words if possible.`;
                       type="text"
                       value={contactForm.company}
                       onChange={(e) => setContactForm({ ...contactForm, company: e.target.value })}
-                      className="w-full p-3 bg-white border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
+                      className="w-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors"
                     />
                   </div>
 
@@ -1561,7 +1561,7 @@ Keep responses under 50 words if possible.`;
                       rows={4}
                       value={contactMessage}
                       onChange={(e) => setContactMessage(e.target.value)}
-                      className="w-full h-full p-3 bg-white border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors min-h-[120px]"
+                      className="w-full h-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-0 outline-none transition-colors min-h-[120px]"
                     />
                   </div>
 
