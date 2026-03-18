@@ -1594,32 +1594,33 @@ Keep responses under 50 words if possible.`;
           </section>
 
           {/* FAQ */}
-          <section className="py-16 bg-blue-900 text-white">
+          <section className="py-16 bg-slate-50">
             <div className="max-w-4xl mx-auto px-6">
               <div className="text-center mb-12">
-                <h2 className="text-sm font-bold text-blue-300 uppercase tracking-wider mb-2">Common Questions</h2>
-                <h3 className="text-3xl lg:text-4xl font-bold text-white">Frequently Asked Questions</h3>
+                <h2 className="text-sm font-bold text-blue-700 uppercase tracking-wider mb-2">Common Questions</h2>
+                <h3 className="text-3xl lg:text-4xl font-bold text-slate-900">Frequently Asked Questions</h3>
               </div>
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {[
                   { q: "What services does JMC Solutions offer?", a: "We offer end-to-end AI enablement for businesses: AI Foundations (tenant readiness and governance), Microsoft Copilot Enablement, AI Training, Process Automation, and Machine Learning solutions. Our engagements range from focused Copilot rollouts to broader digital transformation programmes." },
+                  { q: "Do you offer different levels of training?", a: "Yes. We offer flexible training packages including 2-hour, 4-hour, 8-hour, and 16-hour sessions, delivered over a timeline that suits your organisation. All packages can include hands-on lab sessions for practical, real-world experience." },
                   { q: "Do we need to already have Microsoft 365 Copilot licences?", a: "No. We can advise on licensing as part of our engagement, and our AI Foundations module prepares your environment before you activate Copilot. If you already have licences, we can start enablement immediately." },
                   { q: "How long does a typical engagement take?", a: "It depends on your scope. A focused Copilot rollout (Foundations + Enablement + Training) typically spans 6-10 weeks. More complex programmes including automations or machine learning are scoped individually on your Discovery Call." },
                   { q: "What does a Discovery Call involve?", a: "It's a free, no-obligation 30-minute conversation to understand your current environment, your goals, and the challenges you're facing. From there, we'll outline the most appropriate approach and a clear next step." },
                   { q: "We're a small business - is this right for us?", a: "Absolutely. We specialise in helping SMEs access the same calibre of AI capability as enterprise organisations, without the overhead. Our services are modular so you can start small and scale as confidence and ROI grows." },
                   { q: "How is JMC Solutions different from going directly to Microsoft?", a: "Microsoft provides the tools - we provide the strategy, governance, training, and change management to ensure those tools actually get used and deliver measurable value. Many organisations buy Copilot and see low adoption without structured enablement support." },
                 ].map((faq, i) => (
-                  <div key={i} className="border border-blue-800 rounded-lg overflow-hidden">
+                  <div key={i} className="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm">
                     <button
                       onClick={() => setActiveFaq(activeFaq === `home-${i}` ? null : `home-${i}`)}
-                      className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-blue-800/40 transition-colors"
+                      className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-50 transition-colors"
                     >
-                      <span className="text-sm font-semibold text-white pr-4">{faq.q}</span>
-                      <ChevronDown size={18} className={`text-blue-300 shrink-0 transition-transform duration-200 ${activeFaq === `home-${i}` ? 'rotate-180' : ''}`} />
+                      <span className="text-sm font-semibold text-slate-800 pr-4">{faq.q}</span>
+                      <ChevronDown size={18} className={`text-blue-600 shrink-0 transition-transform duration-200 ${activeFaq === `home-${i}` ? 'rotate-180' : ''}`} />
                     </button>
                     {activeFaq === `home-${i}` && (
-                      <div className="px-5 pb-4 pt-0">
-                        <p className="text-sm text-blue-100 leading-relaxed">{faq.a}</p>
+                      <div className="px-5 pb-4 pt-0 border-t border-slate-100">
+                        <p className="text-sm text-slate-600 leading-relaxed pt-3">{faq.a}</p>
                       </div>
                     )}
                   </div>
@@ -1628,7 +1629,7 @@ Keep responses under 50 words if possible.`;
               <div className="text-center mt-8">
                 <button
                   onClick={() => setActivePage('faq')}
-                  className="text-sm font-semibold text-blue-300 hover:text-white transition-colors"
+                  className="text-sm font-semibold text-blue-700 hover:text-blue-900 transition-colors"
                 >
                   View all FAQs &rarr;
                 </button>
