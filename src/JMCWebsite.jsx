@@ -1325,7 +1325,7 @@ Keep responses under 50 words if possible.`;
                       />
                     </button>
                     <div
-                      className={`transition-[max-height,opacity] duration-300 ease-in-out flex items-center ${
+                      className={`transition-[max-height,opacity] duration-300 ease-in-out overflow-hidden ${
                         activeFaq === idx ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
                       }`}
                     >
