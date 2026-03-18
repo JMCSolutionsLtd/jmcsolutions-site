@@ -123,10 +123,6 @@ const FAQPage = ({ onBack }) => {
           a: "Yes. We offer flexible training packages including 2-hour, 4-hour, 8-hour, and 16-hour sessions, delivered over a timeline that suits your organisation. All packages can include hands-on lab sessions for practical, real-world experience."
         },
         {
-          q: "Who are the trainers?",
-          a: "All training is delivered directly by our co-founders, Finlay Coles and Amit Jaitly. You won't be handed off to a junior associate — you get the people who built the methodology. Both hold the AI Business Professional Certification (AB-730) and bring hands-on enterprise delivery experience to every session."
-        },
-        {
           q: "Can training be tailored to our industry or team?",
           a: "Yes. We customise content to reflect your sector, tools, and team roles. Training for a finance team looks different to training for an operations or HR team. We scope this during your Discovery Call and build a programme that maps to your actual workflows."
         },
@@ -166,7 +162,7 @@ const FAQPage = ({ onBack }) => {
       items: [
         {
           q: "What does a Discovery Call involve?",
-          a: "It's a free, no-obligation 30-minute conversation to understand your current environment, your goals, and the challenges you're facing. From there, we'll outline the most appropriate approach and a clear next step — no hard sell."
+          a: "It's a free, no-obligation 30-minute conversation to understand your current environment, your goals, and the challenges you're facing. From there, we'll outline the most appropriate approach and a clear next step - no hard sell."
         },
         {
           q: "We're a small business - is this right for us?",
@@ -174,11 +170,11 @@ const FAQPage = ({ onBack }) => {
         },
         {
           q: "How do you measure success?",
-          a: "We define success metrics at the outset of every engagement — typically time saved per user per week, adoption rates, process cycle-time reductions, and qualitative feedback from teams. We build in checkpoints to track against these throughout the programme."
+          a: "We define success metrics at the outset of every engagement - typically time saved per user per week, adoption rates, process cycle-time reductions, and qualitative feedback from teams. We build in checkpoints to track against these throughout the programme."
         },
         {
           q: "What happens if adoption is low after the initial rollout?",
-          a: "Low adoption is the most common failure mode for AI tool deployments — it's exactly what we're built to prevent. If it does occur, we diagnose the root cause (skills gap, workflow mismatch, change resistance) and run targeted interventions. Our structured enablement model is designed to catch this early."
+          a: "Low adoption is the most common failure mode for AI tool deployments - it's exactly what we're built to prevent. If it does occur, we diagnose the root cause (skills gap, workflow mismatch, change resistance) and run targeted interventions. Our structured enablement model is designed to catch this early."
         }
       ]
     },
@@ -1430,21 +1426,6 @@ Keep responses under 50 words if possible.`;
                   </a>
                 </div>
               </div>
-            </div>
-          </section>
-
-          {/* FAQ Teaser */}
-          <section className="py-16 bg-white border-t border-slate-100">
-            <div className="max-w-3xl mx-auto px-6 text-center">
-              <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">Common Questions</h2>
-              <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">Frequently Asked Questions</h3>
-              <p className="text-slate-600 mb-8">Find answers to questions about our services, training, and how we work - from licensing to what a Discovery Call actually involves.</p>
-              <button
-                onClick={() => setActivePage('faq')}
-                className="inline-flex items-center gap-2 px-8 py-3 bg-blue-900 text-white font-semibold rounded-lg hover:bg-blue-800 transition-colors shadow-lg shadow-blue-900/20"
-              >
-                View All FAQs <ArrowRight size={16} />
-              </button>
             </div>
           </section>
 
