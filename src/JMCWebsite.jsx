@@ -112,6 +112,155 @@ const CookiePolicy = ({ onBack }) => (
   </div>
 );
 
+const FAQPage = ({ onBack }) => {
+  const [activeIdx, setActiveIdx] = useState(null);
+  const faqs = [
+    {
+      category: "Training & Certification",
+      items: [
+        {
+          q: "Do you offer different levels of training?",
+          a: "Yes. We offer flexible training packages including 2-hour, 4-hour, 8-hour, and 16-hour sessions, delivered over a timeline that suits your organisation. All packages can include hands-on lab sessions for practical, real-world experience."
+        },
+        {
+          q: "Who are the trainers?",
+          a: "All training is delivered directly by our co-founders, Finlay Coles and Amit Jaitly. You won't be handed off to a junior associate — you get the people who built the methodology. Both hold the AI Business Professional Certification (AB-730) and bring hands-on enterprise delivery experience to every session."
+        },
+        {
+          q: "Can training be tailored to our industry or team?",
+          a: "Yes. We customise content to reflect your sector, tools, and team roles. Training for a finance team looks different to training for an operations or HR team. We scope this during your Discovery Call and build a programme that maps to your actual workflows."
+        },
+        {
+          q: "Do you offer ongoing or refresher training after the initial programme?",
+          a: "Yes. AI tools evolve quickly and so do best practices. We offer scheduled refresher sessions, new-feature walkthroughs, and extended learning pathways for teams who want to continue developing their capability after the initial engagement."
+        }
+      ]
+    },
+    {
+      category: "Services & Scope",
+      items: [
+        {
+          q: "What services does JMC Solutions offer?",
+          a: "We offer end-to-end AI enablement for businesses: AI Foundations (tenant readiness and governance), Microsoft Copilot Enablement, AI Training, Process Automation, and Machine Learning solutions. Our engagements range from focused Copilot rollouts to broader digital transformation programmes."
+        },
+        {
+          q: "Do we need to already have Microsoft 365 Copilot licences?",
+          a: "No. We can advise on licensing as part of our engagement, and our AI Foundations module prepares your environment before you activate Copilot. If you already have licences, we can start enablement immediately."
+        },
+        {
+          q: "How long does a typical engagement take?",
+          a: "It depends on your scope. A focused Copilot rollout (Foundations + Enablement + Training) typically spans 6-10 weeks. More complex programmes including automations or machine learning are scoped individually on your Discovery Call."
+        },
+        {
+          q: "Can you work with our existing IT team or MSP?",
+          a: "Yes. We regularly work alongside in-house IT teams and managed service providers. We focus on the AI strategy, governance, and adoption layers, while your existing team retains control of infrastructure and day-to-day IT operations."
+        },
+        {
+          q: "Do you offer ongoing support after a project completes?",
+          a: "Yes. We offer retainer-based support, periodic reviews, and new-feature enablement as Microsoft and other platforms continue to evolve. Many clients engage us on an ongoing basis as their AI landscape matures."
+        }
+      ]
+    },
+    {
+      category: "Getting Started",
+      items: [
+        {
+          q: "What does a Discovery Call involve?",
+          a: "It's a free, no-obligation 30-minute conversation to understand your current environment, your goals, and the challenges you're facing. From there, we'll outline the most appropriate approach and a clear next step — no hard sell."
+        },
+        {
+          q: "We're a small business - is this right for us?",
+          a: "Absolutely. We specialise in helping SMEs access the same calibre of AI capability as enterprise organisations, without the overhead. Our services are modular so you can start small and scale as confidence and ROI grows."
+        },
+        {
+          q: "How do you measure success?",
+          a: "We define success metrics at the outset of every engagement — typically time saved per user per week, adoption rates, process cycle-time reductions, and qualitative feedback from teams. We build in checkpoints to track against these throughout the programme."
+        },
+        {
+          q: "What happens if adoption is low after the initial rollout?",
+          a: "Low adoption is the most common failure mode for AI tool deployments — it's exactly what we're built to prevent. If it does occur, we diagnose the root cause (skills gap, workflow mismatch, change resistance) and run targeted interventions. Our structured enablement model is designed to catch this early."
+        }
+      ]
+    },
+    {
+      category: "About JMC Solutions",
+      items: [
+        {
+          q: "How is JMC Solutions different from going directly to Microsoft?",
+          a: "Microsoft provides the tools - we provide the strategy, governance, training, and change management to ensure those tools actually get used and deliver measurable value. Many organisations buy Copilot and see low adoption without structured enablement support."
+        },
+        {
+          q: "Are you Microsoft-certified?",
+          a: "Both co-founders hold industry certifications in AI and business transformation including the AI Business Professional Certification (AB-730). We stay current with Microsoft's evolving Copilot and Azure AI stack and maintain close familiarity with their licensing and deployment models."
+        },
+        {
+          q: "What industries do you work in?",
+          a: "We have experience across financial services, insurance, technology, professional services, and operations-heavy sectors. Our methodology is sector-agnostic but we tailor every engagement to the regulatory environment, tooling, and culture of your organisation."
+        },
+        {
+          q: "Is JMC Solutions a registered UK company?",
+          a: "Yes. JMC Solutions Ltd is registered in England and Wales. You can reach us at contact@jmcsolutions.ai for any formal enquiries."
+        }
+      ]
+    }
+  ];
+
+  return (
+    <div className="pt-32 pb-20 px-6 max-w-4xl mx-auto">
+      <button onClick={onBack} className="flex items-center text-blue-600 hover:text-blue-800 mb-8 font-medium">
+        <ArrowLeft size={16} className="mr-2" /> Back to Home
+      </button>
+      <h1 className="text-4xl font-bold text-slate-900 mb-3">Frequently Asked Questions</h1>
+      <p className="text-slate-500 mb-12 text-lg">Everything you need to know about working with JMC Solutions.</p>
+
+      <div className="space-y-12">
+        {faqs.map((section) => (
+          <div key={section.category}>
+            <h2 className="text-xs font-bold text-blue-900 uppercase tracking-widest mb-4">{section.category}</h2>
+            <div className="space-y-3">
+              {section.items.map((item, idx) => {
+                const key = `${section.category}-${idx}`;
+                return (
+                  <div
+                    key={key}
+                    className={`rounded-xl border transition-all duration-200 overflow-hidden ${activeIdx === key ? 'border-blue-300 shadow-sm' : 'border-slate-200'}`}
+                  >
+                    <button
+                      onClick={() => setActiveIdx(activeIdx === key ? null : key)}
+                      className="w-full text-left px-6 py-5 flex justify-between items-center gap-4 hover:bg-slate-50 transition-colors"
+                      aria-expanded={activeIdx === key}
+                    >
+                      <span className="font-semibold text-slate-900 text-base">{item.q}</span>
+                      <ChevronDown
+                        size={18}
+                        className={`text-slate-400 shrink-0 transition-transform duration-200 ${activeIdx === key ? 'rotate-180' : ''}`}
+                      />
+                    </button>
+                    <div className={`transition-[max-height,opacity] duration-300 ease-in-out overflow-hidden ${activeIdx === key ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'}`}>
+                      <p className="px-6 py-4 text-slate-600 leading-relaxed text-sm">{item.a}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-16 p-8 bg-blue-50 rounded-xl border border-blue-100 text-center">
+        <h3 className="text-xl font-bold text-slate-900 mb-2">Still have questions?</h3>
+        <p className="text-slate-600 mb-6">Book a free Discovery Call and we'll answer everything specific to your situation.</p>
+        <button
+          onClick={onBack}
+          className="px-8 py-3 bg-blue-900 text-white font-semibold rounded-lg hover:bg-blue-800 transition-colors"
+        >
+          Get in Touch
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const JMCWebsite = () => {
   const [activePage, setActivePage] = useState('home');
 
@@ -655,6 +804,12 @@ Keep responses under 50 words if possible.`;
                 {item.name}
               </button>
             ))}
+            <button
+              onClick={() => setActivePage('faq')}
+              className="text-sm font-medium text-slate-600 hover:text-blue-900 transition-colors"
+            >
+              FAQ
+            </button>
             <a
               href="/portal"
               className="text-sm font-medium text-slate-600 hover:text-blue-900 transition-colors"
@@ -691,6 +846,9 @@ Keep responses under 50 words if possible.`;
                 {item.name}
               </button>
             ))}
+            <button onClick={() => { setActivePage('faq'); setIsMobileMenuOpen(false); }} className="text-left text-lg font-medium text-slate-800 py-2">
+              FAQ
+            </button>
             <a
               href="/portal"
               className="text-left text-lg font-medium text-blue-900 py-2"
@@ -714,6 +872,7 @@ Keep responses under 50 words if possible.`;
         <>
           {activePage === 'privacy' && <PrivacyPolicy onBack={() => setActivePage('home')} />}
           {activePage === 'cookies' && <CookiePolicy onBack={() => setActivePage('home')} />}
+          {activePage === 'faq' && <FAQPage onBack={() => setActivePage('home')} />}
 
           <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
             <div className="max-w-7xl mx-auto px-6">
@@ -722,6 +881,9 @@ Keep responses under 50 words if possible.`;
                   <img src={footerLogo} alt="JMC Solutions logo" className="h-10 w-auto object-contain" />
                 </div>
                 <div className="flex gap-6 text-sm font-medium">
+                  <button onClick={() => setActivePage('faq')} className="hover:text-white transition-colors">
+                    FAQ
+                  </button>
                   <button onClick={() => setActivePage('privacy')} className="hover:text-white transition-colors">
                     Privacy Policy
                   </button>
@@ -1232,6 +1394,7 @@ Keep responses under 50 words if possible.`;
                     <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Formally trained in applied AI, machine learning, change management, and agile delivery</li>
                     <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Led complex modernisation projects from strategy through to production</li>
                     <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Combines rigorous technical capability with a practical understanding of how organisations adopt new technology safely and effectively</li>
+                    <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Holds the AI Business Professional Certification (AB-730)</li>
                   </ul>
                   <a
                     href="https://www.linkedin.com/in/finlay-coles-9776b3161/"
@@ -1255,6 +1418,7 @@ Keep responses under 50 words if possible.`;
                     <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Worked across stakeholder management, process improvement, and workforce change in regulated and consulting-led environments</li>
                     <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Delivered training workshops to help teams adopt new ways of working with confidence</li>
                     <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Grounded understanding of process, people, and implementation that ensures AI initiatives succeed in practice</li>
+                    <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Holds the AI Business Professional Certification (AB-730)</li>
                   </ul>
                   <a
                     href="https://www.linkedin.com/in/amit-jaitly-63ab4218a/"
@@ -1269,89 +1433,18 @@ Keep responses under 50 words if possible.`;
             </div>
           </section>
 
-          {/* CTA */}
-          <section className="py-16 bg-slate-50">
-            <div className="max-w-4xl mx-auto px-6 text-center">
-              <h2 className="text-3xl lg:text-5xl font-bold text-slate-900 mb-6">Every Business Is Different</h2>
-              <p className="text-xl text-slate-600 mb-10">
-                We don't sell cookie-cutter solutions. Book a discovery call for a tailored plan aimed at your specific operational needs.
-              </p>
-              <div className="flex items-center justify-center">
-                <button
-                  onClick={() => scrollToSection('contact')}
-                  className="w-full sm:w-auto px-10 py-4 rounded-lg bg-blue-900 text-white font-bold text-lg hover:bg-blue-800 transition-all shadow-xl shadow-blue-900/20"
-                >
-                  Speak To Us Today
-                </button>
-              </div>
-            </div>
-          </section>
-
-          {/* FAQ */}
+          {/* FAQ Teaser */}
           <section className="py-16 bg-white border-t border-slate-100">
-            <div className="max-w-3xl mx-auto px-6">
-              <div className="text-center mb-12">
-                <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">Common Questions</h2>
-                <h3 className="text-3xl lg:text-4xl font-bold text-slate-900">Frequently Asked Questions</h3>
-              </div>
-              <div className="space-y-3">
-                {[
-                  {
-                    q: "Do you offer different levels of training?",
-                    a: "Yes. We offer various training packages to suit your needs, including 2-hour, 4-hour, 8-hour, and 16-hour sessions delivered over a timeline of your choice. All packages can include hands-on lab sessions for practical experience. Both of our directors hold the AI Business Professional Certification (AB-730)."
-                  },
-                  {
-                    q: "Do we need to already have Microsoft 365 Copilot licences?",
-                    a: "No. We can advise on licensing as part of our engagement, and our AI Foundations module prepares your environment before you activate Copilot. If you already have licences, we can start enablement immediately."
-                  },
-                  {
-                    q: "How long does a typical engagement take?",
-                    a: "It depends on your scope. A focused Copilot rollout (Foundations + Enablement + Training) typically spans 6–10 weeks. More complex programmes including automations or machine learning are scoped individually on your Discovery Call."
-                  },
-                  {
-                    q: "We're a small business - is this right for us?",
-                    a: "Absolutely. We specialise in helping SMEs access the same calibre of AI capability as enterprise organisations, without the overhead. Our services are modular so you can start small and scale."
-                  },
-                  {
-                    q: "How is JMC Solutions different from going directly to Microsoft?",
-                    a: "Microsoft provides the tools - we provide the strategy, governance, training, and change management to ensure those tools actually get used and deliver measurable value. Many organisations buy Copilot and see low adoption without structured enablement support."
-                  },
-                  {
-                    q: "Can you work with our existing IT team or MSP?",
-                    a: "Yes. We regularly work alongside in-house IT teams and managed service providers. We focus on the AI strategy, governance, and adoption layers, while your existing team retains control of infrastructure."
-                  },
-                  {
-                    q: "What does a Discovery Call involve?",
-                    a: "It's a free, no-obligation 30-minute conversation to understand your current environment, your goals, and the challenges you're facing. From there, we'll outline the most appropriate approach and a clear next step."
-                  }
-                ].map((item, idx) => (
-                  <div
-                    key={idx}
-                    className={`rounded-xl border transition-all duration-200 overflow-hidden ${
-                      activeFaq === idx ? 'border-blue-300 shadow-sm' : 'border-slate-200'
-                    }`}
-                  >
-                    <button
-                      onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
-                      className="w-full text-left px-6 py-5 flex justify-between items-center gap-4 hover:bg-slate-50 transition-colors"
-                      aria-expanded={activeFaq === idx}
-                    >
-                      <span className="font-semibold text-slate-900 text-base">{item.q}</span>
-                      <ChevronDown
-                        size={18}
-                        className={`text-slate-400 shrink-0 transition-transform duration-200 ${activeFaq === idx ? 'rotate-180' : ''}`}
-                      />
-                    </button>
-                    <div
-                      className={`transition-[max-height,opacity] duration-300 ease-in-out overflow-hidden ${
-                        activeFaq === idx ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
-                      }`}
-                    >
-                      <p className="px-6 py-4 text-slate-600 leading-relaxed text-sm">{item.a}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <div className="max-w-3xl mx-auto px-6 text-center">
+              <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">Common Questions</h2>
+              <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">Frequently Asked Questions</h3>
+              <p className="text-slate-600 mb-8">Find answers to questions about our services, training, and how we work - from licensing to what a Discovery Call actually involves.</p>
+              <button
+                onClick={() => setActivePage('faq')}
+                className="inline-flex items-center gap-2 px-8 py-3 bg-blue-900 text-white font-semibold rounded-lg hover:bg-blue-800 transition-colors shadow-lg shadow-blue-900/20"
+              >
+                View All FAQs <ArrowRight size={16} />
+              </button>
             </div>
           </section>
 
@@ -1509,6 +1602,7 @@ Keep responses under 50 words if possible.`;
                   <img src={footerLogo} alt="JMC Solutions logo" className="h-10 w-auto object-contain" />
                 </div>
                 <div className="flex gap-6 text-sm font-medium">
+                  <button onClick={() => setActivePage('faq')} className="hover:text-white transition-colors">FAQ</button>
                   <button onClick={() => setActivePage('privacy')} className="hover:text-white transition-colors">Privacy Policy</button>
                   <button onClick={() => setActivePage('cookies')} className="hover:text-white transition-colors">Cookie Policy</button>
                   <a href="https://www.linkedin.com/company/jmcsolutionsltd/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
