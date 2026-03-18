@@ -1,5 +1,5 @@
 {
-  "_comment": "JMC Solutions AI Readiness Assessment - 50 questions across 6 sections. Each question includes readiness level descriptions for scores 1-5. Designed for SMEs beginning a Microsoft 365 Copilot rollout programme.",
+  "_comment": "JMC Solutions AI Readiness Assessment - 50 questions across 5 sections. Each question includes readiness level descriptions for scores 1-5. Designed for SMEs beginning a Microsoft 365 Copilot rollout programme.",
   "questions": [
 
     {
@@ -180,7 +180,7 @@
       ]
     },
     {
-      "id": "as-01", "category": "AI Experience & Readiness", "order": 1,
+      "id": "as-01", "category": "People & Culture", "order": 9,
       "prompt": "Has your organisation previously run any AI pilot projects, and how well were the learnings captured?",
       "levels": [
         "No AI pilots have been attempted. There's no prior experience to build on.",
@@ -191,7 +191,7 @@
       ]
     },
     {
-      "id": "as-02", "category": "AI Experience & Readiness", "order": 2,
+      "id": "as-02", "category": "People & Culture", "order": 10,
       "prompt": "To what extent do you currently use AI assistants or Copilot in daily work?",
       "levels": [
         "AI assistants are not used at all in the organisation.",
@@ -202,7 +202,7 @@
       ]
     },
     {
-      "id": "as-03", "category": "AI Experience & Readiness", "order": 3,
+      "id": "as-03", "category": "People & Culture", "order": 11,
       "prompt": "How mature is your use of workflow automation?",
       "levels": [
         "Little to no workflow automation is in place. Most processes are manual.",
@@ -213,7 +213,7 @@
       ]
     },
     {
-      "id": "as-04", "category": "AI Experience & Readiness", "order": 4,
+      "id": "as-04", "category": "People & Culture", "order": 12,
       "prompt": "How much practical experience does your team have with prompting and interacting with AI tools?",
       "levels": [
         "Little to no experience. Staff have barely used AI tools, if at all.",
@@ -224,7 +224,7 @@
       ]
     },
     {
-      "id": "as-05", "category": "AI Experience & Readiness", "order": 5,
+      "id": "as-05", "category": "People & Culture", "order": 13,
       "prompt": "Do you have a formal process for evaluating and selecting AI tools and vendors?",
       "levels": [
         "No formal process exists. AI tools are chosen informally or not evaluated at all.",
@@ -235,7 +235,7 @@
       ]
     },
     {
-      "id": "as-06", "category": "AI Experience & Readiness", "order": 6,
+      "id": "as-06", "category": "People & Culture", "order": 14,
       "prompt": "How well does your organisation retain AI knowledge and expertise when people leave or change roles?",
       "levels": [
         "AI knowledge is at risk. Key people could leave and take critical know-how with them.",
@@ -525,7 +525,7 @@
     },
 
     {
-      "id": "rp-01", "category": "Rollout & Adoption Planning", "order": 1,
+      "id": "rp-01", "category": "Technology & Microsoft 365 Readiness", "order": 9,
       "prompt": "Have you identified which teams or roles will be the first to use Copilot?",
       "levels": [
         "No thought has been given to who should get Copilot first.",
@@ -536,7 +536,7 @@
       ]
     },
     {
-      "id": "rp-02", "category": "Rollout & Adoption Planning", "order": 2,
+      "id": "rp-02", "category": "Technology & Microsoft 365 Readiness", "order": 10,
       "prompt": "Do you have a plan for how you will train and support users during and after the Copilot rollout?",
       "levels": [
         "No training or support plan exists. Users would be expected to figure it out on their own.",
@@ -547,7 +547,7 @@
       ]
     },
     {
-      "id": "rp-03", "category": "Rollout & Adoption Planning", "order": 3,
+      "id": "rp-03", "category": "Technology & Microsoft 365 Readiness", "order": 11,
       "prompt": "How will you track whether Copilot is actually being used and adding value after launch?",
       "levels": [
         "No plan to track adoption or value. We'd rely on anecdotal feedback.",

@@ -21,21 +21,17 @@ import {
 const CATEGORIES = [
   'Business Strategy & Goals',
   'People & Culture',
-  'AI Experience & Readiness',
   'Data & Content Foundations',
   'Governance & Risk',
   'Technology & Microsoft 365 Readiness',
-  'Rollout & Adoption Planning',
 ];
 
 const CATEGORY_SHORT = {
   'Business Strategy & Goals': 'Business Strategy',
   'People & Culture': 'People & Culture',
-  'AI Experience & Readiness': 'AI Experience',
   'Data & Content Foundations': 'Data Foundations',
   'Governance & Risk': 'Governance & Risk',
   'Technology & Microsoft 365 Readiness': 'Tech & M365',
-  'Rollout & Adoption Planning': 'Rollout Planning',
 };
 
 function computeClientScores(responses, questions) {
@@ -262,7 +258,7 @@ export default function AssessmentView() {
       )}
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 mt-5">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
           {CATEGORIES.map((cat) => {
             const catScore = liveScores.categories?.[cat];
             const pct = catScore?.percent ?? null;
