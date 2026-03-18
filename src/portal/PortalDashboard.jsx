@@ -32,21 +32,20 @@ import {
 import logo from '../assets/JMC Solutions_v2_4.png';
 
 const CATEGORIES = [
-  'AI Readiness: Business Strategy',
-  'AI Readiness: Organisation & Culture',
-  'AI Readiness: AI Strategy & Experience',
-  'AI Readiness: Data Foundations',
-  'AI Readiness: AI Governance & Security',
-  'AI Readiness: Technology & Infrastructure',
+  'Business Strategy & Goals',
+  'People & Culture',
+  'Data & Content Foundations',
+  'Governance & Risk',
+  'Technology & Microsoft 365 Readiness',
 ];
 
 /* ── Bundle → Assessment Category mapping ── */
 const SERVICE_CATEGORIES = {
-  foundations: ['AI Readiness: Business Strategy', 'AI Readiness: Data Foundations'],
-  copilot:    ['AI Readiness: AI Strategy & Experience'],
-  training:   ['AI Readiness: Organisation & Culture'],
-  automations: ['AI Readiness: Technology & Infrastructure', 'AI Readiness: AI Governance & Security'],
-  ml:         ['AI Readiness: Technology & Infrastructure'],
+  foundations: ['Business Strategy & Goals', 'Data & Content Foundations'],
+  copilot:    ['People & Culture'],
+  training:   ['People & Culture'],
+  automations: ['Technology & Microsoft 365 Readiness', 'Governance & Risk'],
+  ml:         ['Technology & Microsoft 365 Readiness'],
 };
 
 const BUNDLES = {
@@ -209,7 +208,7 @@ export default function PortalDashboard() {
                 if (!latest?.scores?.categories) return;
                 const rows = CATEGORIES.map((c) => {
                   const s = latest.scores.categories[c];
-                  return { Category: c.replace('AI Readiness: ', ''), Score: s ? `${s.percent}%` : '-', Answered: s?.answered ?? 0 };
+                  return { Category: c, Score: s ? `${s.percent}%` : '-', Answered: s?.answered ?? 0 };
                 });
                 exportToCsv(rows, 'ai-readiness-scores.csv');
               }}

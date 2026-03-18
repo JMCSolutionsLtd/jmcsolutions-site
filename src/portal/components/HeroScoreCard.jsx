@@ -5,12 +5,11 @@ import React from 'react';
 import { TrendingUp, Target, Clock, ChevronDown } from 'lucide-react';
 
 const CATEGORY_SHORT = {
-  'AI Readiness: Business Strategy': 'Business Strategy',
-  'AI Readiness: Organisation & Culture': 'Org & Culture',
-  'AI Readiness: AI Strategy & Experience': 'AI Strategy',
-  'AI Readiness: Data Foundations': 'Data Foundations',
-  'AI Readiness: AI Governance & Security': 'Governance',
-  'AI Readiness: Technology & Infrastructure': 'Tech & Infra',
+  'Business Strategy & Goals': 'Business Strategy',
+  'People & Culture': 'People & Culture',
+  'Data & Content Foundations': 'Data Foundations',
+  'Governance & Risk': 'Governance & Risk',
+  'Technology & Microsoft 365 Readiness': 'Tech & M365',
 };
 
 /** Return a colour on the red → yellow → green gradient based on percentage */

@@ -41,7 +41,7 @@ function ChartTooltip({ active, payload, label }) {
       {payload.map((p, i) => (
         <div key={i} className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full" style={{ backgroundColor: p.stroke || p.color }} />
-          <span className="text-slate-500">{p.name?.replace('AI Readiness: ', '') || 'Overall'}:</span>
+          <span className="text-slate-500">{p.name || 'Overall'}:</span>
           <span className="font-bold text-slate-800">{p.value != null ? `${p.value}%` : 'N/A'}</span>
         </div>
       ))}
@@ -113,7 +113,7 @@ export function CategoryProgressChart({ milestones, categories }) {
     return point;
   });
 
-  const shortLabel = (cat) => cat.replace('AI Readiness: ', '');
+  const shortLabel = (cat) => cat;
 
   return (
     <>

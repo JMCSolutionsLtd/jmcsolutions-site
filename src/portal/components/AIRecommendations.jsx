@@ -113,12 +113,11 @@ const RECOMMENDATIONS = {
 };
 
 const CATEGORY_KEY_MAP = {
-  'AI Readiness: Business Strategy': 'Business Strategy',
-  'AI Readiness: Organisation & Culture': 'Org & Culture',
-  'AI Readiness: AI Strategy & Experience': 'AI Strategy',
-  'AI Readiness: Data Foundations': 'Data Foundations',
-  'AI Readiness: AI Governance & Security': 'Governance',
-  'AI Readiness: Technology & Infrastructure': 'Infrastructure',
+  'Business Strategy & Goals': 'Business Strategy',
+  'People & Culture': 'People & Culture',
+  'Data & Content Foundations': 'Data Foundations',
+  'Governance & Risk': 'Governance & Risk',
+  'Technology & Microsoft 365 Readiness': 'Tech & M365',
 };
 
 function getTier(pct) {

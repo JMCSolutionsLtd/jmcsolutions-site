@@ -1322,49 +1322,6 @@ Keep responses under 50 words if possible.`;
             </div>
           </section>
 
-          {/* Outcomes */}
-          <section id="outcomes" className="py-16 bg-blue-900 text-white relative overflow-hidden">
-            <div className="absolute inset-0 -z-10">
-              <img
-                src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
-                alt="Global data network"
-                className="w-full h-full object-cover opacity-20"
-              />
-              <div className="absolute inset-0 bg-blue-900/80 mix-blend-multiply" />
-            </div>
-
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
-
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
-              <div className="text-center mb-12">
-                <h2 className="text-sm font-bold text-blue-300 uppercase tracking-wider mb-2">The AI Opportunity</h2>
-                <h3 className="text-3xl lg:text-4xl font-bold text-white">The Time To Adapt Is Now</h3>
-              </div>
-              <div className="grid md:grid-cols-3 gap-8 text-center">
-                <div className="p-6">
-                  <div className="text-5xl font-bold text-blue-300 mb-2">88%</div>
-                  <div className="text-lg font-medium opacity-90 mb-2">Global organisations using AI</div>
-                  <div className="text-xs text-blue-400 opacity-75">McKinsey Global Survey, 2024</div>
-                </div>
-                <div className="p-6 border-t md:border-t-0 md:border-l border-blue-800">
-                  <div className="text-5xl font-bold text-blue-300 mb-2">39%</div>
-                  <div className="text-lg font-medium opacity-90 mb-2">Scaled AI enterprise-wide</div>
-                  <div className="text-xs text-blue-400 opacity-75">McKinsey Global Survey, 2024</div>
-                </div>
-                <div className="p-6 border-t md:border-t-0 md:border-l border-blue-800">
-                  <div className="text-5xl font-bold text-blue-300 mb-2">40h</div>
-                  <div className="text-lg font-medium opacity-90 mb-2">Saved per department / month</div>
-                  <div className="text-xs text-blue-400 opacity-75">Microsoft Copilot Impact Study, 2024</div>
-                </div>
-              </div>
-              <div className="text-center mt-12 pt-12 border-t border-blue-800">
-                <p className="text-xl font-light text-blue-100 max-w-2xl mx-auto leading-relaxed">
-                  Organisations that act now gain a compounding advantage. Those that delay risk falling further behind as their competitors automate, accelerate, and scale.
-                </p>
-              </div>
-            </div>
-          </section>
-
           {/* About Us - Founders */}
           <section id="about" className="py-16 bg-white relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-900 via-blue-600 to-blue-900" />
@@ -1425,6 +1382,49 @@ Keep responses under 50 words if possible.`;
                     View LinkedIn Profile
                   </a>
                 </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Outcomes */}
+          <section id="outcomes" className="py-16 bg-blue-900 text-white relative overflow-hidden">
+            <div className="absolute inset-0 -z-10">
+              <img
+                src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
+                alt="Global data network"
+                className="w-full h-full object-cover opacity-20"
+              />
+              <div className="absolute inset-0 bg-blue-900/80 mix-blend-multiply" />
+            </div>
+
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
+
+            <div className="max-w-7xl mx-auto px-6 relative z-10">
+              <div className="text-center mb-12">
+                <h2 className="text-sm font-bold text-blue-300 uppercase tracking-wider mb-2">The AI Opportunity</h2>
+                <h3 className="text-3xl lg:text-4xl font-bold text-white">The Time To Adapt Is Now</h3>
+              </div>
+              <div className="grid md:grid-cols-3 gap-8 text-center">
+                <div className="p-6">
+                  <div className="text-5xl font-bold text-blue-300 mb-2">88%</div>
+                  <div className="text-lg font-medium opacity-90 mb-2">Global organisations using AI</div>
+                  <div className="text-xs text-blue-400 opacity-75">McKinsey Global Survey, 2024</div>
+                </div>
+                <div className="p-6 border-t md:border-t-0 md:border-l border-blue-800">
+                  <div className="text-5xl font-bold text-blue-300 mb-2">39%</div>
+                  <div className="text-lg font-medium opacity-90 mb-2">Scaled AI enterprise-wide</div>
+                  <div className="text-xs text-blue-400 opacity-75">McKinsey Global Survey, 2024</div>
+                </div>
+                <div className="p-6 border-t md:border-t-0 md:border-l border-blue-800">
+                  <div className="text-5xl font-bold text-blue-300 mb-2">40h</div>
+                  <div className="text-lg font-medium opacity-90 mb-2">Saved per department / month</div>
+                  <div className="text-xs text-blue-400 opacity-75">Microsoft Copilot Impact Study, 2024</div>
+                </div>
+              </div>
+              <div className="text-center mt-12 pt-12 border-t border-blue-800">
+                <p className="text-xl font-light text-blue-100 max-w-2xl mx-auto leading-relaxed">
+                  Organisations that act now gain a compounding advantage. Those that delay risk falling further behind as their competitors automate, accelerate, and scale.
+                </p>
               </div>
             </div>
           </section>
@@ -1589,6 +1589,49 @@ Keep responses under 50 words if possible.`;
                     </div>
                   )}
                 </form>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQ */}
+          <section className="py-16 bg-blue-900 text-white">
+            <div className="max-w-4xl mx-auto px-6">
+              <div className="text-center mb-12">
+                <h2 className="text-sm font-bold text-blue-300 uppercase tracking-wider mb-2">Common Questions</h2>
+                <h3 className="text-3xl lg:text-4xl font-bold text-white">Frequently Asked Questions</h3>
+              </div>
+              <div className="space-y-3">
+                {[
+                  { q: "What services does JMC Solutions offer?", a: "We offer end-to-end AI enablement for businesses: AI Foundations (tenant readiness and governance), Microsoft Copilot Enablement, AI Training, Process Automation, and Machine Learning solutions. Our engagements range from focused Copilot rollouts to broader digital transformation programmes." },
+                  { q: "Do we need to already have Microsoft 365 Copilot licences?", a: "No. We can advise on licensing as part of our engagement, and our AI Foundations module prepares your environment before you activate Copilot. If you already have licences, we can start enablement immediately." },
+                  { q: "How long does a typical engagement take?", a: "It depends on your scope. A focused Copilot rollout (Foundations + Enablement + Training) typically spans 6-10 weeks. More complex programmes including automations or machine learning are scoped individually on your Discovery Call." },
+                  { q: "What does a Discovery Call involve?", a: "It's a free, no-obligation 30-minute conversation to understand your current environment, your goals, and the challenges you're facing. From there, we'll outline the most appropriate approach and a clear next step." },
+                  { q: "We're a small business - is this right for us?", a: "Absolutely. We specialise in helping SMEs access the same calibre of AI capability as enterprise organisations, without the overhead. Our services are modular so you can start small and scale as confidence and ROI grows." },
+                  { q: "How is JMC Solutions different from going directly to Microsoft?", a: "Microsoft provides the tools - we provide the strategy, governance, training, and change management to ensure those tools actually get used and deliver measurable value. Many organisations buy Copilot and see low adoption without structured enablement support." },
+                ].map((faq, i) => (
+                  <div key={i} className="border border-blue-800 rounded-lg overflow-hidden">
+                    <button
+                      onClick={() => setActiveFaq(activeFaq === `home-${i}` ? null : `home-${i}`)}
+                      className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-blue-800/40 transition-colors"
+                    >
+                      <span className="text-sm font-semibold text-white pr-4">{faq.q}</span>
+                      <ChevronDown size={18} className={`text-blue-300 shrink-0 transition-transform duration-200 ${activeFaq === `home-${i}` ? 'rotate-180' : ''}`} />
+                    </button>
+                    {activeFaq === `home-${i}` && (
+                      <div className="px-5 pb-4 pt-0">
+                        <p className="text-sm text-blue-100 leading-relaxed">{faq.a}</p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <div className="text-center mt-8">
+                <button
+                  onClick={() => setActivePage('faq')}
+                  className="text-sm font-semibold text-blue-300 hover:text-white transition-colors"
+                >
+                  View all FAQs &rarr;
+                </button>
               </div>
             </div>
           </section>
