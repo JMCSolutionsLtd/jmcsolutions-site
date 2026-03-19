@@ -37,6 +37,8 @@ import {
 } from 'lucide-react';
 import logo from './assets/JMC Solutions_v2_1.png';
 import footerLogo from './assets/JMC Solutions_v2_4.png';
+import finHeadshot from './assets/fin_headshot.jpeg';
+import amitHeadshot from './assets/amit_headshot.jpeg';
 
 // --- Page Components ---
 
@@ -1334,10 +1336,10 @@ Keep responses under 50 words if possible.`;
               </div>
 
               <div className="grid md:grid-cols-2 gap-10 lg:gap-16 max-w-5xl mx-auto">
-                {/* Finlay - Headshot placeholder: replace the div below with an <img> when ready */}
+                {/* Finlay */}
                 <div className="bg-slate-50 rounded-xl border border-slate-200 p-8 shadow-sm hover:shadow-lg transition-all flex flex-col items-center text-center">
-                  <div className="w-36 h-36 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center mb-6 shadow-inner border-4 border-white">
-                    <User size={56} className="text-blue-400" />
+                  <div className="w-36 h-36 rounded-full mb-6 shadow-inner border-4 border-white overflow-hidden shrink-0">
+                    <img src={finHeadshot} alt="Finlay Coles" className="w-full h-full object-cover object-top" />
                   </div>
                   <h4 className="text-xl font-bold text-slate-900 mb-1">Finlay Coles</h4>
                   <p className="text-sm font-medium text-blue-600 mb-4">Co-Founder</p>
@@ -1358,10 +1360,10 @@ Keep responses under 50 words if possible.`;
                   </a>
                 </div>
 
-                {/* Amit - Headshot placeholder: replace the div below with an <img> when ready */}
+                {/* Amit */}
                 <div className="bg-slate-50 rounded-xl border border-slate-200 p-8 shadow-sm hover:shadow-lg transition-all flex flex-col items-center text-center">
-                  <div className="w-36 h-36 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center mb-6 shadow-inner border-4 border-white">
-                    <User size={56} className="text-blue-400" />
+                  <div className="w-36 h-36 rounded-full mb-6 shadow-inner border-4 border-white overflow-hidden shrink-0">
+                    <img src={amitHeadshot} alt="Amit Jaitly" className="w-full h-full object-cover object-top" />
                   </div>
                   <h4 className="text-xl font-bold text-slate-900 mb-1">Amit Jaitly</h4>
                   <p className="text-sm font-medium text-blue-600 mb-4">Co-Founder</p>
