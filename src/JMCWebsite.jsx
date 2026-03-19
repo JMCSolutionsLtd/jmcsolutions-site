@@ -1063,7 +1063,7 @@ Keep responses under 50 words if possible.`;
                       <path d="M12.4377 12.4377H23V23H12.4377V12.4377Z" fill="#FFB900" />
                     </svg>
                   </div>
-                  <h4 className="text-4xl font-bold leading-none text-blue-900 mb-2">Microsoft</h4>
+                  <h4 className="text-3xl font-bold leading-none text-blue-900 mb-2">Microsoft</h4>
                   <p className="text-lg font-bold text-slate-900 mb-2">Partner</p>
                   <p className="text-sm text-slate-500">Certified expertise delivering enterprise-grade Microsoft AI and Cloud solutions.</p>
                   <div
@@ -1098,7 +1098,7 @@ Keep responses under 50 words if possible.`;
                   <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform text-blue-900">
                     <Globe size={32} />
                   </div>
-                  <h4 className="text-4xl font-bold leading-none text-blue-900 mb-2">15+</h4>
+                  <h4 className="text-3xl font-bold leading-none text-blue-900 mb-2">15+</h4>
                   <p className="text-lg font-bold text-slate-900 mb-2">Global Enterprises</p>
                   <p className="text-sm text-slate-500">Delivering complex solutions for major financial, retail, and technology brands.</p>
                   <div
@@ -1133,7 +1133,7 @@ Keep responses under 50 words if possible.`;
                   <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform text-blue-900">
                     <TrendingUp size={32} />
                   </div>
-                  <h4 className="text-4xl font-bold leading-none text-blue-900 mb-2">SME</h4>
+                  <h4 className="text-3xl font-bold leading-none text-blue-900 mb-2">SME</h4>
                   <p className="text-lg font-bold text-slate-900 mb-2">Specialised Focus</p>
                   <p className="text-sm text-slate-500">Bridging the gap for smaller organisations to adopt enterprise-grade AI safely.</p>
                   <div
