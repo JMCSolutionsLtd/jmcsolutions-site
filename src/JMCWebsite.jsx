@@ -1064,7 +1064,7 @@ Keep responses under 50 words if possible.`;
                     </svg>
                   </div>
                   <h4 className="text-4xl font-bold leading-none text-blue-900 mb-2">Microsoft</h4>
-                  <p className="font-bold text-slate-900 mb-2">Partner</p>
+                  <p className="text-lg font-bold text-slate-900 mb-2">Partner</p>
                   <p className="text-sm text-slate-500">Certified expertise delivering enterprise-grade Microsoft AI and Cloud solutions.</p>
                   <div
                     id="partner-detail-microsoft"
@@ -1099,7 +1099,7 @@ Keep responses under 50 words if possible.`;
                     <Globe size={32} />
                   </div>
                   <h4 className="text-4xl font-bold leading-none text-blue-900 mb-2">15+</h4>
-                  <p className="font-bold text-slate-900 mb-2">Global Enterprises</p>
+                  <p className="text-lg font-bold text-slate-900 mb-2">Global Enterprises</p>
                   <p className="text-sm text-slate-500">Delivering complex solutions for major financial, retail, and technology brands.</p>
                   <div
                     id="partner-detail-enterprises"
@@ -1134,7 +1134,7 @@ Keep responses under 50 words if possible.`;
                     <TrendingUp size={32} />
                   </div>
                   <h4 className="text-4xl font-bold leading-none text-blue-900 mb-2">SME</h4>
-                  <p className="font-bold text-slate-900 mb-2">Specialised Focus</p>
+                  <p className="text-lg font-bold text-slate-900 mb-2">Specialised Focus</p>
                   <p className="text-sm text-slate-500">Bridging the gap for smaller organisations to adopt enterprise-grade AI safely.</p>
                   <div
                     id="partner-detail-sme"
