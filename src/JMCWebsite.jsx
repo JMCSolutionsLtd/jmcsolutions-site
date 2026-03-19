@@ -292,7 +292,7 @@ const JMCWebsite = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatInput, setChatInput] = useState('');
   const [chatMessages, setChatMessages] = useState([
-    { role: 'assistant', text: "Hello! I'm Joanna. Ask me about Copilot, Automation, or how we can help your business." }
+    { role: 'assistant', text: "Hello! I'm Joanna, the JMC AI assistant. Ask me about Copilot, Automation, or how we can help your business." }
   ]);
   const [isChatLoading, setIsChatLoading] = useState(false);
   const chatEndRef = useRef(null);
