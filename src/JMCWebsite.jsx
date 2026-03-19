@@ -1599,7 +1599,6 @@ Keep responses under 50 words if possible.`;
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-900 via-blue-600 to-blue-900" />
             <div className="max-w-4xl mx-auto px-6">
               <div className="text-center mb-12">
-                <h2 className="text-sm font-bold text-blue-700 uppercase tracking-wider mb-2">Common Questions</h2>
                 <h3 className="text-3xl lg:text-4xl font-bold text-slate-900">Frequently Asked Questions</h3>
               </div>
               <div className="space-y-2">
