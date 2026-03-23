@@ -919,7 +919,7 @@ Keep responses under 50 words if possible.`;
             <div className="max-w-7xl mx-auto px-6 relative z-10">
               <div className="max-w-4xl">
                 <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-white mb-8 drop-shadow-lg">
-                  Helping SMEs Adopt AI <br className="hidden lg:block" />
+                  Empowering SMEs to Adopt AI <br className="hidden lg:block" />
                   <span className="text-blue-100">
                     Safely and Effectively
                   </span>
