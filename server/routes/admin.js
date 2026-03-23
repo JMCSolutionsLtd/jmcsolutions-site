@@ -136,4 +136,23 @@ router.post('/clients/:id/users', (req, res) => {
   return res.status(201).json({ user });
 });
 
+// ── PATCH /api/portal/admin/clients/:id — rename a client ────────────────────
+router.patch('/clients/:id', (req, res) => {
+  const clientId = parseInt(req.params.id, 10);
+  if (isNaN(clientId)) {
+    return res.status(400).json({ error: 'Invalid client ID.' });
+  }
+  const { name } = req.body;
+  if (!name || !name.trim()) {
+    return res.status(400).json({ error: 'name is required.' });
+  }
+  const client = queryOne('SELECT id FROM clients WHERE id = ?', [clientId]);
+  if (!client) {
+    return res.status(404).json({ error: 'Client not found.' });
+  }
+  execute("UPDATE clients SET name = ?, updated_at = datetime('now') WHERE id = ?", [name.trim(), clientId]);
+  const updated = queryOne('SELECT id, name, email FROM clients WHERE id = ?', [clientId]);
+  return res.json({ client: updated });
+});
+
 export default router;

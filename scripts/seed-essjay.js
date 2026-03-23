@@ -1,23 +1,71 @@
 #!/usr/bin/env node
 /**
- * Seed script — creates Essjay Solutions account with 3 users.
- *
- * Creates:
- *   1. Primary account: fin@jmcsolutions.ai (Essjay Solutions)
- *   2. Alias user: seemajaitly@essjaysolutions.co.uk
- *   3. Alias user: sabita.mukherjee@essjaysolutions.co.uk
- *
- * Requires:
- *   - The portal server to be running (npm run dev:portal or npm run dev:all)
- *   - PORTAL_ADMIN_KEY env var to match the server's
+ * Renames the JMC Solutions client to Essjay Solutions and adds two alias users.
  *
  * Usage:
- *   PORTAL_ADMIN_KEY=mykey node scripts/seed-essjay.js
+ *   Local:      PORTAL_ADMIN_KEY=mykey node scripts/seed-essjay.js
+ *   Production: PORTAL_ADMIN_KEY=mykey PORTAL_URL=https://jmcsolutions.ai node scripts/seed-essjay.js
  */
 
-const PORT = process.env.PORTAL_PORT || 3001;
 const ADMIN_KEY = process.env.PORTAL_ADMIN_KEY;
-const BASE_URL = `http://localhost:${PORT}/api/portal/admin`;
+const BASE_URL = process.env.PORTAL_URL
+  ? `${process.env.PORTAL_URL.replace(/\/$/, '')}/api/portal/admin`
+  : `http://localhost:${process.env.PORTAL_PORT || 3001}/api/portal/admin`;
+
+async function main() {
+  if (!ADMIN_KEY) {
+    console.error('Error: PORTAL_ADMIN_KEY env var is required.');
+    process.exit(1);
+  }
+
+  console.log(`Connecting to: ${BASE_URL}\n`);
+
+  // 1. Find the existing client
+  const listRes = await fetch(`${BASE_URL}/clients`, { headers: { 'X-Admin-Key': ADMIN_KEY } });
+  if (!listRes.ok) { console.error('Failed to list clients:', await listRes.text()); process.exit(1); }
+  const { clients } = await listRes.json();
+  const client = clients.find((c) => c.email === 'fin@jmcsolutions.ai');
+  if (!client) { console.error('Client fin@jmcsolutions.ai not found.'); process.exit(1); }
+  console.log(`Found: "${client.name}" (ID: ${client.id}) — ${client.email}`);
+
+  // 2. Rename to Essjay Solutions
+  if (client.name !== 'Essjay Solutions') {
+    const r = await fetch(`${BASE_URL}/clients/${client.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
+      body: JSON.stringify({ name: 'Essjay Solutions' }),
+    });
+    const d = await r.json();
+    if (!r.ok) { console.error('Rename failed:', d.error); process.exit(1); }
+    console.log(`✅ Renamed to: "${d.client.name}"`);
+  } else {
+    console.log('ℹ️  Already named "Essjay Solutions" — skipping rename.');
+  }
+
+  // 3. Add alias users
+  const aliasUsers = [
+    { name: 'Seema Jaitly',     email: 'seemajaitly@essjaysolutions.co.uk',      password: 'Testingpassword1!' },
+    { name: 'Sabita Mukherjee', email: 'sabita.mukherjee@essjaysolutions.co.uk',  password: 'Testingpassword1!' },
+  ];
+
+  for (const user of aliasUsers) {
+    const r = await fetch(`${BASE_URL}/clients/${client.id}/users`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_KEY },
+      body: JSON.stringify(user),
+    });
+    const d = await r.json();
+    if (!r.ok) {
+      console.log(r.status === 409 ? `ℹ️  Already exists: ${user.email}` : `❌ Error adding ${user.email}: ${d.error}`);
+    } else {
+      console.log(`✅ Added: ${d.user.name} (${d.user.email})`);
+    }
+  }
+
+  console.log('\nDone.');
+}
+
+main().catch((err) => { console.error(err); process.exit(1); });
 
 async function main() {
   if (!ADMIN_KEY) {
