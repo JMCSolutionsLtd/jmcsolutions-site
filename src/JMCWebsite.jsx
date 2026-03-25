@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   Menu,
   X,
@@ -41,6 +41,83 @@ import finHeadshot from './assets/fin_headshot.jpeg';
 import amitHeadshot from './assets/amit_headshot.jpeg';
 import badgeAiBusiness from './assets/ai_business_professional_badge.png';
 import badgeAiTransformation from './assets/ai_transformation_leader_badge.png';
+
+// ── Scroll-triggered visibility hook ──
+const useInView = (options = {}) => {
+  const ref = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(element);
+        }
+      },
+      { threshold: 0.15, ...options }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  return [ref, isVisible];
+};
+
+// ── Animated counter component ──
+const AnimatedCounter = ({ end, suffix = '', prefix = '', duration = 2000 }) => {
+  const [count, setCount] = useState(0);
+  const [ref, isVisible] = useInView();
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    if (!isVisible || hasAnimated.current) return;
+    hasAnimated.current = true;
+
+    const startTime = performance.now();
+    const animate = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.round(eased * end));
+      if (progress < 1) requestAnimationFrame(animate);
+    };
+    requestAnimationFrame(animate);
+  }, [isVisible, end, duration]);
+
+  return <span ref={ref}>{prefix}{count}{suffix}</span>;
+};
+
+// ── Reveal wrapper component ──
+const Reveal = ({ children, className = '', type = 'up', delay = 0 }) => {
+  const [ref, isVisible] = useInView();
+  const typeClass = type === 'left' ? 'reveal-left' : type === 'right' ? 'reveal-right' : type === 'scale' ? 'reveal-scale' : 'reveal';
+
+  return (
+    <div
+      ref={ref}
+      className={`${typeClass} ${isVisible ? 'visible' : ''} ${className}`}
+      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
+    >
+      {children}
+    </div>
+  );
+};
+
+// ── Stagger wrapper component ──
+const StaggerReveal = ({ children, className = '' }) => {
+  const [ref, isVisible] = useInView();
+  return (
+    <div ref={ref} className={`stagger-children ${isVisible ? 'visible' : ''} ${className}`}>
+      {children}
+    </div>
+  );
+};
 
 // --- Page Components ---
 
@@ -914,30 +991,34 @@ Keep responses under 50 words if possible.`;
       {showHome && (
         <>
           {/* Hero Section */}
-          <section id="hero" className="relative pt-[124px] sm:pt-28 pb-16 lg:pt-40 lg:pb-24 overflow-hidden bg-blue-900">
+          <section id="hero" className="relative pt-[124px] sm:pt-28 pb-16 lg:pt-40 lg:pb-24 overflow-hidden bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 animated-gradient">
             <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-b from-blue-900 to-blue-950 -z-10 opacity-30" />
-            <div className="absolute top-20 right-10 w-64 h-64 bg-blue-700 rounded-full blur-3xl -z-10 opacity-25" />
-            <div className="absolute bottom-20 left-10 w-96 h-96 bg-blue-800 rounded-full blur-3xl -z-10 opacity-20" />
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff12_1px,transparent_1px),linear-gradient(to_bottom,#ffffff12_1px,transparent_1px)] bg-[size:24px_24px] -z-10" />
+            <div className="absolute top-20 right-10 w-64 h-64 bg-blue-700 rounded-full blur-3xl -z-10 opacity-25 float-orb" />
+            <div className="absolute bottom-20 left-10 w-96 h-96 bg-blue-800 rounded-full blur-3xl -z-10 opacity-20 float-orb-slow" />
+            <div className="absolute top-1/2 left-1/2 w-80 h-80 bg-blue-600 rounded-full blur-3xl -z-10 opacity-10 float-orb-delay" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff12_1px,transparent_1px),linear-gradient(to_bottom,#ffffff12_1px,transparent_1px)] bg-[size:24px_24px] -z-10 grid-pattern" />
+
+            {/* Accent glow */}
+            <div className="absolute -top-24 -right-24 w-[500px] h-[500px] bg-blue-400 rounded-full blur-[120px] -z-10 pulse-glow" />
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
               <div className="max-w-4xl">
-                <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-white mb-8 drop-shadow-lg">
+                <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-white mb-8 drop-shadow-lg hero-reveal hero-reveal-delay-1">
                   Empowering SMEs to Adopt AI <br className="hidden lg:block" />
                   <span className="text-blue-100">
                     Safely and Effectively
                   </span>
                 </h1>
-                <p className="text-lg sm:text-xl text-blue-50 max-w-2xl leading-relaxed mb-8">
+                <p className="text-lg sm:text-xl text-blue-50 max-w-2xl leading-relaxed mb-8 hero-reveal hero-reveal-delay-2">
                   As a Microsoft Partner, we help to make your organisation future-ready with Microsoft 365 Copilot training and enablement, as well as through smart automations built compliantly around your data.
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-4 mt-3">
+                <div className="flex flex-col sm:flex-row gap-4 mt-3 hero-reveal hero-reveal-delay-3">
                   <button
                     onClick={() => scrollToSection('contact')}
-                    className="px-8 py-4 bg-white text-blue-900 font-bold hover:bg-blue-50 transition-all shadow-2xl flex items-center justify-center gap-2 rounded-lg"
+                    className="group px-8 py-4 bg-white text-blue-900 font-bold hover:bg-blue-50 transition-all shadow-2xl flex items-center justify-center gap-2 rounded-lg"
                   >
-                    Book a Discovery Call <ArrowRight size={18} />
+                    Book a Discovery Call <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                   </button>
                 </div>
               </div>
@@ -949,7 +1030,7 @@ Keep responses under 50 words if possible.`;
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-900 via-blue-600 to-blue-900" />
             <div className="max-w-7xl mx-auto px-6">
               <div className={`${aiInsights || isGeneratingInsights ? 'grid lg:grid-cols-2 gap-16' : 'max-w-3xl mx-auto text-center'} items-center transition-all duration-500`}>
-                <div className="w-full">
+                <Reveal className="w-full">
                   <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-900 text-xs font-bold uppercase tracking-wider mb-6 border border-blue-100 ${aiInsights || isGeneratingInsights ? '' : 'mx-auto'}`}>
                     <Sparkles size={14} className="fill-blue-900" /> Live AI Demo
                   </div>
@@ -987,7 +1068,7 @@ Keep responses under 50 words if possible.`;
                     </button>
                   </div>
                   {insightError && <p className="text-red-500 text-sm mt-3">{insightError}</p>}
-                </div>
+                </Reveal>
 
                 {(aiInsights || isGeneratingInsights) && (
                   <div className="bg-slate-50 border border-slate-100 p-8 min-h-[400px] relative rounded-xl animate-in fade-in slide-in-from-bottom-8 duration-700">
@@ -1033,14 +1114,15 @@ Keep responses under 50 words if possible.`;
           <section className="py-16 bg-slate-50 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-900 via-blue-600 to-blue-900" />
             <div className="max-w-7xl mx-auto px-6">
-              <div className="text-center max-w-3xl mx-auto mb-12">
+              <Reveal className="text-center max-w-3xl mx-auto mb-12">
                 <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">Why Choose JMC</h2>
                 <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-6">Practical AI, Built Around Your People</h3>
                 <p className="text-lg text-slate-600 leading-relaxed">
                   We combine practical technical delivery with real-world adoption and change support, ensuring AI is implemented safely and ethically, used effectively, and delivers genuine commercial value.
                 </p>
-              </div>
+              </Reveal>
 
+              <StaggerReveal>
               <div ref={partnerCardsRef} className="grid md:grid-cols-3 gap-6 relative z-10">
                 <button
                   type="button"
@@ -1057,7 +1139,7 @@ Keep responses under 50 words if possible.`;
                   }}
                   aria-expanded={isPartnerCardExpanded('microsoft')}
                   aria-controls="partner-detail-microsoft"
-                  className="group bg-white p-8 rounded-xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-300 transition-all flex flex-col items-center text-center"
+                  className="group bg-white p-8 rounded-xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-300 transition-all flex flex-col items-center text-center card-lift"
                 >
                   <div className="w-16 h-16 bg-white rounded-full border border-slate-100 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-sm">
                     <svg width="30" height="30" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1097,7 +1179,7 @@ Keep responses under 50 words if possible.`;
                   }}
                   aria-expanded={isPartnerCardExpanded('enterprises')}
                   aria-controls="partner-detail-enterprises"
-                  className="group bg-white p-8 rounded-xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-300 transition-all flex flex-col items-center text-center"
+                  className="group bg-white p-8 rounded-xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-300 transition-all flex flex-col items-center text-center card-lift"
                 >
                   <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform text-blue-900">
                     <Globe size={32} />
@@ -1132,7 +1214,7 @@ Keep responses under 50 words if possible.`;
                   }}
                   aria-expanded={isPartnerCardExpanded('sme')}
                   aria-controls="partner-detail-sme"
-                  className="group bg-white p-8 rounded-xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-300 transition-all flex flex-col items-center text-center"
+                  className="group bg-white p-8 rounded-xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-300 transition-all flex flex-col items-center text-center card-lift"
                 >
                   <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform text-blue-900">
                     <TrendingUp size={32} />
@@ -1152,19 +1234,20 @@ Keep responses under 50 words if possible.`;
                   </div>
                 </button>
               </div>
+              </StaggerReveal>
             </div>
           </section>
 
           {/* Services & Approach */}
           <section id="approach" className="py-16 bg-white relative">
             <div className="max-w-7xl mx-auto px-6">
-              <div className="text-center max-w-3xl mx-auto mb-12">
+              <Reveal className="text-center max-w-3xl mx-auto mb-12">
                 <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">Our Services & Approach</h2>
                 <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">Full Service Capabilities</h3>
                 <p className="text-lg text-slate-600">
                   From laying the secure foundations to deploying advanced machine learning, we cover every stage of your AI journey.
                 </p>
-              </div>
+              </Reveal>
 
               <div className="max-w-4xl mx-auto">
                 <div className="mb-12">
@@ -1296,8 +1379,8 @@ Keep responses under 50 words if possible.`;
           {/* Governance & Security (Moved Here) */}
           <section className="py-16 bg-slate-50">
             <div className="max-w-7xl mx-auto px-6">
-              <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
-                <div className="bg-white p-8 rounded-none border-l-4 border-blue-900 shadow-sm hover:shadow-md transition-all">
+              <StaggerReveal className="grid md:grid-cols-3 gap-8 lg:gap-12">
+                <div className="bg-white p-8 rounded-none border-l-4 border-blue-900 shadow-sm hover:shadow-md transition-all card-lift">
                   <div className="w-12 h-12 bg-blue-50 flex items-center justify-center mb-6 text-blue-900">
                     <ShieldCheck size={24} />
                   </div>
@@ -1306,7 +1389,7 @@ Keep responses under 50 words if possible.`;
                     Copilot requires clean data permissions. We ensure your AI adoption doesn't expose sensitive information or create compliance risks.
                   </p>
                 </div>
-                <div className="bg-white p-8 rounded-none border-l-4 border-blue-600 shadow-sm hover:shadow-md transition-all">
+                <div className="bg-white p-8 rounded-none border-l-4 border-blue-600 shadow-sm hover:shadow-md transition-all card-lift">
                   <div className="w-12 h-12 bg-blue-50 flex items-center justify-center mb-6 text-blue-800">
                     <Zap size={24} />
                   </div>
@@ -1315,7 +1398,7 @@ Keep responses under 50 words if possible.`;
                     Intelligent automation eliminates repetitive tasks while centralising your business knowledge into an accessible, searchable hub, giving your team a competitive advantage in both speed and strategic focus.
                   </p>
                 </div>
-                <div className="bg-white p-8 rounded-none border-l-4 border-blue-400 shadow-sm hover:shadow-md transition-all">
+                <div className="bg-white p-8 rounded-none border-l-4 border-blue-400 shadow-sm hover:shadow-md transition-all card-lift">
                   <div className="w-12 h-12 bg-blue-50 flex items-center justify-center mb-6 text-blue-600">
                     <GraduationCap size={24} />
                   </div>
@@ -1324,24 +1407,25 @@ Keep responses under 50 words if possible.`;
                     Equip your team with structured, role-specific training, practical use cases, and tailored prompt libraries that turn AI tools into everyday productivity gains.
                   </p>
                 </div>
-              </div>
+              </StaggerReveal>
             </div>
           </section>
 
           {/* About Us - Founders */}
           <section id="about" className="py-16 bg-white relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-6">
-              <div className="text-center max-w-3xl mx-auto mb-14">
+              <Reveal className="text-center max-w-3xl mx-auto mb-14">
                 <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">About Us</h2>
                 <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-6">Meet The Founders</h3>
                 <p className="text-lg text-slate-600 leading-relaxed">
                   JMC Solutions combines deep technical AI expertise with practical change management and business transformation experience, ensuring your AI initiatives are not only well-built, but genuinely adopted.
                 </p>
-              </div>
+              </Reveal>
 
               <div className="grid md:grid-cols-2 gap-10 lg:gap-16 max-w-5xl mx-auto">
                 {/* Finlay */}
-                <div className="bg-slate-50 rounded-xl border border-slate-200 p-8 shadow-sm hover:shadow-lg transition-all flex flex-col items-center text-center">
+                <Reveal type="left">
+                <div className="bg-slate-50 rounded-xl border border-slate-200 p-8 shadow-sm hover:shadow-lg transition-all flex flex-col items-center text-center card-lift">
                   <div className="w-36 h-36 rounded-full mb-6 shadow-inner border-4 border-white overflow-hidden shrink-0">
                     <img src={finHeadshot} alt="Finlay Coles" className="w-full h-full object-cover object-top" />
                   </div>
@@ -1365,9 +1449,11 @@ Keep responses under 50 words if possible.`;
                     View LinkedIn Profile
                   </a>
                 </div>
+                </Reveal>
 
                 {/* Amit */}
-                <div className="bg-slate-50 rounded-xl border border-slate-200 p-8 shadow-sm hover:shadow-lg transition-all flex flex-col items-center text-center">
+                <Reveal type="right">
+                <div className="bg-slate-50 rounded-xl border border-slate-200 p-8 shadow-sm hover:shadow-lg transition-all flex flex-col items-center text-center card-lift">
                   <div className="w-36 h-36 rounded-full mb-6 shadow-inner border-4 border-white overflow-hidden shrink-0">
                     <img src={amitHeadshot} alt="Amit Jaitly" className="w-full h-full object-cover object-top" />
                   </div>
@@ -1392,6 +1478,7 @@ Keep responses under 50 words if possible.`;
                     View LinkedIn Profile
                   </a>
                 </div>
+                </Reveal>
               </div>
             </div>
           </section>
@@ -1410,38 +1497,38 @@ Keep responses under 50 words if possible.`;
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
-              <div className="text-center mb-12">
+              <Reveal className="text-center mb-12">
                 <h2 className="text-sm font-bold text-blue-300 uppercase tracking-wider mb-2">The AI Opportunity</h2>
                 <h3 className="text-3xl lg:text-4xl font-bold text-white">The Time To Adapt Is Now</h3>
-              </div>
-              <div className="grid md:grid-cols-3 gap-8 text-center">
+              </Reveal>
+              <StaggerReveal className="grid md:grid-cols-3 gap-8 text-center">
                 <div className="p-6">
-                  <div className="text-5xl font-bold text-blue-300 mb-2">78%</div>
+                  <div className="text-5xl font-bold text-blue-300 mb-2"><AnimatedCounter end={78} suffix="%" /></div>
                   <div className="text-lg font-medium opacity-90 mb-2">Organisations now using AI</div>
                   <div className="text-xs text-blue-400 opacity-75">Stanford HAI AI Index, 2025</div>
                 </div>
                 <div className="p-6 border-t md:border-t-0 md:border-l border-blue-800">
-                  <div className="text-5xl font-bold text-blue-300 mb-2">9h</div>
+                  <div className="text-5xl font-bold text-blue-300 mb-2"><AnimatedCounter end={9} suffix="h" /></div>
                   <div className="text-lg font-medium opacity-90 mb-2">Saved per employee / month</div>
                   <div className="text-xs text-blue-400 opacity-75">Forrester TEI Study, 2025</div>
                 </div>
                 <div className="p-6 border-t md:border-t-0 md:border-l border-blue-800">
-                  <div className="text-5xl font-bold text-blue-300 mb-2">36%</div>
+                  <div className="text-5xl font-bold text-blue-300 mb-2"><AnimatedCounter end={36} suffix="%" /></div>
                   <div className="text-lg font-medium opacity-90 mb-2">Employees feel adequately trained in AI</div>
                   <div className="text-xs text-blue-400 opacity-75">BCG AI at Work, 2025</div>
                 </div>
-              </div>
-              <div className="text-center mt-12 pt-12 border-t border-blue-800">
+              </StaggerReveal>
+              <Reveal className="text-center mt-12 pt-12 border-t border-blue-800">
                 <p className="text-xl font-light text-blue-100 max-w-2xl mx-auto leading-relaxed">
                   Organisations that act now gain a compounding advantage. Those that delay risk falling further behind as their competitors automate, accelerate, and scale.
                 </p>
-              </div>
+              </Reveal>
             </div>
           </section>
 
           {/* CTA */}
           <section className="py-16 bg-slate-50">
-            <div className="max-w-4xl mx-auto px-6 text-center">
+            <Reveal type="scale" className="max-w-4xl mx-auto px-6 text-center">
               <h2 className="text-3xl lg:text-5xl font-bold text-slate-900 mb-6">Every Business Is Different</h2>
               <p className="text-xl text-slate-600 mb-10">
                 We don't sell cookie-cutter solutions. Book a discovery call for a tailored plan aimed at your specific operational needs.
@@ -1449,19 +1536,19 @@ Keep responses under 50 words if possible.`;
               <div className="flex items-center justify-center">
                 <button
                   onClick={() => scrollToSection('contact')}
-                  className="w-full sm:w-auto px-10 py-4 rounded-lg bg-blue-900 text-white font-bold text-lg hover:bg-blue-800 transition-all shadow-xl shadow-blue-900/20"
+                  className="group w-full sm:w-auto px-10 py-4 rounded-lg bg-blue-900 text-white font-bold text-lg hover:bg-blue-800 transition-all shadow-xl shadow-blue-900/20 hover:shadow-2xl hover:shadow-blue-900/30"
                 >
                   Speak To Us Today
                 </button>
               </div>
-            </div>
+            </Reveal>
           </section>
 
           {/* Contact */}
           <section id="contact" className="py-16 bg-white">
             <div className="max-w-7xl mx-auto px-6">
               <div className="grid lg:grid-cols-2 gap-16">
-                <div className="flex flex-col h-full justify-between">
+                <Reveal type="left" className="flex flex-col h-full justify-between">
                   <div>
                     <h2 className="text-3xl font-bold text-slate-900 mb-6">Get in touch.</h2>
                     <p className="text-slate-600 mb-8">
@@ -1495,8 +1582,9 @@ Keep responses under 50 words if possible.`;
                       <p className="text-white font-medium text-sm">"We partner with you to ensure sustainable adoption."</p>
                     </div>
                   </div>
-                </div>
+                </Reveal>
 
+                <Reveal type="right">
                 <form className="space-y-4 relative flex flex-col h-full">
                   {selectedModules.length > 0 && (
                     <div className="bg-blue-50 p-4 rounded-md border border-blue-100 mb-6 animate-in fade-in slide-in-from-top-2 duration-300">
@@ -1599,6 +1687,7 @@ Keep responses under 50 words if possible.`;
                     </div>
                   )}
                 </form>
+                </Reveal>
               </div>
             </div>
           </section>
@@ -1607,9 +1696,9 @@ Keep responses under 50 words if possible.`;
           <section className="py-16 bg-slate-50 relative">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-900 via-blue-600 to-blue-900" />
             <div className="max-w-4xl mx-auto px-6">
-              <div className="text-center mb-12">
+              <Reveal className="text-center mb-12">
                 <h3 className="text-3xl lg:text-4xl font-bold text-slate-900">Frequently Asked Questions</h3>
-              </div>
+              </Reveal>
               <div className="space-y-2">
                 {[
                   { q: "What services does JMC Solutions offer?", a: "We offer end-to-end AI enablement for businesses: AI Foundations (tenant readiness and governance), Microsoft Copilot Enablement, AI Training, Process Automation, and Machine Learning solutions. Our engagements range from focused Copilot rollouts to broader digital transformation programmes." },
