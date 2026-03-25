@@ -72,9 +72,9 @@
 
 .reveal-left {
   opacity: 0;
-  transform: translateX(-40px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(-50px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal-left.visible {
@@ -120,6 +120,32 @@
 .stagger-children.visible > *:nth-child(4) { transition-delay: 240ms; opacity: 1; transform: translateY(0); }
 .stagger-children.visible > *:nth-child(5) { transition-delay: 320ms; opacity: 1; transform: translateY(0); }
 .stagger-children.visible > *:nth-child(6) { transition-delay: 400ms; opacity: 1; transform: translateY(0); }
+
+/* ── Service module stagger (slower, more deliberate) ── */
+.service-stagger > * {
+  opacity: 0;
+  transform: translateX(-16px);
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.service-stagger.visible > *:nth-child(1) { transition-delay: 0ms;   opacity: 1; transform: translateX(0); }
+.service-stagger.visible > *:nth-child(2) { transition-delay: 90ms;  opacity: 1; transform: translateX(0); }
+.service-stagger.visible > *:nth-child(3) { transition-delay: 180ms; opacity: 1; transform: translateX(0); }
+.service-stagger.visible > *:nth-child(4) { transition-delay: 270ms; opacity: 1; transform: translateX(0); }
+.service-stagger.visible > *:nth-child(5) { transition-delay: 360ms; opacity: 1; transform: translateX(0); }
+.service-stagger.visible > *:nth-child(6) { transition-delay: 450ms; opacity: 1; transform: translateX(0); }
+
+/* ── Service icon pop-in ── */
+@keyframes iconPop {
+  0%   { transform: scale(0.6); opacity: 0; }
+  70%  { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+
+.service-icon-animate {
+  animation: iconPop 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
 
 /* ── Hero gradient animation ── */
 @keyframes gradientShift {

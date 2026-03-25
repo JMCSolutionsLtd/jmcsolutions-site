@@ -1371,7 +1371,7 @@ Keep responses under 50 words if possible.`;
                   <h4 className="text-center text-sm font-bold text-slate-500 uppercase tracking-wider mb-6">
                     Get better value by selecting one of our packages
                   </h4>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <StaggerReveal className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {Object.entries(bundleConfig).map(([id, config]) => (
                       <button
                         key={id}
@@ -1389,7 +1389,7 @@ Keep responses under 50 words if possible.`;
                         <div className="text-xs text-slate-600 leading-tight opacity-90">{config.desc}</div>
                       </button>
                     ))}
-                  </div>
+                  </StaggerReveal>
                   <div className="text-center mt-10 relative">
                     <span className="bg-white px-4 text-slate-400 text-xs font-bold uppercase tracking-wider relative z-10">
                       OR Select your desired services below
@@ -1398,14 +1398,14 @@ Keep responses under 50 words if possible.`;
                   </div>
                 </div>
 
-                 {serviceModules.map((module) => {
+                 {serviceModules.map((module, index) => {
                     const isSelected = selectedModules.includes(module.id);
                     const isExpanded = expandedModules.includes(module.id);
                     const Icon = module.icon;
 
                     return (
+                      <Reveal key={module.id} type="left" delay={0}>
                       <div
-                        key={module.id}
                         className={`mb-4 rounded-xl border transition-all duration-300 overflow-hidden ${
                           isSelected ? 'border-blue-500 ring-1 ring-blue-500 bg-white shadow-md' : 'border-slate-200 bg-white hover:border-blue-300 hover:shadow-md'
                         }`}
@@ -1415,13 +1415,15 @@ Keep responses under 50 words if possible.`;
                           onClick={() => toggleAccordion(module.id)}
                           className="flex items-center p-6 cursor-pointer"
                         >
-                           <div
-                            className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 transition-colors ${
-                              isSelected ? 'bg-blue-100 text-blue-700' : 'bg-blue-50 text-blue-900'
-                            }`}
-                          >
-                            <Icon size={24} />
-                          </div>
+                           <Reveal type="scale" className="shrink-0">
+                            <div
+                              className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${
+                                isSelected ? 'bg-blue-100 text-blue-700' : 'bg-blue-50 text-blue-900'
+                              }`}
+                            >
+                              <Icon size={24} />
+                            </div>
+                          </Reveal>
 
                           <div className="ml-5 flex-grow">
                             <div className="flex items-center gap-3 mb-1">
@@ -1487,6 +1489,7 @@ Keep responses under 50 words if possible.`;
                             </div>
                         </div>
                       </div>
+                      </Reveal>
                     );
                   })}
               </div>
