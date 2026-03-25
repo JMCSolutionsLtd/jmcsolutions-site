@@ -114,7 +114,7 @@ const CookiePolicy = ({ onBack }) => (
   </div>
 );
 
-const FAQPage = ({ onBack }) => {
+const FAQPage = ({ onBack, onGetInTouch }) => {
   const [activeIdx, setActiveIdx] = useState(null);
   const faqs = [
     {
@@ -249,7 +249,7 @@ const FAQPage = ({ onBack }) => {
         <h3 className="text-xl font-bold text-slate-900 mb-2">Still have questions?</h3>
         <p className="text-slate-600 mb-6">Book a free Discovery Call and we'll answer everything specific to your situation.</p>
         <button
-          onClick={onBack}
+          onClick={onGetInTouch}
           className="px-8 py-3 bg-blue-900 text-white font-semibold rounded-lg hover:bg-blue-800 transition-colors"
         >
           Get in Touch
@@ -324,12 +324,14 @@ const JMCWebsite = () => {
   }, []);
 
   const scrollToSection = (id) => {
-    if (activePage !== 'home') setActivePage('home');
+    const wasHome = activePage === 'home';
+    if (!wasHome) setActivePage('home');
+    setIsMobileMenuOpen(false);
+    // When switching pages, React needs time to render the home content before we can scroll
     setTimeout(() => {
       const el = document.getElementById(id);
       if (el) el.scrollIntoView({ behavior: 'smooth' });
-      setIsMobileMenuOpen(false);
-    }, 0);
+    }, wasHome ? 0 : 100);
   };
 
   const toggleModuleSelection = (e, id) => {
@@ -803,7 +805,7 @@ Keep responses under 50 words if possible.`;
               </button>
             ))}
             <button
-              onClick={() => setActivePage('faq')}
+              onClick={() => { setActivePage('faq'); window.scrollTo(0, 0); }}
               className="text-sm font-medium text-slate-600 hover:text-blue-900 transition-colors"
             >
               FAQ
@@ -844,7 +846,7 @@ Keep responses under 50 words if possible.`;
                 {item.name}
               </button>
             ))}
-            <button onClick={() => { setActivePage('faq'); setIsMobileMenuOpen(false); }} className="text-left text-lg font-medium text-slate-800 py-2">
+            <button onClick={() => { setActivePage('faq'); setIsMobileMenuOpen(false); window.scrollTo(0, 0); }} className="text-left text-lg font-medium text-slate-800 py-2">
               FAQ
             </button>
             <a
@@ -854,10 +856,10 @@ Keep responses under 50 words if possible.`;
               Client Portal
             </a>
             <div className="pt-2 border-t border-slate-100 flex flex-col">
-              <button onClick={() => setActivePage('privacy')} className="text-left text-lg font-medium text-slate-800 py-2">
+              <button onClick={() => { setActivePage('privacy'); setIsMobileMenuOpen(false); window.scrollTo(0, 0); }} className="text-left text-lg font-medium text-slate-800 py-2">
                 Privacy Policy
               </button>
-              <button onClick={() => setActivePage('cookies')} className="text-left text-lg font-medium text-slate-800 py-2">
+              <button onClick={() => { setActivePage('cookies'); setIsMobileMenuOpen(false); window.scrollTo(0, 0); }} className="text-left text-lg font-medium text-slate-800 py-2">
                 Cookie Policy
               </button>
             </div>
@@ -870,7 +872,7 @@ Keep responses under 50 words if possible.`;
         <>
           {activePage === 'privacy' && <PrivacyPolicy onBack={() => setActivePage('home')} />}
           {activePage === 'cookies' && <CookiePolicy onBack={() => setActivePage('home')} />}
-          {activePage === 'faq' && <FAQPage onBack={() => setActivePage('home')} />}
+          {activePage === 'faq' && <FAQPage onBack={() => setActivePage('home')} onGetInTouch={() => scrollToSection('contact')} />}
 
           <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
             <div className="max-w-7xl mx-auto px-6">
@@ -879,13 +881,13 @@ Keep responses under 50 words if possible.`;
                   <img src={footerLogo} alt="JMC Solutions logo" className="h-10 w-auto object-contain" />
                 </div>
                 <div className="flex gap-6 text-sm font-medium">
-                  <button onClick={() => setActivePage('faq')} className="hover:text-white transition-colors">
+                  <button onClick={() => { setActivePage('faq'); window.scrollTo(0, 0); }} className="hover:text-white transition-colors">
                     FAQ
                   </button>
-                  <button onClick={() => setActivePage('privacy')} className="hover:text-white transition-colors">
+                  <button onClick={() => { setActivePage('privacy'); window.scrollTo(0, 0); }} className="hover:text-white transition-colors">
                     Privacy Policy
                   </button>
-                  <button onClick={() => setActivePage('cookies')} className="hover:text-white transition-colors">
+                  <button onClick={() => { setActivePage('cookies'); window.scrollTo(0, 0); }} className="hover:text-white transition-colors">
                     Cookie Policy
                   </button>
                   <a href="https://www.linkedin.com/company/jmcsolutionsltd/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
@@ -1470,7 +1472,7 @@ Keep responses under 50 words if possible.`;
                         <div className="w-10 h-10 bg-blue-50 flex items-center justify-center text-blue-900 rounded-full">
                           <Phone size={20} />
                         </div>
-                        <a href="tel:07827337189" className="text-slate-700 hover:text-blue-900 transition-colors">07827 337 189</a>
+                        <a href="tel:+447842964555" className="text-slate-700 hover:text-blue-900 transition-colors">+44 7842 964555</a>
                       </div>
 
                     </div>
@@ -1629,7 +1631,7 @@ Keep responses under 50 words if possible.`;
               </div>
               <div className="text-center mt-8">
                 <button
-                  onClick={() => setActivePage('faq')}
+                  onClick={() => { setActivePage('faq'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                   className="text-sm font-semibold text-blue-700 hover:text-blue-900 transition-colors"
                 >
                   View all FAQs &rarr;
@@ -1646,9 +1648,9 @@ Keep responses under 50 words if possible.`;
                   <img src={footerLogo} alt="JMC Solutions logo" className="h-10 w-auto object-contain" />
                 </div>
                 <div className="flex gap-6 text-sm font-medium">
-                  <button onClick={() => setActivePage('faq')} className="hover:text-white transition-colors">FAQ</button>
-                  <button onClick={() => setActivePage('privacy')} className="hover:text-white transition-colors">Privacy Policy</button>
-                  <button onClick={() => setActivePage('cookies')} className="hover:text-white transition-colors">Cookie Policy</button>
+                  <button onClick={() => { setActivePage('faq'); window.scrollTo(0, 0); }} className="hover:text-white transition-colors">FAQ</button>
+                  <button onClick={() => { setActivePage('privacy'); window.scrollTo(0, 0); }} className="hover:text-white transition-colors">Privacy Policy</button>
+                  <button onClick={() => { setActivePage('cookies'); window.scrollTo(0, 0); }} className="hover:text-white transition-colors">Cookie Policy</button>
                   <a href="https://www.linkedin.com/company/jmcsolutionsltd/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
                 </div>
               </div>
