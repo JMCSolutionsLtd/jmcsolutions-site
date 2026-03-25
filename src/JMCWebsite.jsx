@@ -39,6 +39,8 @@ import logo from './assets/JMC Solutions_v2_1.png';
 import footerLogo from './assets/JMC Solutions_v2_4.png';
 import finHeadshot from './assets/fin_headshot.jpeg';
 import amitHeadshot from './assets/amit_headshot.jpeg';
+import badgeAiBusiness from './assets/ai_business_professional_badge.png';
+import badgeAiTransformation from './assets/ai_transformation_leader_badge.png';
 
 // --- Page Components ---
 
@@ -1350,8 +1352,10 @@ Keep responses under 50 words if possible.`;
                     <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Formally trained in applied AI, machine learning, change management, and agile delivery</li>
                     <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Led complex modernisation projects from strategy through to production</li>
                     <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Combines rigorous technical capability with a practical understanding of how organisations adopt new technology safely and effectively</li>
-                    <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Holds the AI Business Professional Certification (AB-730)</li>
                   </ul>
+                  <div className="flex items-center justify-center gap-4 mb-5 pt-1 border-t border-slate-200 w-full">
+                    <img src={badgeAiBusiness} alt="Microsoft Certified: AI Business Professional" className="h-36 w-auto object-contain pt-4" />
+                  </div>
                   <a
                     href="https://www.linkedin.com/in/finlay-coles-9776b3161/"
                     target="_blank"
@@ -1373,9 +1377,12 @@ Keep responses under 50 words if possible.`;
                     <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Extensive experience in operations leadership, organisational change, and business transformation</li>
                     <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Worked across stakeholder management, process improvement, and workforce change in regulated and consulting-led environments</li>
                     <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Delivered training workshops to help teams adopt new ways of working with confidence</li>
-                    <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Grounded understanding of process, people, and implementation that ensures AI initiatives succeed in practice</li>
-                    <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Holds the AI Business Professional Certification (AB-730)</li>
+                    <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />Grounded understanding of process, people, and implementation that ensures AI initiatives succeed and drive value</li>
                   </ul>
+                  <div className="flex items-center justify-center gap-4 mb-5 pt-1 border-t border-slate-200 w-full">
+                    <img src={badgeAiBusiness} alt="Microsoft Certified: AI Business Professional" className="h-36 w-auto object-contain pt-4" />
+                    <img src={badgeAiTransformation} alt="Microsoft Certified: AI Transformation Leader" className="h-36 w-auto object-contain pt-4" />
+                  </div>
                   <a
                     href="https://www.linkedin.com/in/amit-jaitly-63ab4218a/"
                     target="_blank"
@@ -1409,19 +1416,19 @@ Keep responses under 50 words if possible.`;
               </div>
               <div className="grid md:grid-cols-3 gap-8 text-center">
                 <div className="p-6">
-                  <div className="text-5xl font-bold text-blue-300 mb-2">88%</div>
-                  <div className="text-lg font-medium opacity-90 mb-2">Global organisations using AI</div>
-                  <div className="text-xs text-blue-400 opacity-75">McKinsey Global Survey, 2024</div>
+                  <div className="text-5xl font-bold text-blue-300 mb-2">78%</div>
+                  <div className="text-lg font-medium opacity-90 mb-2">Organisations now using AI</div>
+                  <div className="text-xs text-blue-400 opacity-75">Stanford HAI AI Index, 2025</div>
                 </div>
                 <div className="p-6 border-t md:border-t-0 md:border-l border-blue-800">
-                  <div className="text-5xl font-bold text-blue-300 mb-2">39%</div>
-                  <div className="text-lg font-medium opacity-90 mb-2">Scaled AI enterprise-wide</div>
-                  <div className="text-xs text-blue-400 opacity-75">McKinsey Global Survey, 2024</div>
+                  <div className="text-5xl font-bold text-blue-300 mb-2">9h</div>
+                  <div className="text-lg font-medium opacity-90 mb-2">Saved per employee / month</div>
+                  <div className="text-xs text-blue-400 opacity-75">Forrester TEI Study, 2025</div>
                 </div>
                 <div className="p-6 border-t md:border-t-0 md:border-l border-blue-800">
-                  <div className="text-5xl font-bold text-blue-300 mb-2">40h</div>
-                  <div className="text-lg font-medium opacity-90 mb-2">Saved per department / month</div>
-                  <div className="text-xs text-blue-400 opacity-75">Microsoft Copilot Impact Study, 2024</div>
+                  <div className="text-5xl font-bold text-blue-300 mb-2">36%</div>
+                  <div className="text-lg font-medium opacity-90 mb-2">Employees feel adequately trained in AI</div>
+                  <div className="text-xs text-blue-400 opacity-75">BCG AI at Work, 2025</div>
                 </div>
               </div>
               <div className="text-center mt-12 pt-12 border-t border-blue-800">
