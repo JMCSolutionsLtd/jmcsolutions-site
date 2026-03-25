@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  html, body {
+    overflow-x: hidden;
+  }
+
   body {
     margin: 0;
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -225,3 +229,53 @@
 .line-expand.visible {
   transform: scaleX(1);
 }
+
+/* ── Hero block mosaic animations ── */
+@keyframes blockBreathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes blockPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(0.96); }
+}
+
+@keyframes nodePulse {
+  0%, 100% { opacity: 1; r: 3; }
+  50% { opacity: 0.3; r: 2; }
+}
+
+@keyframes lineTrace {
+  0% { stroke-dashoffset: 200; }
+  100% { stroke-dashoffset: 0; }
+}
+
+.block-breathe {
+  animation: blockBreathe 4s ease-in-out infinite;
+}
+
+.block-pulse {
+  animation: blockPulse 5s ease-in-out infinite;
+}
+
+.node-pulse {
+  animation: nodePulse 3s ease-in-out infinite;
+}
+
+.hero-lines line {
+  stroke-dasharray: 200;
+  animation: lineTrace 2s ease-out forwards;
+}
+
+.hero-line-1 { animation-delay: 0.2s; stroke-dashoffset: 200; }
+.hero-line-2 { animation-delay: 0.4s; stroke-dashoffset: 200; }
+.hero-line-3 { animation-delay: 0.6s; stroke-dashoffset: 200; }
+.hero-line-4 { animation-delay: 0.5s; stroke-dashoffset: 200; }
+.hero-line-5 { animation-delay: 0.7s; stroke-dashoffset: 200; }
+.hero-line-6 { animation-delay: 0.8s; stroke-dashoffset: 200; }
+.hero-line-7 { animation-delay: 0.3s; stroke-dashoffset: 200; }
+.hero-line-8 { animation-delay: 0.4s; stroke-dashoffset: 200; }
+.hero-line-9 { animation-delay: 0.6s; stroke-dashoffset: 200; }
+.hero-line-10 { animation-delay: 0.7s; stroke-dashoffset: 200; }
+.hero-line-11 { animation-delay: 0.8s; stroke-dashoffset: 200; }

@@ -42,7 +42,7 @@ import amitHeadshot from './assets/amit_headshot.jpeg';
 import badgeAiBusiness from './assets/ai_business_professional_badge.png';
 import badgeAiTransformation from './assets/ai_transformation_leader_badge.png';
 
-// ── Scroll-triggered visibility hook ──
+// ── Scroll-triggered visibility hook (repeats on every scroll in/out) ──
 const useInView = (options = {}) => {
   const ref = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -53,10 +53,7 @@ const useInView = (options = {}) => {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(element);
-        }
+        setIsVisible(entry.isIntersecting);
       },
       { threshold: 0.15, ...options }
     );
@@ -68,26 +65,33 @@ const useInView = (options = {}) => {
   return [ref, isVisible];
 };
 
-// ── Animated counter component ──
+// ── Animated counter component (re-animates each time it scrolls into view) ──
 const AnimatedCounter = ({ end, suffix = '', prefix = '', duration = 2000 }) => {
   const [count, setCount] = useState(0);
   const [ref, isVisible] = useInView();
-  const hasAnimated = useRef(false);
+  const animFrameRef = useRef(null);
 
   useEffect(() => {
-    if (!isVisible || hasAnimated.current) return;
-    hasAnimated.current = true;
-
-    const startTime = performance.now();
-    const animate = (currentTime) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      // Ease-out cubic
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.round(eased * end));
-      if (progress < 1) requestAnimationFrame(animate);
+    if (isVisible) {
+      setCount(0);
+      const startTime = performance.now();
+      const animate = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setCount(Math.round(eased * end));
+        if (progress < 1) {
+          animFrameRef.current = requestAnimationFrame(animate);
+        }
+      };
+      animFrameRef.current = requestAnimationFrame(animate);
+    } else {
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+      setCount(0);
+    }
+    return () => {
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
     };
-    requestAnimationFrame(animate);
   }, [isVisible, end, duration]);
 
   return <span ref={ref}>{prefix}{count}{suffix}</span>;
@@ -991,35 +995,148 @@ Keep responses under 50 words if possible.`;
       {showHome && (
         <>
           {/* Hero Section */}
-          <section id="hero" className="relative pt-[124px] sm:pt-28 pb-16 lg:pt-40 lg:pb-24 overflow-hidden bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 animated-gradient">
-            <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-b from-blue-900 to-blue-950 -z-10 opacity-30" />
-            <div className="absolute top-20 right-10 w-64 h-64 bg-blue-700 rounded-full blur-3xl -z-10 opacity-25 float-orb" />
-            <div className="absolute bottom-20 left-10 w-96 h-96 bg-blue-800 rounded-full blur-3xl -z-10 opacity-20 float-orb-slow" />
-            <div className="absolute top-1/2 left-1/2 w-80 h-80 bg-blue-600 rounded-full blur-3xl -z-10 opacity-10 float-orb-delay" />
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff12_1px,transparent_1px),linear-gradient(to_bottom,#ffffff12_1px,transparent_1px)] bg-[size:24px_24px] -z-10 grid-pattern" />
+          <section id="hero" className="relative pt-[124px] sm:pt-28 pb-16 lg:pt-36 lg:pb-20 overflow-hidden bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 animated-gradient">
+            {/* Background layers */}
+            <div className="absolute top-20 right-10 w-64 h-64 bg-blue-700 rounded-full blur-3xl opacity-25 float-orb" />
+            <div className="absolute bottom-20 left-10 w-96 h-96 bg-blue-800 rounded-full blur-3xl opacity-20 float-orb-slow" />
+            <div className="absolute -top-24 -right-24 w-[500px] h-[500px] bg-blue-400 rounded-full blur-[120px] pulse-glow" />
 
-            {/* Accent glow */}
-            <div className="absolute -top-24 -right-24 w-[500px] h-[500px] bg-blue-400 rounded-full blur-[120px] -z-10 pulse-glow" />
+            {/* Scattered blocks pattern across entire hero */}
+            <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              {/* Scattered blocks — spanning full width */}
+              <rect x="2%" y="15%" width="32" height="32" rx="6" fill="rgba(147,197,253,0.09)" className="block-breathe" style={{animationDelay: '0s'}} />
+              <rect x="8%" y="55%" width="26" height="26" rx="5" fill="rgba(147,197,253,0.08)" className="block-breathe" style={{animationDelay: '1.2s'}} />
+              <rect x="15%" y="30%" width="22" height="22" rx="5" fill="rgba(147,197,253,0.07)" className="block-breathe" style={{animationDelay: '2.4s'}} />
+              <rect x="12%" y="78%" width="28" height="28" rx="6" fill="rgba(147,197,253,0.09)" className="block-breathe" style={{animationDelay: '0.6s'}} />
+              <rect x="22%" y="10%" width="20" height="20" rx="4" fill="rgba(147,197,253,0.07)" className="block-breathe" style={{animationDelay: '3s'}} />
+              <rect x="25%" y="65%" width="24" height="24" rx="5" fill="rgba(147,197,253,0.08)" className="block-breathe" style={{animationDelay: '1.8s'}} />
+              <rect x="30%" y="85%" width="18" height="18" rx="4" fill="rgba(147,197,253,0.06)" className="block-breathe" style={{animationDelay: '2.8s'}} />
+              <rect x="35%" y="20%" width="24" height="24" rx="5" fill="rgba(147,197,253,0.07)" className="block-breathe" style={{animationDelay: '0.4s'}} />
+              <rect x="40%" y="50%" width="20" height="20" rx="4" fill="rgba(147,197,253,0.06)" className="block-breathe" style={{animationDelay: '2s'}} />
+              <rect x="38%" y="90%" width="26" height="26" rx="5" fill="rgba(147,197,253,0.07)" className="block-breathe" style={{animationDelay: '1s'}} />
+              <rect x="48%" y="8%" width="22" height="22" rx="5" fill="rgba(147,197,253,0.07)" className="block-breathe" style={{animationDelay: '3.2s'}} />
+              <rect x="52%" y="42%" width="18" height="18" rx="4" fill="rgba(147,197,253,0.06)" className="block-breathe" style={{animationDelay: '0.8s'}} />
+              <rect x="55%" y="72%" width="28" height="28" rx="6" fill="rgba(147,197,253,0.08)" className="block-breathe" style={{animationDelay: '2.2s'}} />
+              <rect x="62%" y="18%" width="20" height="20" rx="4" fill="rgba(147,197,253,0.07)" className="block-breathe" style={{animationDelay: '1.4s'}} />
+              <rect x="68%" y="60%" width="24" height="24" rx="5" fill="rgba(147,197,253,0.07)" className="block-breathe" style={{animationDelay: '0.2s'}} />
+              <rect x="72%" y="88%" width="22" height="22" rx="5" fill="rgba(147,197,253,0.06)" className="block-breathe" style={{animationDelay: '2.6s'}} />
+              <rect x="78%" y="35%" width="18" height="18" rx="4" fill="rgba(147,197,253,0.06)" className="block-breathe" style={{animationDelay: '1.6s'}} />
+              <rect x="82%" y="75%" width="26" height="26" rx="5" fill="rgba(147,197,253,0.08)" className="block-breathe" style={{animationDelay: '3.4s'}} />
+              <rect x="88%" y="12%" width="24" height="24" rx="5" fill="rgba(147,197,253,0.08)" className="block-breathe" style={{animationDelay: '0.5s'}} />
+              <rect x="92%" y="48%" width="20" height="20" rx="4" fill="rgba(147,197,253,0.06)" className="block-breathe" style={{animationDelay: '2.1s'}} />
+              <rect x="95%" y="82%" width="18" height="18" rx="4" fill="rgba(147,197,253,0.07)" className="block-breathe" style={{animationDelay: '1.3s'}} />
+              {/* Node dots scattered */}
+              <circle cx="5%" cy="40%" r="2.5" fill="rgba(147,197,253,0.12)" className="node-pulse" style={{animationDelay: '0.5s'}} />
+              <circle cx="18%" cy="22%" r="2.5" fill="rgba(147,197,253,0.1)" className="node-pulse" style={{animationDelay: '1.5s'}} />
+              <circle cx="33%" cy="70%" r="2" fill="rgba(147,197,253,0.09)" className="node-pulse" style={{animationDelay: '2.5s'}} />
+              <circle cx="45%" cy="30%" r="2.5" fill="rgba(147,197,253,0.1)" className="node-pulse" style={{animationDelay: '0.8s'}} />
+              <circle cx="58%" cy="55%" r="2" fill="rgba(147,197,253,0.09)" className="node-pulse" style={{animationDelay: '1.8s'}} />
+              <circle cx="75%" cy="25%" r="2.5" fill="rgba(147,197,253,0.1)" className="node-pulse" style={{animationDelay: '3s'}} />
+              <circle cx="85%" cy="65%" r="2" fill="rgba(147,197,253,0.09)" className="node-pulse" style={{animationDelay: '0.3s'}} />
+              <circle cx="93%" cy="38%" r="2.5" fill="rgba(147,197,253,0.1)" className="node-pulse" style={{animationDelay: '2.3s'}} />
+            </svg>
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
-              <div className="max-w-4xl">
-                <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-white mb-8 drop-shadow-lg hero-reveal hero-reveal-delay-1">
-                  Empowering SMEs to Adopt AI <br className="hidden lg:block" />
-                  <span className="text-blue-100">
-                    Safely and Effectively
-                  </span>
-                </h1>
-                <p className="text-lg sm:text-xl text-blue-50 max-w-2xl leading-relaxed mb-8 hero-reveal hero-reveal-delay-2">
-                  As a Microsoft Partner, we help to make your organisation future-ready with Microsoft 365 Copilot training and enablement, as well as through smart automations built compliantly around your data.
-                </p>
+              <div className="grid xl:grid-cols-2 gap-12 xl:gap-16 items-center">
+                {/* Left: Text content */}
+                <div>
+                  <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.5rem] xl:text-[3.8rem] 2xl:text-[4.2rem] font-bold leading-[1.12] tracking-tight text-white mb-8 drop-shadow-lg hero-reveal hero-reveal-delay-1">
+                    Empowering SMEs<br />
+                    to Adopt AI{' '}<span className="text-blue-200">Safely</span><br />
+                    <span className="text-blue-200">and Effectively</span>
+                  </h1>
+                  <p className="text-lg sm:text-xl text-blue-100/80 max-w-xl leading-relaxed mb-8 hero-reveal hero-reveal-delay-2">
+                    As a Microsoft Partner, we help to make your organisation future-ready with Microsoft 365 Copilot training and enablement, as well as through smart automations built compliantly around your data.
+                  </p>
 
-                <div className="flex flex-col sm:flex-row gap-4 mt-3 hero-reveal hero-reveal-delay-3">
-                  <button
-                    onClick={() => scrollToSection('contact')}
-                    className="group px-8 py-4 bg-white text-blue-900 font-bold hover:bg-blue-50 transition-all shadow-2xl flex items-center justify-center gap-2 rounded-lg"
-                  >
-                    Book a Discovery Call <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                  </button>
+                  <div className="flex flex-col sm:flex-row gap-4 mt-3 hero-reveal hero-reveal-delay-3">
+                    <button
+                      onClick={() => scrollToSection('contact')}
+                      className="group px-8 py-4 bg-white text-blue-900 font-bold hover:bg-blue-50 transition-all shadow-2xl flex items-center justify-center gap-2 rounded-lg"
+                    >
+                      Book a Discovery Call <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Right: Brand block mosaic — cubes only, no lines */}
+                <div className="hidden xl:flex items-center justify-center hero-reveal hero-reveal-delay-2">
+                  <svg viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-[460px]">
+                    <defs>
+                      <radialGradient id="blockGlow" cx="50%" cy="45%" r="50%">
+                        <stop offset="0%" stopColor="rgba(96,165,250,0.3)" />
+                        <stop offset="100%" stopColor="rgba(96,165,250,0)" />
+                      </radialGradient>
+                      <filter id="softGlow">
+                        <feGaussianBlur stdDeviation="4" result="blur" />
+                        <feMerge>
+                          <feMergeNode in="blur" />
+                          <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                      </filter>
+                      <filter id="glass">
+                        <feGaussianBlur stdDeviation="1" result="blur" />
+                        <feMerge>
+                          <feMergeNode in="blur" />
+                          <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                      </filter>
+                      <linearGradient id="glassGrad1" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stopColor="rgba(255,255,255,0.15)" />
+                        <stop offset="100%" stopColor="rgba(255,255,255,0.03)" />
+                      </linearGradient>
+                      <linearGradient id="glassGrad2" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stopColor="rgba(147,197,253,0.25)" />
+                        <stop offset="100%" stopColor="rgba(147,197,253,0.05)" />
+                      </linearGradient>
+                      <linearGradient id="accentGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stopColor="rgba(30,58,138,0.95)" />
+                        <stop offset="100%" stopColor="rgba(29,78,216,0.7)" />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Ambient glow */}
+                    <circle cx="250" cy="220" r="200" fill="url(#blockGlow)" />
+
+                    {/* Large glass cubes — staircase ascending bottom-left to top-right */}
+                    {/* Bottom tier */}
+                    <rect x="30" y="330" width="72" height="72" rx="14" fill="url(#glassGrad2)" stroke="rgba(147,197,253,0.12)" strokeWidth="1" className="block-breathe" style={{animationDelay: '0s'}} />
+                    <rect x="30" y="245" width="72" height="72" rx="14" fill="url(#glassGrad2)" stroke="rgba(147,197,253,0.15)" strokeWidth="1" className="block-breathe" style={{animationDelay: '0.4s'}} />
+
+                    {/* Second tier */}
+                    <rect x="115" y="245" width="72" height="72" rx="14" fill="url(#glassGrad1)" stroke="rgba(255,255,255,0.1)" strokeWidth="1" className="block-breathe" style={{animationDelay: '0.2s'}} />
+                    <rect x="115" y="160" width="72" height="72" rx="14" fill="url(#glassGrad1)" stroke="rgba(255,255,255,0.12)" strokeWidth="1" className="block-breathe" style={{animationDelay: '0.6s'}} />
+
+                    {/* Third tier */}
+                    <rect x="200" y="160" width="72" height="72" rx="14" fill="url(#glassGrad2)" stroke="rgba(147,197,253,0.15)" strokeWidth="1" className="block-breathe" style={{animationDelay: '0.3s'}} />
+                    <rect x="200" y="75" width="72" height="72" rx="14" fill="url(#glassGrad1)" stroke="rgba(255,255,255,0.12)" strokeWidth="1" className="block-breathe" style={{animationDelay: '0.8s'}} />
+
+                    {/* Fourth tier */}
+                    <rect x="285" y="75" width="72" height="72" rx="14" fill="url(#glassGrad2)" stroke="rgba(147,197,253,0.12)" strokeWidth="1" className="block-breathe" style={{animationDelay: '0.5s'}} />
+                    <rect x="285" y="160" width="72" height="72" rx="14" fill="url(#glassGrad1)" stroke="rgba(255,255,255,0.08)" strokeWidth="1" className="block-breathe" style={{animationDelay: '1s'}} />
+
+                    {/* Top tier — peak */}
+                    <rect x="370" y="0" width="72" height="72" rx="14" fill="url(#glassGrad1)" stroke="rgba(255,255,255,0.1)" strokeWidth="1" className="block-breathe" style={{animationDelay: '0.7s'}} />
+                    <rect x="370" y="75" width="72" height="72" rx="14" fill="url(#glassGrad2)" stroke="rgba(147,197,253,0.1)" strokeWidth="1" className="block-breathe" style={{animationDelay: '1.2s'}} />
+
+                    {/* Accent cubes — solid brand navy, glowing, overlapping the glass */}
+                    <rect x="125" y="170" width="52" height="52" rx="12" fill="url(#accentGrad)" filter="url(#softGlow)" className="block-pulse" style={{animationDelay: '0s'}} />
+                    <rect x="210" y="85" width="52" height="52" rx="12" fill="url(#accentGrad)" filter="url(#softGlow)" className="block-pulse" style={{animationDelay: '2s'}} />
+                    <rect x="380" y="10" width="52" height="52" rx="12" fill="url(#accentGrad)" filter="url(#softGlow)" className="block-pulse" style={{animationDelay: '4s'}} />
+
+                    {/* Floating small cubes — scattered for depth */}
+                    <rect x="40" y="160" width="32" height="32" rx="7" fill="url(#glassGrad1)" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" className="block-breathe" style={{animationDelay: '1.5s'}} />
+                    <rect x="350" y="250" width="36" height="36" rx="8" fill="url(#glassGrad2)" stroke="rgba(147,197,253,0.08)" strokeWidth="0.5" className="block-breathe" style={{animationDelay: '2.5s'}} />
+                    <rect x="420" y="180" width="28" height="28" rx="6" fill="url(#glassGrad1)" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" className="block-breathe" style={{animationDelay: '1.8s'}} />
+                    <rect x="160" y="340" width="24" height="24" rx="5" fill="rgba(147,197,253,0.1)" className="block-breathe" style={{animationDelay: '3s'}} />
+                    <rect x="450" y="120" width="20" height="20" rx="4" fill="rgba(147,197,253,0.08)" className="block-breathe" style={{animationDelay: '2.2s'}} />
+                    <rect x="310" y="260" width="22" height="22" rx="5" fill="rgba(147,197,253,0.07)" className="block-breathe" style={{animationDelay: '3.5s'}} />
+
+                    {/* Tiny accent cubes */}
+                    <rect x="80" y="420" width="16" height="16" rx="3" fill="rgba(147,197,253,0.06)" className="block-breathe" style={{animationDelay: '2.8s'}} />
+                    <rect x="440" y="300" width="18" height="18" rx="4" fill="rgba(147,197,253,0.05)" className="block-breathe" style={{animationDelay: '1.2s'}} />
+                    <rect x="250" y="280" width="14" height="14" rx="3" fill="rgba(147,197,253,0.06)" className="block-breathe" style={{animationDelay: '3.8s'}} />
+                  </svg>
                 </div>
               </div>
             </div>
