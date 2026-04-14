@@ -305,3 +305,15 @@
 .hero-line-9 { animation-delay: 0.6s; stroke-dashoffset: 200; }
 .hero-line-10 { animation-delay: 0.7s; stroke-dashoffset: 200; }
 .hero-line-11 { animation-delay: 0.8s; stroke-dashoffset: 200; }
+
+/* Hero gradient layers for platform toggle transitions */
+.hero-gradient-layer {
+  transition: opacity 0.6s ease-in-out;
+  position: absolute;
+  inset: 0;
+}
+
+/* Platform content fade transition */
+.platform-fade {
+  transition: opacity 0.3s ease-in-out;
+}

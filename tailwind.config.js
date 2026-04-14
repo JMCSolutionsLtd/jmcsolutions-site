@@ -16,6 +16,14 @@ export default {
           700: '#1d4ed8',
           50: '#eff6ff',
         },
+        claude: {
+          900: '#92400e',
+          800: '#b45309',
+          700: '#d97706',
+          600: '#d97706',
+          100: '#fef3c7',
+          50: '#fffbeb',
+        },
       },
       boxShadow: {
         'card': '0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.03)',

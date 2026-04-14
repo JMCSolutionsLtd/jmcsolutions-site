@@ -33,7 +33,9 @@ import {
   Package,
   User,
   ExternalLink,
-  Phone
+  Phone,
+  Calendar,
+  Clock
 } from 'lucide-react';
 import logo from './assets/JMC Solutions_v2_1.png';
 import footerLogo from './assets/JMC Solutions_v2_4.png';
@@ -41,6 +43,8 @@ import finHeadshot from './assets/fin_headshot.jpeg';
 import amitHeadshot from './assets/amit_headshot.jpeg';
 import badgeAiBusiness from './assets/ai_business_professional_badge.png';
 import badgeAiTransformation from './assets/ai_transformation_leader_badge.png';
+import claudeLogo from './assets/claude-ai-icon.png';
+import copilotLogo from './assets/Copilot-Logo.png';
 
 // ── Scroll-triggered visibility hook (repeats on every scroll in/out) ──
 const useInView = (options = {}) => {
@@ -222,15 +226,15 @@ const FAQPage = ({ onBack, onGetInTouch }) => {
       items: [
         {
           q: "What services does JMC Solutions offer?",
-          a: "We offer end-to-end AI enablement for businesses: AI Foundations (tenant readiness and governance), Microsoft Copilot Enablement, AI Training, Process Automation, and Machine Learning solutions. Our engagements range from focused Copilot rollouts to broader digital transformation programmes."
+          a: "We offer end-to-end AI enablement for businesses: AI Foundations (tenant readiness and governance), Microsoft Copilot Enablement, Claude AI Enablement, AI Training, Process Automation, and Machine Learning solutions. Our engagements range from focused platform rollouts to broader dual-platform digital transformation programmes."
         },
         {
           q: "Do we need to already have Microsoft 365 Copilot licences?",
-          a: "No. We can advise on licensing as part of our engagement, and our AI Foundations module prepares your environment before you activate Copilot. If you already have licences, we can start enablement immediately."
+          a: "Not necessarily. We can advise on licensing as part of our engagement, and our AI Foundations module prepares your environment before you activate Copilot. If you're interested in Claude instead, no Microsoft licensing is required \u2014 we help you set up and integrate Claude separately. If you already have Copilot licences, we can start enablement immediately."
         },
         {
           q: "How long does a typical engagement take?",
-          a: "It depends on your scope. A focused Copilot rollout (Foundations + Enablement + Training) typically spans 6-10 weeks. More complex programmes including automations or machine learning are scoped individually on your Discovery Call."
+          a: "It depends on your scope. A focused Copilot or Claude rollout (Foundations + Enablement + Training) typically spans 6\u201310 weeks. A dual-platform programme may take 8\u201314 weeks. More complex programmes including automations or machine learning are scoped individually on your Discovery Call."
         },
         {
           q: "Can you work with our existing IT team or MSP?",
@@ -238,7 +242,28 @@ const FAQPage = ({ onBack, onGetInTouch }) => {
         },
         {
           q: "Do you offer ongoing support after a project completes?",
-          a: "Yes. We offer retainer-based support, periodic reviews, and new-feature enablement as Microsoft and other platforms continue to evolve. Many clients engage us on an ongoing basis as their AI landscape matures."
+          a: "Yes. We offer retainer-based support, periodic reviews, and new-feature enablement as Microsoft, Anthropic, and other platforms continue to evolve. Many clients engage us on an ongoing basis as their AI landscape matures."
+        }
+      ]
+    },
+    {
+      category: "Choosing the Right AI Platform",
+      items: [
+        {
+          q: "Should we choose Microsoft Copilot or Claude?",
+          a: "It depends on your tech stack and use cases. If your organisation runs heavily on Microsoft 365, Copilot integrates natively into Word, Excel, Teams, and Outlook. If you use Google Workspace, Slack, or need advanced reasoning and document analysis, Claude may be a better fit. Many organisations benefit from both. Our Discovery Call helps you decide."
+        },
+        {
+          q: "Can we use both Copilot and Claude together?",
+          a: "Yes. Many organisations use Copilot for Microsoft 365 productivity and Claude for deeper analytical tasks, document processing, or customer-facing applications. We help design a strategy that avoids duplication and maximises value from each platform."
+        },
+        {
+          q: "What is Claude and how is it different from Copilot?",
+          a: "Claude is Anthropic\u2019s AI assistant, known for strong reasoning, long document comprehension, and safety-focused design. Unlike Copilot, which is embedded in Microsoft 365 apps, Claude is accessed via API or web interface and can be integrated into a wider range of workflows and applications."
+        },
+        {
+          q: "Do you have a partnership with Anthropic?",
+          a: "We are experienced Claude practitioners with deep knowledge of Anthropic\u2019s platform, API integration, and enterprise deployment patterns. We help organisations implement Claude with the same rigour and governance we apply to Microsoft Copilot engagements."
         }
       ]
     },
@@ -267,12 +292,12 @@ const FAQPage = ({ onBack, onGetInTouch }) => {
       category: "About JMC Solutions",
       items: [
         {
-          q: "How is JMC Solutions different from going directly to Microsoft?",
-          a: "Microsoft provides the tools - we provide the strategy, governance, training, and change management to ensure those tools actually get used and deliver measurable value. Many organisations buy Copilot and see low adoption without structured enablement support."
+          q: "How is JMC Solutions different from going directly to Microsoft or Anthropic?",
+          a: "Platform vendors provide the tools \u2014 we provide the strategy, governance, training, and change management to ensure those tools actually get used and deliver measurable value. Many organisations buy AI tools and see low adoption without structured enablement support. We bridge that gap for both Copilot and Claude."
         },
         {
-          q: "Are you Microsoft-certified?",
-          a: "Both co-founders hold industry certifications in AI and business transformation including the AI Business Professional Certification (AB-730). We stay current with Microsoft's evolving Copilot and Azure AI stack and maintain close familiarity with their licensing and deployment models."
+          q: "Are you certified in AI platforms?",
+          a: "Both co-founders hold industry certifications in AI and business transformation including the AI Business Professional Certification (AB-730). We stay current with Microsoft\u2019s evolving Copilot and Azure AI stack, as well as Anthropic\u2019s Claude platform, API capabilities, and enterprise deployment patterns."
         },
         {
           q: "What industries do you work in?",
@@ -367,15 +392,30 @@ const JMCWebsite = () => {
   const [isSending, setIsSending] = useState(false);
   const [sendStatus, setSendStatus] = useState(null); // 'success', 'error', or null
 
+  // Discovery Call Booking State
+  const [showBooking, setShowBooking] = useState(false);
+  const [bookingDate, setBookingDate] = useState('');
+  const [bookingTime, setBookingTime] = useState('');
+  const [bookingName, setBookingName] = useState('');
+  const [bookingEmail, setBookingEmail] = useState('');
+  const [bookingCompany, setBookingCompany] = useState('');
+  const [isBooking, setIsBooking] = useState(false);
+  const [bookingStatus, setBookingStatus] = useState(null);
+
   // Selection State
   const [selectedModules, setSelectedModules] = useState([]);
   const [expandedModules, setExpandedModules] = useState([]);
+
+  // Platform Selection State
+  const [activePlatform, setActivePlatform] = useState('both');
+  const [selectedStack, setSelectedStack] = useState([]);
+  const [showStackSelector, setShowStackSelector] = useState(false);
 
   // AI Feature States - Joanna Chatbot
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatInput, setChatInput] = useState('');
   const [chatMessages, setChatMessages] = useState([
-    { role: 'assistant', text: "Hello! I'm Joanna, the JMC AI assistant. Ask me about Copilot, Automation, or how we can help your business." }
+    { role: 'assistant', text: "Hello! I'm Joanna, the JMC AI assistant. Ask me about Copilot, Claude, Automation, or how we can help your business." }
   ]);
   const [isChatLoading, setIsChatLoading] = useState(false);
   const chatEndRef = useRef(null);
@@ -428,19 +468,28 @@ const JMCWebsite = () => {
     );
   };
 
-  const bundles = {
-    training: ['training', 'retainer'],
-    airollout: ['foundations', 'copilot', 'training', 'retainer'],
-    automate: ['foundations', 'copilot', 'training', 'automations', 'retainer'],
-    complete: ['foundations', 'copilot', 'training', 'automations', 'ml', 'retainer']
+
+  // ── Platform-aware bundles ──
+  const getBundles = (platform) => {
+    const enablement = platform === 'claude' ? ['claude']
+      : platform === 'copilot' ? ['copilot']
+      : ['copilot', 'claude'];
+
+    return {
+      training: ['training', 'retainer'],
+      airollout: ['foundations', ...enablement, 'training', 'retainer'],
+      automate: ['foundations', ...enablement, 'training', 'automations', 'retainer'],
+      complete: ['foundations', ...enablement, 'training', 'automations', 'ml', 'retainer']
+    };
   };
+
+  const bundles = getBundles(activePlatform);
 
   // Determine active bundle based on current selections
   const getActiveBundle = () => {
     const activeKey = Object.keys(bundles).find(key => {
       const bundleServices = bundles[key];
-      // Check if selectedModules contains exactly the same elements as bundleServices
-      return bundleServices.length === selectedModules.length && 
+      return bundleServices.length === selectedModules.length &&
              bundleServices.every(service => selectedModules.includes(service));
     });
     return activeKey || null;
@@ -449,14 +498,14 @@ const JMCWebsite = () => {
   const activeBundle = getActiveBundle();
 
   const handleBundleClick = (bundleKey) => {
-    // If clicking the currently active bundle, deselect all
     if (activeBundle === bundleKey) {
       setSelectedModules([]);
     } else {
-      // Otherwise select the new bundle
       setSelectedModules(bundles[bundleKey]);
     }
   };
+
+  // visibleModules moved below serviceModules definition
 
   const isPartnerCardExpanded = (cardId) => hoveredPartnerCard === cardId || expandedPartnerCard === cardId;
 
@@ -464,20 +513,104 @@ const JMCWebsite = () => {
     setExpandedPartnerCard((prev) => (prev === cardId ? null : cardId));
   };
 
+
+  // ── Platform content map — all platform-varying copy in one place ──
+  const platformContent = {
+    copilot: {
+      hero: {
+        heading: <>Empowering SMEs<br />to Adopt <span className="text-blue-200">Microsoft Copilot</span><br /><span className="text-blue-200">Safely and Effectively</span></>,
+        subtext: 'As a Microsoft Partner, we help to make your organisation future-ready with Microsoft 365 Copilot training and enablement, as well as through smart automations built compliantly around your data.',
+      },
+      governance: 'Copilot requires clean data permissions. We ensure your AI adoption doesn\'t expose sensitive information or create compliance risks.',
+      foundationsSummary: 'The solid starting point. We prepare your Microsoft 365 environment to ensure AI is accurate, secure, and compliant.',
+      foundationsDesc: 'Prepare the organisation\u2019s Microsoft 365 environment so AI, automation, and intelligent agents can operate accurately, securely, and compliantly.',
+      retainerIncludes: 'Copilot Usage Analysis & Tuning',
+    },
+    claude: {
+      hero: {
+        heading: <>Empowering SMEs<br />to Adopt <span className="text-amber-200">Claude AI</span><br /><span className="text-amber-200">Safely and Effectively</span></>,
+        subtext: 'We help your organisation harness Claude\u2019s advanced reasoning, document analysis, and workflow capabilities \u2014 governed, adopted, and delivering measurable value.',
+      },
+      governance: 'Claude needs well-structured data access and clear usage policies. We ensure your AI adoption doesn\u2019t expose sensitive information or create compliance risks.',
+      foundationsSummary: 'The solid starting point. We prepare your data environment and access policies to ensure AI is accurate, secure, and compliant.',
+      foundationsDesc: 'Prepare your organisation\u2019s data environment and access policies so Claude and AI agents can operate accurately, securely, and compliantly.',
+      retainerIncludes: 'Claude Usage Analysis & Tuning',
+    },
+    both: {
+      hero: {
+        heading: <>Empowering SMEs<br />to Adopt AI{' '}<span className="text-blue-200">Safely</span><br /><span className="text-blue-200">and Effectively</span></>,
+        subtext: 'We help organisations adopt the right AI platform for their stack \u2014 whether Microsoft Copilot, Anthropic Claude, or both \u2014 with structured enablement, governance, and measurable adoption outcomes.',
+      },
+      governance: 'AI tools require clean data permissions and clear policies. We ensure your adoption doesn\u2019t expose sensitive information or create compliance risks.',
+      foundationsSummary: 'The solid starting point. We prepare your environment to ensure AI is accurate, secure, and compliant.',
+      foundationsDesc: 'Prepare your organisation\u2019s environment so AI, automation, and intelligent agents can operate accurately, securely, and compliantly.',
+      retainerIncludes: 'AI Platform Usage Analysis & Tuning',
+    }
+  };
+
+  // ── Tech stack data for recommendation engine ──
+  const techStacks = [
+    { id: 'microsoft365', label: 'Microsoft 365', recommended: 'copilot' },
+    { id: 'google_workspace', label: 'Google Workspace', recommended: 'claude' },
+    { id: 'slack', label: 'Slack', recommended: 'claude' },
+    { id: 'teams', label: 'Microsoft Teams', recommended: 'copilot' },
+    { id: 'sharepoint', label: 'SharePoint', recommended: 'copilot' },
+    { id: 'notion', label: 'Notion', recommended: 'claude' },
+    { id: 'salesforce', label: 'Salesforce', recommended: 'both' },
+    { id: 'custom_crm', label: 'Custom CRM / ERP', recommended: 'both' },
+    { id: 'zendesk', label: 'Zendesk', recommended: 'claude' },
+    { id: 'hubspot', label: 'HubSpot', recommended: 'both' },
+  ];
+
+  const getStackRecommendation = (stack) => {
+    if (stack.length === 0) return null;
+    let copilotScore = 0;
+    let claudeScore = 0;
+    stack.forEach(id => {
+      const tool = techStacks.find(t => t.id === id);
+      if (tool) {
+        if (tool.recommended === 'copilot') copilotScore += 2;
+        else if (tool.recommended === 'claude') claudeScore += 2;
+        else { copilotScore += 1; claudeScore += 1; }
+      }
+    });
+    if (copilotScore > 0 && claudeScore === 0) return 'copilot';
+    if (claudeScore > 0 && copilotScore === 0) return 'claude';
+    return 'both';
+  };
+
+  const stackRecommendation = getStackRecommendation(selectedStack);
+
+  const handlePlatformChange = (platform) => {
+    setActivePlatform(platform);
+    // Clear module selection when platform changes since bundles will differ
+    setSelectedModules([]);
+  };
+
+  // ── Resolve platform-specific includes text ──
+  const resolveIncludes = (includes) =>
+    includes.map(item => {
+      if (typeof item === 'string') return item;
+      if (item.platforms.includes(activePlatform)) return item.text;
+      return null;
+    }).filter(Boolean);
+
+
   const serviceModules = [
     {
       id: 'foundations',
       title: 'AI Foundations',
       icon: ShieldCheck,
       badge: 'Recommended Foundation',
-      summary: 'The solid starting point. We prepare your Microsoft 365 environment to ensure AI is accurate, secure, and compliant.',
-      desc: 'Prepare the organisation’s Microsoft 365 environment so AI, automation, and intelligent agents can operate accurately, securely, and compliantly.',
+      summary: platformContent[activePlatform].foundationsSummary,
+      desc: platformContent[activePlatform].foundationsDesc,
       includes: [
-        'Full Data Audit (SharePoint, OneDrive, Teams)',
+        'Full Data & Permissions Audit',
         'Permissions Audit & Risk Assessment',
         'Governance Setup & Standardisation',
         'Remediation & Cleanup of high-risk items'
-      ]
+      ],
+      platforms: ['copilot', 'claude', 'both']
     },
     {
       id: 'copilot',
@@ -490,7 +623,22 @@ const JMCWebsite = () => {
         'Admin Configuration & Policy Setup',
         'Department-specific Prompt Libraries',
         'Security & Compliance Configuration'
-      ]
+      ],
+      platforms: ['copilot', 'both']
+    },
+    {
+      id: 'claude',
+      title: 'Claude AI Enablement',
+      icon: Bot,
+      summary: 'Technical deployment and configuration to integrate Anthropic Claude across your organisation\u2019s workflows.',
+      desc: 'We handle API setup, workspace integration, prompt engineering, and governance to ensure Claude delivers value from day one across document analysis, customer support, and knowledge work.',
+      includes: [
+        'API & Workspace Integration Setup',
+        'Prompt Library Design & Deployment',
+        'Knowledge Base Configuration',
+        'Usage Policies & Safety Guardrails'
+      ],
+      platforms: ['claude', 'both']
     },
     {
       id: 'training',
@@ -505,24 +653,26 @@ const JMCWebsite = () => {
         'Department-level Prompt Libraries & Use Cases',
         'Usage Optimisation Workshops',
         'Change Management Support'
-      ]
+      ],
+      platforms: ['copilot', 'claude', 'both']
     },
     {
       id: 'automations',
       title: 'AI Automations',
       icon: Zap,
-      summary: 'Replace repetitive work with intelligent workflows and deploy secure, context-aware AI agents across Microsoft and external platforms.',
+      summary: 'Replace repetitive work with intelligent workflows and deploy secure, context-aware AI agents across your platforms.',
       desc: 'Eliminate manual, repetitive work with intelligent automation and purpose-built AI agents. From workflow automation and document processing to governed, context-aware agents capable of acting on behalf of your organisation, this service covers the full spectrum of AI-driven efficiency.',
       includes: [
         'Process Mapping & ROI Prioritisation',
-        'Power Automate Workflows & Document Processing',
+        'Workflow Automation & Document Processing',
         'Voice Agents & Messaging Bots',
         'Cross-system Integrations & Website Creation',
         'Agent Blueprinting & Persona Design',
         'Knowledge Retrieval & Task Execution',
         'Secure Connectors (Salesforce, SQL, etc.)',
         'Guardrails & Safety Governance'
-      ]
+      ],
+      platforms: ['copilot', 'claude', 'both']
     },
     {
       id: 'ml',
@@ -535,7 +685,8 @@ const JMCWebsite = () => {
         'Pattern & Anomaly Detection',
         'Python-based Analytics Pipelines',
         'Compliance-focused Deterministic Models'
-      ]
+      ],
+      platforms: ['copilot', 'claude', 'both']
     },
     {
       id: 'retainer',
@@ -545,13 +696,19 @@ const JMCWebsite = () => {
       desc: 'AI does not deliver value through one-off deployment. Ongoing training, optimisation, and governance are essential to ensure AI systems remain accurate. We also keep you updated with the latest AI releases so you remain at the forefront of innovation.',
       includes: [
         'Regular Refresher Training',
-        'Copilot Usage Analysis & Tuning',
+        platformContent[activePlatform].retainerIncludes,
         'Automation Reliability Improvements',
         'Agent Behaviour Refinement',
         'Updates on Latest AI Features & Releases'
-      ]
+      ],
+      platforms: ['copilot', 'claude', 'both']
     }
   ];
+
+  // ── Filter service modules by active platform ──
+  const visibleModules = serviceModules.filter(m =>
+    m.platforms.includes(activePlatform)
+  );
 
   // --- Gemini API Integration ---
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
@@ -602,8 +759,8 @@ const JMCWebsite = () => {
 
     try {
       const systemPrompt = `You are a senior AI consultant at JMC Solutions. For the given industry, return EXACTLY FOUR use cases, one in each of these categories:
-1. "individual_productivity" — How Microsoft 365 Copilot can boost an individual employee's day-to-day productivity (e.g. drafting, summarising, data analysis).
-2. "team_collaboration" — How Copilot can enhance team collaboration and communication (e.g. meeting recaps, shared knowledge, project coordination).
+1. "individual_productivity" — How AI tools like Microsoft Copilot or Claude can boost an individual employee's day-to-day productivity (e.g. drafting, summarising, data analysis, document review).
+2. "team_collaboration" — How AI can enhance team collaboration and communication (e.g. meeting recaps, shared knowledge, project coordination).
 3. "workflow_automation" — A workflow automation or simple agentic AI use case such as an internal assistant, approvals bot, or document routing.
 4. "data_analytics" — A machine learning or data analytics use case such as forecasting, anomaly detection, or performance dashboards.
 
@@ -720,6 +877,68 @@ const JMCWebsite = () => {
     }
   };
 
+  // ── Discovery Call Booking ──
+  const getAvailableDates = () => {
+    const dates = [];
+    const now = new Date();
+    for (let i = 1; dates.length < 14; i++) {
+      const d = new Date(now);
+      d.setDate(now.getDate() + i);
+      const day = d.getDay();
+      if (day !== 0 && day !== 6) dates.push(d); // skip weekends
+    }
+    return dates;
+  };
+
+  const timeSlots = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30'];
+
+  const handleBookCall = async (e) => {
+    e.preventDefault();
+    if (!bookingDate || !bookingTime || !bookingName || !bookingEmail) {
+      setBookingStatus({ type: 'error', message: 'Please fill in all required fields.' });
+      return;
+    }
+
+    setIsBooking(true);
+    setBookingStatus(null);
+
+    try {
+      const dateObj = new Date(bookingDate);
+      const formattedDate = dateObj.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: bookingName.split(' ')[0] || bookingName,
+          lastName: bookingName.split(' ').slice(1).join(' ') || '',
+          email: bookingEmail,
+          company: bookingCompany || 'Not specified',
+          message: `DISCOVERY CALL BOOKING\n\nDate: ${formattedDate}\nTime: ${bookingTime} (UK time)\nDuration: 30 minutes\n\nBooked by: ${bookingName}\nEmail: ${bookingEmail}\nCompany: ${bookingCompany || 'Not specified'}`
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setBookingStatus({ type: 'error', message: data.error || 'Failed to book. Please try again.' });
+        return;
+      }
+
+      setBookingStatus({ type: 'success', message: `Booked! Your Discovery Call is confirmed for ${formattedDate} at ${bookingTime}. We'll send a confirmation to ${bookingEmail}.` });
+      setBookingDate('');
+      setBookingTime('');
+      setBookingName('');
+      setBookingEmail('');
+      setBookingCompany('');
+    } catch (error) {
+      console.error('Booking error:', error);
+      setBookingStatus({ type: 'error', message: 'Network error. Please try again.' });
+    } finally {
+      setIsBooking(false);
+    }
+  };
+
   const handleChatSubmit = async (e) => {
     e.preventDefault();
     if (!chatInput.trim()) return;
@@ -731,15 +950,18 @@ const JMCWebsite = () => {
 
     try {
       const systemPrompt = `You are Joanna, the AI assistant for JMC Solutions Ltd.
-We are a premium AI consultancy helping SMEs implement Microsoft Copilot, Power Automate, and Custom AI Assistants.
+We are a premium AI consultancy helping SMEs implement Microsoft Copilot, Anthropic Claude, Power Automate, and Custom AI Assistants.
 
 Our Services:
 1. AI Foundations: Data audits, security, and governance.
-2. Copilot 365 Enablement: Technical setup and configuration.
-3. AI Training & Effective Adoption: Tiered, role-based training programmes tailored to client needs, plus adoption tracking.
-4. AI Automations: Intelligent workflow automation, AI agents, voice agents, and process automation across Microsoft and external platforms.
-5. Machine Learning & Advanced Analytics: Bespoke models and predictive analytics.
-6. Ongoing Support & Optimisation: Continuous optimization and updates.
+2. Copilot 365 Enablement: Technical setup and configuration for Microsoft 365 Copilot.
+3. Claude AI Enablement: API setup, workspace integration, prompt engineering, and governance for Anthropic Claude.
+4. AI Training & Effective Adoption: Tiered, role-based training programmes tailored to client needs, plus adoption tracking.
+5. AI Automations: Intelligent workflow automation, AI agents, voice agents, and process automation across platforms.
+6. Machine Learning & Advanced Analytics: Bespoke models and predictive analytics.
+7. Ongoing Support & Optimisation: Continuous optimization and updates.
+
+We support businesses with either platform individually or both together, depending on their existing tools and needs.
 
 Goal: Answer questions briefly and professionally. Always encourage the user to 'Book a Discovery Call' for complex queries.
 Keep responses under 50 words if possible.`;
@@ -831,32 +1053,37 @@ Keep responses under 50 words if possible.`;
     });
   };
 
+  const aiRolloutDesc = activePlatform === 'copilot' ? 'Copilot Setup & Training'
+    : activePlatform === 'claude' ? 'Claude Setup & Training'
+    : 'AI Platform Setup & Training';
+
   const bundleConfig = {
-    training: { 
-      label: 'Training', 
+    training: {
+      label: 'Training',
       desc: 'Training & Support',
       colorClass: 'bg-red-50 border-red-200 hover:border-red-400',
       activeClass: 'ring-2 ring-red-500 border-red-500 bg-red-100'
     },
-    airollout: { 
-      label: 'AI Rollout', 
-      desc: 'Copilot Setup & Training',
+    airollout: {
+      label: 'AI Rollout',
+      desc: aiRolloutDesc,
       colorClass: 'bg-orange-50 border-orange-200 hover:border-orange-400',
       activeClass: 'ring-2 ring-orange-500 border-orange-500 bg-orange-100'
     },
-    automate: { 
-      label: 'Automate', 
+    automate: {
+      label: 'Automate',
       desc: 'AI Rollout & Automations',
       colorClass: 'bg-yellow-50 border-yellow-200 hover:border-yellow-400',
       activeClass: 'ring-2 ring-yellow-500 border-yellow-500 bg-yellow-100'
     },
-    complete: { 
-      label: 'Complete', 
+    complete: {
+      label: 'Complete',
       desc: 'Everything Including ML',
       colorClass: 'bg-green-50 border-green-200 hover:border-green-400',
       activeClass: 'ring-2 ring-green-500 border-green-500 bg-green-100'
     }
   };
+
 
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900 selection:bg-blue-100">
@@ -995,11 +1222,15 @@ Keep responses under 50 words if possible.`;
       {showHome && (
         <>
           {/* Hero Section */}
-          <section id="hero" className="relative pt-[124px] sm:pt-28 pb-16 lg:pt-36 lg:pb-20 overflow-hidden bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 animated-gradient">
+          <section id="hero" className="relative pt-[124px] sm:pt-28 pb-16 lg:pt-36 lg:pb-20 overflow-hidden">
+            {/* Layered gradient backgrounds for smooth platform transitions */}
+            <div className={`hero-gradient-layer bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 animated-gradient ${activePlatform === 'claude' ? 'opacity-0' : 'opacity-100'}`} />
+            <div className={`hero-gradient-layer bg-gradient-to-br from-amber-950 via-amber-900 to-amber-800 animated-gradient ${activePlatform === 'claude' ? 'opacity-100' : 'opacity-0'}`} />
+
             {/* Background layers */}
-            <div className="absolute top-20 right-10 w-64 h-64 bg-blue-700 rounded-full blur-3xl opacity-25 float-orb" />
-            <div className="absolute bottom-20 left-10 w-96 h-96 bg-blue-800 rounded-full blur-3xl opacity-20 float-orb-slow" />
-            <div className="absolute -top-24 -right-24 w-[500px] h-[500px] bg-blue-400 rounded-full blur-[120px] pulse-glow" />
+            <div className={`absolute top-20 right-10 w-64 h-64 rounded-full blur-3xl opacity-25 float-orb transition-colors duration-600 ${activePlatform === 'claude' ? 'bg-amber-700' : 'bg-blue-700'}`} />
+            <div className={`absolute bottom-20 left-10 w-96 h-96 rounded-full blur-3xl opacity-20 float-orb-slow transition-colors duration-600 ${activePlatform === 'claude' ? 'bg-amber-800' : 'bg-blue-800'}`} />
+            <div className={`absolute -top-24 -right-24 w-[500px] h-[500px] rounded-full blur-[120px] pulse-glow transition-colors duration-600 ${activePlatform === 'claude' ? 'bg-amber-400' : 'bg-blue-400'}`} />
 
             {/* Scattered blocks pattern across entire hero */}
             <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -1046,7 +1277,7 @@ Keep responses under 50 words if possible.`;
                     <span className="text-blue-200">and Effectively</span>
                   </h1>
                   <p className="text-lg sm:text-xl text-blue-100/80 max-w-xl leading-relaxed mb-8 hero-reveal hero-reveal-delay-2">
-                    As a Microsoft Partner, we help to make your organisation future-ready with Microsoft 365 Copilot training and enablement, as well as through smart automations built compliantly around your data.
+                    Whether it's Copilot or Claude, we help businesses get real results from AI. Setup, training, adoption and automation done to best suit your company.
                   </p>
 
                   <div className="flex flex-col sm:flex-row gap-4 mt-3 hero-reveal hero-reveal-delay-3">
@@ -1276,7 +1507,7 @@ Keep responses under 50 words if possible.`;
                     }`}
                   >
                     <p className="text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
-                      We align deployment, governance, and security controls to Microsoft best practice so your team can adopt Copilot and automation safely at scale.
+                      We align deployment, governance, and security controls to best practice so your team can adopt AI platforms like Copilot and Claude safely at scale.
                     </p>
                   </div>
                 </button>
@@ -1366,6 +1597,120 @@ Keep responses under 50 words if possible.`;
                 </p>
               </Reveal>
 
+              {/* Platform Selector + Tech Stack */}
+              <div className="max-w-3xl mx-auto mb-12">
+                <Reveal>
+                  <h4 className="text-center text-sm font-bold text-slate-500 uppercase tracking-wider mb-6">
+                    Which AI platform are you interested in?
+                  </h4>
+                  <div className="grid grid-cols-3 gap-3 mb-6">
+                    {[
+                      { key: 'copilot', label: 'Microsoft Copilot', logo: copilotLogo, logoSize: 'w-20 h-20', desc: 'Embedded in Microsoft 365', borderColor: 'border-blue-500', ringColor: 'ring-blue-500', bgColor: 'bg-blue-50', textColor: 'text-blue-700' },
+                      { key: 'both', label: 'Both Platforms', logo: null, desc: 'Get the best of both', borderColor: 'border-purple-500', ringColor: 'ring-purple-500', bgColor: 'bg-purple-50', textColor: 'text-purple-700' },
+                      { key: 'claude', label: 'Claude AI', logo: claudeLogo, logoSize: 'w-10 h-10', desc: 'Advanced reasoning & analysis', borderColor: 'border-amber-500', ringColor: 'ring-amber-500', bgColor: 'bg-amber-50', textColor: 'text-amber-700' },
+                    ].map(opt => {
+                      const isActive = activePlatform === opt.key;
+                      return (
+                        <button
+                          key={opt.key}
+                          onClick={() => handlePlatformChange(opt.key)}
+                          className={`p-4 rounded-xl border-2 transition-all duration-300 text-center ${
+                            isActive
+                              ? `${opt.borderColor} ${opt.ringColor} ring-1 ${opt.bgColor} shadow-md`
+                              : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm'
+                          }`}
+                        >
+                          <div className="h-14 flex items-center justify-center mb-2">
+                            {opt.logo ? (
+                              <img src={opt.logo} alt={opt.label} className={`${opt.logoSize} object-contain rounded-lg transition-opacity ${isActive ? 'opacity-100' : 'opacity-50 grayscale'}`} />
+                            ) : (
+                              <div className="flex items-center gap-1 justify-center">
+                                <img src={copilotLogo} alt="Copilot" className={`w-10 h-10 object-contain rounded transition-opacity ${isActive ? 'opacity-100' : 'opacity-50 grayscale'}`} />
+                                <span className={`text-xs font-bold ${isActive ? 'text-purple-400' : 'text-slate-300'}`}>+</span>
+                                <img src={claudeLogo} alt="Claude" className={`w-6 h-6 object-contain rounded transition-opacity ${isActive ? 'opacity-100' : 'opacity-50 grayscale'}`} />
+                              </div>
+                            )}
+                          </div>
+                          <div className="font-bold text-slate-900 text-sm">{opt.label}</div>
+                          <div className="text-xs text-slate-500 mt-0.5 hidden sm:block">{opt.desc}</div>
+                          <div className="h-5 mt-1 flex items-center justify-center">
+                            {isActive && <CheckCircle2 size={14} className={opt.textColor} />}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Tech Stack Selector */}
+                  <div className="text-center">
+                    <button
+                      onClick={() => setShowStackSelector(!showStackSelector)}
+                      className="text-xs font-semibold text-blue-600 hover:text-blue-800 transition-colors inline-flex items-center gap-1"
+                    >
+                      {showStackSelector ? 'Hide' : 'Not sure?'} Tell us your tech stack for a recommendation
+                      <ChevronDown size={14} className={`transition-transform duration-200 ${showStackSelector ? 'rotate-180' : ''}`} />
+                    </button>
+                  </div>
+
+                  <div className={`transition-[max-height,opacity] duration-300 ease-in-out overflow-hidden ${showStackSelector ? 'max-h-[400px] opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
+                    <div className="bg-slate-50 rounded-xl border border-slate-200 p-5">
+                      <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Select the tools your organisation uses:</p>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {techStacks.map(tool => {
+                          const isSelected = selectedStack.includes(tool.id);
+                          return (
+                            <button
+                              key={tool.id}
+                              onClick={() => setSelectedStack(prev =>
+                                prev.includes(tool.id) ? prev.filter(s => s !== tool.id) : [...prev, tool.id]
+                              )}
+                              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all border ${
+                                isSelected
+                                  ? 'bg-blue-600 text-white border-blue-600'
+                                  : 'bg-white text-slate-600 border-slate-200 hover:border-blue-300 hover:text-blue-600'
+                              }`}
+                            >
+                              {isSelected && <Check size={12} />}
+                              {tool.label}
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      {stackRecommendation && selectedStack.length > 0 && (
+                        <div className="bg-white rounded-lg border border-blue-100 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                          <div>
+                            <p className="text-sm font-bold text-slate-900">
+                              Based on your tools, we recommend:{' '}
+                              <span className={
+                                stackRecommendation === 'copilot' ? 'text-blue-700'
+                                : stackRecommendation === 'claude' ? 'text-amber-700'
+                                : 'text-purple-700'
+                              }>
+                                {stackRecommendation === 'copilot' ? 'Microsoft Copilot'
+                                  : stackRecommendation === 'claude' ? 'Claude AI'
+                                  : 'Both Platforms'}
+                              </span>
+                            </p>
+                            <p className="text-xs text-slate-500 mt-0.5">You can adjust this manually at any time.</p>
+                          </div>
+                          <button
+                            onClick={() => handlePlatformChange(stackRecommendation)}
+                            className={`px-4 py-2 rounded-lg text-xs font-bold text-white transition-all shrink-0 ${
+                              stackRecommendation === 'copilot' ? 'bg-blue-600 hover:bg-blue-700'
+                              : stackRecommendation === 'claude' ? 'bg-amber-600 hover:bg-amber-700'
+                              : 'bg-purple-600 hover:bg-purple-700'
+                            }`}
+                          >
+                            Apply Recommendation
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </Reveal>
+              </div>
+
               <div className="max-w-4xl mx-auto">
                 <div className="mb-12">
                   <h4 className="text-center text-sm font-bold text-slate-500 uppercase tracking-wider mb-6">
@@ -1398,7 +1743,7 @@ Keep responses under 50 words if possible.`;
                   </div>
                 </div>
 
-                 {serviceModules.map((module, index) => {
+                 {visibleModules.map((module, index) => {
                     const isSelected = selectedModules.includes(module.id);
                     const isExpanded = expandedModules.includes(module.id);
                     const Icon = module.icon;
@@ -1506,7 +1851,7 @@ Keep responses under 50 words if possible.`;
                   </div>
                   <h3 className="text-xl font-bold mb-3 text-slate-900">Governance & Security</h3>
                   <p className="text-slate-600 leading-relaxed">
-                    Copilot requires clean data permissions. We ensure your AI adoption doesn't expose sensitive information or create compliance risks.
+                    {platformContent[activePlatform].governance}
                   </p>
                 </div>
                 <div className="bg-white p-8 rounded-none border-l-4 border-blue-600 shadow-sm hover:shadow-md transition-all card-lift">
@@ -1688,20 +2033,122 @@ Keep responses under 50 words if possible.`;
                         </div>
                         <a href="tel:+447842964555" className="text-slate-700 hover:text-blue-900 transition-colors">+44 7842 964555</a>
                       </div>
-
                     </div>
+
+                    <button
+                      onClick={() => setShowBooking(!showBooking)}
+                      className={`w-full flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm transition-all shadow-sm ${
+                        showBooking
+                          ? 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                          : 'bg-blue-900 text-white hover:bg-blue-800 shadow-blue-900/20'
+                      }`}
+                    >
+                      <Calendar size={16} />
+                      {showBooking ? 'Hide Calendar' : 'Schedule a Discovery Call'}
+                    </button>
                   </div>
 
-                  <div className="mt-auto rounded-xl overflow-hidden relative w-full shadow-lg flex-grow min-h-[250px]">
-                    <img
-                      src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=2070&auto=format&fit=crop"
-                      alt="Professional consultation"
-                      className="absolute inset-0 w-full h-full object-cover object-[center_20%] hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 to-transparent flex items-end p-6">
-                      <p className="text-white font-medium text-sm">"We partner with you to ensure sustainable adoption."</p>
+                  {!showBooking ? (
+                    <div className="mt-6 rounded-xl overflow-hidden relative w-full shadow-lg flex-grow min-h-[250px]">
+                      <img
+                        src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=2070&auto=format&fit=crop"
+                        alt="Professional consultation"
+                        className="absolute inset-0 w-full h-full object-cover object-[center_20%] hover:scale-105 transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 to-transparent flex items-end p-6">
+                        <p className="text-white font-medium text-sm">"We partner with you to ensure sustainable adoption."</p>
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <form onSubmit={handleBookCall} className="mt-6 bg-slate-50 rounded-xl border border-slate-200 p-6">
+                      <h4 className="font-bold text-slate-900 mb-1">Book Your Free 30-Minute Discovery Call</h4>
+                      <p className="text-xs text-slate-500 mb-5">Pick a date and time that works for you. We'll confirm by email.</p>
+
+                      <div className="grid sm:grid-cols-2 gap-4 mb-4">
+                        <div>
+                          <label className="block text-xs font-bold text-slate-700 mb-1.5">Date *</label>
+                          <input
+                            type="date"
+                            value={bookingDate}
+                            onChange={(e) => setBookingDate(e.target.value)}
+                            min={(() => { const d = new Date(); d.setDate(d.getDate() + 1); return d.toISOString().split('T')[0]; })()}
+                            max={(() => { const d = new Date(); d.setDate(d.getDate() + 30); return d.toISOString().split('T')[0]; })()}
+                            className="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                            <span className="flex items-center gap-1"><Clock size={12} /> Time (UK) *</span>
+                          </label>
+                          <select
+                            value={bookingTime}
+                            onChange={(e) => setBookingTime(e.target.value)}
+                            className="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+                          >
+                            <option value="">Select a time</option>
+                            {timeSlots.map(t => (
+                              <option key={t} value={t}>{t}</option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="space-y-3 mb-4">
+                        <div>
+                          <label className="block text-xs font-bold text-slate-700 mb-1.5">Full Name *</label>
+                          <input
+                            type="text"
+                            value={bookingName}
+                            onChange={(e) => setBookingName(e.target.value)}
+                            placeholder="Jane Smith"
+                            className="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-bold text-slate-700 mb-1.5">Email *</label>
+                          <input
+                            type="email"
+                            value={bookingEmail}
+                            onChange={(e) => setBookingEmail(e.target.value)}
+                            placeholder="jane@company.com"
+                            className="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-bold text-slate-700 mb-1.5">Company</label>
+                          <input
+                            type="text"
+                            value={bookingCompany}
+                            onChange={(e) => setBookingCompany(e.target.value)}
+                            placeholder="Company name (optional)"
+                            className="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          />
+                        </div>
+                      </div>
+
+                      <button
+                        type="submit"
+                        disabled={isBooking}
+                        className="w-full py-3 bg-blue-900 text-white font-bold rounded-lg hover:bg-blue-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      >
+                        {isBooking ? (
+                          <><Loader2 size={18} className="animate-spin" /> Booking...</>
+                        ) : (
+                          <><Calendar size={18} /> Confirm Booking</>
+                        )}
+                      </button>
+
+                      {bookingStatus && (
+                        <div className={`mt-3 p-3 rounded-lg text-sm font-medium ${
+                          bookingStatus.type === 'success'
+                            ? 'bg-green-50 text-green-800 border border-green-200'
+                            : 'bg-red-50 text-red-800 border border-red-200'
+                        }`}>
+                          {bookingStatus.message}
+                        </div>
+                      )}
+                    </form>
+                  )}
                 </Reveal>
 
                 <Reveal type="right">
@@ -1821,13 +2268,14 @@ Keep responses under 50 words if possible.`;
               </Reveal>
               <div className="space-y-2">
                 {[
-                  { q: "What services does JMC Solutions offer?", a: "We offer end-to-end AI enablement for businesses: AI Foundations (tenant readiness and governance), Microsoft Copilot Enablement, AI Training, Process Automation, and Machine Learning solutions. Our engagements range from focused Copilot rollouts to broader digital transformation programmes." },
+                  { q: "What services does JMC Solutions offer?", a: "We offer end-to-end AI enablement for businesses: AI Foundations, Microsoft Copilot Enablement, Claude AI Enablement, AI Training, Process Automation, and Machine Learning solutions. Our engagements range from focused single-platform rollouts to dual-platform digital transformation programmes." },
+                  { q: "Do you support AI platforms other than Microsoft Copilot?", a: "Yes. We offer full enablement for both Microsoft Copilot and Anthropic Claude. Whether your organisation uses Microsoft 365, Google Workspace, or a mix of tools, we help you adopt the right AI platform \u2014 or both \u2014 with structured governance, training, and measurable adoption outcomes." },
                   { q: "Do you offer different levels of training?", a: "Yes. We offer flexible training packages including 2-hour, 4-hour, 8-hour, and 16-hour sessions, delivered over a timeline that suits your organisation. All packages can include hands-on lab sessions for practical, real-world experience." },
-                  { q: "Do we need to already have Microsoft 365 Copilot licences?", a: "No. We can advise on licensing as part of our engagement, and our AI Foundations module prepares your environment before you activate Copilot. If you already have licences, we can start enablement immediately." },
-                  { q: "How long does a typical engagement take?", a: "It depends on your scope. A focused Copilot rollout (Foundations + Enablement + Training) typically spans 6-10 weeks. More complex programmes including automations or machine learning are scoped individually on your Discovery Call." },
+                  { q: "How long does a typical engagement take?", a: "It depends on your scope. A focused Copilot or Claude rollout typically spans 6\u201310 weeks. Dual-platform programmes may take 8\u201314 weeks. More complex programmes including automations or machine learning are scoped individually on your Discovery Call." },
+                  { q: "How do I know which AI platform is right for my business?", a: "It depends on your existing tech stack and use cases. Microsoft 365 users often benefit most from Copilot, while Google Workspace or Slack-heavy organisations may find Claude a better fit. Many businesses benefit from both. Book a Discovery Call and we\u2019ll help you decide." },
                   { q: "What does a Discovery Call involve?", a: "It's a free, no-obligation 30-minute conversation to understand your current environment, your goals, and the challenges you're facing. From there, we'll outline the most appropriate approach and a clear next step." },
                   { q: "We're a small business, are JMC right for us?", a: "Absolutely. We specialise in helping SMEs access the same calibre of AI capability as enterprise organisations, without the overhead. Our services are modular so you can start small and scale as confidence and ROI grows." },
-                  { q: "How is JMC Solutions different from going directly to Microsoft?", a: "Microsoft provides the tools - we provide the strategy, governance, training, and change management to ensure those tools actually get used and deliver measurable value. Many organisations buy Copilot and see low adoption without structured enablement support." },
+                  { q: "How is JMC Solutions different from going directly to a vendor?", a: "Platform vendors provide the tools \u2014 we provide the strategy, governance, training, and change management to ensure those tools actually get used and deliver measurable value. Many organisations buy AI tools and see low adoption without structured enablement support." },
                 ].map((faq, i) => (
                   <div key={i} className="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm">
                     <button
