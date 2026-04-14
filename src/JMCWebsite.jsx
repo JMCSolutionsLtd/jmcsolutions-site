@@ -396,7 +396,8 @@ const JMCWebsite = () => {
   const [showBooking, setShowBooking] = useState(false);
   const [bookingDate, setBookingDate] = useState('');
   const [bookingTime, setBookingTime] = useState('');
-  const [bookingName, setBookingName] = useState('');
+  const [bookingFirstName, setBookingFirstName] = useState('');
+  const [bookingLastName, setBookingLastName] = useState('');
   const [bookingEmail, setBookingEmail] = useState('');
   const [bookingCompany, setBookingCompany] = useState('');
   const [isBooking, setIsBooking] = useState(false);
@@ -894,7 +895,7 @@ const JMCWebsite = () => {
 
   const handleBookCall = async (e) => {
     e.preventDefault();
-    if (!bookingDate || !bookingTime || !bookingName || !bookingEmail) {
+    if (!bookingDate || !bookingTime || !bookingFirstName || !bookingLastName || !bookingEmail) {
       setBookingStatus({ type: 'error', message: 'Please fill in all required fields.' });
       return;
     }
@@ -910,11 +911,11 @@ const JMCWebsite = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          firstName: bookingName.split(' ')[0] || bookingName,
-          lastName: bookingName.split(' ').slice(1).join(' ') || '',
+          firstName: bookingFirstName,
+          lastName: bookingLastName,
           email: bookingEmail,
           company: bookingCompany || 'Not specified',
-          message: `DISCOVERY CALL BOOKING\n\nDate: ${formattedDate}\nTime: ${bookingTime} (UK time)\nDuration: 30 minutes\n\nBooked by: ${bookingName}\nEmail: ${bookingEmail}\nCompany: ${bookingCompany || 'Not specified'}`
+          message: `DISCOVERY CALL BOOKING\n\nDate: ${formattedDate}\nTime: ${bookingTime} (UK time)\nDuration: 30 minutes\n\nBooked by: ${bookingFirstName} ${bookingLastName}\nEmail: ${bookingEmail}\nCompany: ${bookingCompany || 'Not specified'}`
         })
       });
 
@@ -928,7 +929,8 @@ const JMCWebsite = () => {
       setBookingStatus({ type: 'success', message: `Booked! Your Discovery Call is confirmed for ${formattedDate} at ${bookingTime}. We'll send a confirmation to ${bookingEmail}.` });
       setBookingDate('');
       setBookingTime('');
-      setBookingName('');
+      setBookingFirstName('');
+      setBookingLastName('');
       setBookingEmail('');
       setBookingCompany('');
     } catch (error) {
@@ -1223,14 +1225,13 @@ Keep responses under 50 words if possible.`;
         <>
           {/* Hero Section */}
           <section id="hero" className="relative pt-[124px] sm:pt-28 pb-16 lg:pt-36 lg:pb-20 overflow-hidden">
-            {/* Layered gradient backgrounds for smooth platform transitions */}
-            <div className={`hero-gradient-layer bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 animated-gradient ${activePlatform === 'claude' ? 'opacity-0' : 'opacity-100'}`} />
-            <div className={`hero-gradient-layer bg-gradient-to-br from-amber-950 via-amber-900 to-amber-800 animated-gradient ${activePlatform === 'claude' ? 'opacity-100' : 'opacity-0'}`} />
+            {/* Hero gradient background */}
+            <div className="hero-gradient-layer bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 animated-gradient opacity-100" />
 
             {/* Background layers */}
-            <div className={`absolute top-20 right-10 w-64 h-64 rounded-full blur-3xl opacity-25 float-orb transition-colors duration-600 ${activePlatform === 'claude' ? 'bg-amber-700' : 'bg-blue-700'}`} />
-            <div className={`absolute bottom-20 left-10 w-96 h-96 rounded-full blur-3xl opacity-20 float-orb-slow transition-colors duration-600 ${activePlatform === 'claude' ? 'bg-amber-800' : 'bg-blue-800'}`} />
-            <div className={`absolute -top-24 -right-24 w-[500px] h-[500px] rounded-full blur-[120px] pulse-glow transition-colors duration-600 ${activePlatform === 'claude' ? 'bg-amber-400' : 'bg-blue-400'}`} />
+            <div className="absolute top-20 right-10 w-64 h-64 rounded-full blur-3xl opacity-25 float-orb bg-blue-700" />
+            <div className="absolute bottom-20 left-10 w-96 h-96 rounded-full blur-3xl opacity-20 float-orb-slow bg-blue-800" />
+            <div className="absolute -top-24 -right-24 w-[500px] h-[500px] rounded-full blur-[120px] pulse-glow bg-blue-400" />
 
             {/* Scattered blocks pattern across entire hero */}
             <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -2094,15 +2095,27 @@ Keep responses under 50 words if possible.`;
                       </div>
 
                       <div className="space-y-3 mb-4">
-                        <div>
-                          <label className="block text-xs font-bold text-slate-700 mb-1.5">Full Name *</label>
-                          <input
-                            type="text"
-                            value={bookingName}
-                            onChange={(e) => setBookingName(e.target.value)}
-                            placeholder="Jane Smith"
-                            className="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                          />
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <label className="block text-xs font-bold text-slate-700 mb-1.5">First Name *</label>
+                            <input
+                              type="text"
+                              value={bookingFirstName}
+                              onChange={(e) => setBookingFirstName(e.target.value)}
+                              placeholder="Jane"
+                              className="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-bold text-slate-700 mb-1.5">Last Name *</label>
+                            <input
+                              type="text"
+                              value={bookingLastName}
+                              onChange={(e) => setBookingLastName(e.target.value)}
+                              placeholder="Smith"
+                              className="w-full px-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            />
+                          </div>
                         </div>
                         <div>
                           <label className="block text-xs font-bold text-slate-700 mb-1.5">Email *</label>
