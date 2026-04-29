@@ -1,6 +1,11 @@
 /**
  * MFA routes — TOTP setup, verification, and management.
  * Works with Microsoft Authenticator, Google Authenticator, etc.
+ *
+ * MFA is per-user: primary account holders sit on `clients`, alias users
+ * sit on `client_users`. Each row has its own `mfa_secret` / `mfa_enabled`
+ * / `mfa_backup_codes`. The authenticated `req.client.userType` decides
+ * which table a request operates on.
  */
 import { Router } from 'express';
 import * as OTPAuth from 'otpauth';
@@ -16,15 +21,42 @@ router.use(requireAuth);
 
 const ISSUER = 'JMC Solutions Portal';
 
+// Resolve the row that owns MFA state for the authenticated user.
+function loadEntity(req) {
+  if (req.client.userType === 'alias') {
+    const row = queryOne(
+      'SELECT id, email, mfa_secret, mfa_enabled, mfa_backup_codes FROM client_users WHERE id = ?',
+      [req.client.userId]
+    );
+    if (!row) return null;
+    return { ...row, table: 'client_users' };
+  }
+  const row = queryOne(
+    'SELECT id, email, mfa_secret, mfa_enabled, mfa_backup_codes FROM clients WHERE id = ?',
+    [req.client.clientId]
+  );
+  if (!row) return null;
+  return { ...row, table: 'clients' };
+}
+
+// Build an UPDATE statement for either table. `clients` carries `updated_at`,
+// `client_users` does not, so we conditionally append the bookkeeping column.
+function updateEntity(table, id, fields) {
+  const sets = Object.keys(fields).map((k) => `${k} = ?`);
+  if (table === 'clients') sets.push("updated_at = datetime('now')");
+  const sql = `UPDATE ${table} SET ${sets.join(', ')} WHERE id = ?`;
+  execute(sql, [...Object.values(fields), id]);
+}
+
 /**
  * Generate a new TOTP secret and return QR code for setup.
  * POST /api/portal/mfa/setup
  */
 router.post('/setup', (req, res) => {
-  const client = queryOne('SELECT id, email, mfa_enabled FROM clients WHERE id = ?', [req.client.clientId]);
-  if (!client) return res.status(404).json({ error: 'Client not found.' });
+  const entity = loadEntity(req);
+  if (!entity) return res.status(404).json({ error: 'Account not found.' });
 
-  if (client.mfa_enabled) {
+  if (entity.mfa_enabled) {
     return res.status(400).json({ error: 'MFA is already enabled. Disable it first to reconfigure.' });
   }
 
@@ -32,7 +64,7 @@ router.post('/setup', (req, res) => {
   const secret = new OTPAuth.Secret({ size: 20 });
   const totp = new OTPAuth.TOTP({
     issuer: ISSUER,
-    label: client.email,
+    label: entity.email,
     algorithm: 'SHA1',
     digits: 6,
     period: 30,
@@ -42,10 +74,7 @@ router.post('/setup', (req, res) => {
   const otpauthUrl = totp.toString();
 
   // Store the secret temporarily (not yet enabled)
-  execute('UPDATE clients SET mfa_secret = ?, updated_at = datetime(\'now\') WHERE id = ?', [
-    secret.base32,
-    client.id,
-  ]);
+  updateEntity(entity.table, entity.id, { mfa_secret: secret.base32 });
 
   // Generate QR code as data URL
   QRCode.toDataURL(otpauthUrl, { width: 256, margin: 1 })
@@ -73,21 +102,19 @@ router.post('/verify-setup', (req, res) => {
     return res.status(400).json({ error: 'Verification code is required.' });
   }
 
-  const client = queryOne('SELECT id, email, mfa_secret, mfa_enabled FROM clients WHERE id = ?', [
-    req.client.clientId,
-  ]);
-  if (!client) return res.status(404).json({ error: 'Client not found.' });
-  if (client.mfa_enabled) return res.status(400).json({ error: 'MFA is already enabled.' });
-  if (!client.mfa_secret) return res.status(400).json({ error: 'No MFA setup in progress. Start setup first.' });
+  const entity = loadEntity(req);
+  if (!entity) return res.status(404).json({ error: 'Account not found.' });
+  if (entity.mfa_enabled) return res.status(400).json({ error: 'MFA is already enabled.' });
+  if (!entity.mfa_secret) return res.status(400).json({ error: 'No MFA setup in progress. Start setup first.' });
 
   // Verify the code
   const totp = new OTPAuth.TOTP({
     issuer: ISSUER,
-    label: client.email,
+    label: entity.email,
     algorithm: 'SHA1',
     digits: 6,
     period: 30,
-    secret: OTPAuth.Secret.fromBase32(client.mfa_secret),
+    secret: OTPAuth.Secret.fromBase32(entity.mfa_secret),
   });
 
   const delta = totp.validate({ token: code.trim(), window: 1 });
@@ -101,10 +128,10 @@ router.post('/verify-setup', (req, res) => {
   );
 
   // Enable MFA
-  execute(
-    'UPDATE clients SET mfa_enabled = 1, mfa_backup_codes = ?, updated_at = datetime(\'now\') WHERE id = ?',
-    [JSON.stringify(backupCodes), client.id]
-  );
+  updateEntity(entity.table, entity.id, {
+    mfa_enabled: 1,
+    mfa_backup_codes: JSON.stringify(backupCodes),
+  });
 
   res.json({
     success: true,
@@ -116,14 +143,10 @@ router.post('/verify-setup', (req, res) => {
 /**
  * Verify TOTP code during login (called after password check).
  * POST /api/portal/mfa/verify
- * Body: { code: "123456", mfaToken: "..." }
  *
- * Note: mfaToken is a temporary token issued after password verification.
+ * Note: actual verification happens at /api/portal/auth/mfa-verify.
  */
 router.post('/verify', (req, res) => {
-  // This route doesn't use requireAuth — it uses a temporary MFA token.
-  // We override the middleware at the router level for this specific case.
-  // Actually, this is handled directly in auth.js login flow.
   res.status(501).json({ error: 'Use /auth/mfa-verify instead.' });
 });
 
@@ -138,20 +161,18 @@ router.post('/disable', (req, res) => {
     return res.status(400).json({ error: 'Current TOTP code is required to disable MFA.' });
   }
 
-  const client = queryOne('SELECT id, email, mfa_secret, mfa_enabled FROM clients WHERE id = ?', [
-    req.client.clientId,
-  ]);
-  if (!client) return res.status(404).json({ error: 'Client not found.' });
-  if (!client.mfa_enabled) return res.status(400).json({ error: 'MFA is not enabled.' });
+  const entity = loadEntity(req);
+  if (!entity) return res.status(404).json({ error: 'Account not found.' });
+  if (!entity.mfa_enabled) return res.status(400).json({ error: 'MFA is not enabled.' });
 
   // Verify code before disabling
   const totp = new OTPAuth.TOTP({
     issuer: ISSUER,
-    label: client.email,
+    label: entity.email,
     algorithm: 'SHA1',
     digits: 6,
     period: 30,
-    secret: OTPAuth.Secret.fromBase32(client.mfa_secret),
+    secret: OTPAuth.Secret.fromBase32(entity.mfa_secret),
   });
 
   const delta = totp.validate({ token: code.trim(), window: 1 });
@@ -159,10 +180,25 @@ router.post('/disable', (req, res) => {
     return res.status(400).json({ error: 'Invalid code. MFA was not disabled.' });
   }
 
-  execute(
-    'UPDATE clients SET mfa_enabled = 0, mfa_secret = NULL, mfa_backup_codes = NULL, updated_at = datetime(\'now\') WHERE id = ?',
-    [client.id]
-  );
+  updateEntity(entity.table, entity.id, {
+    mfa_enabled: 0,
+    mfa_secret: null,
+    mfa_backup_codes: null,
+  });
+
+  // Clear any trusted devices for this specific user.
+  const clientUserId = entity.table === 'client_users' ? entity.id : null;
+  if (clientUserId) {
+    execute(
+      'DELETE FROM mfa_trusted_devices WHERE client_id = ? AND client_user_id = ?',
+      [req.client.clientId, clientUserId]
+    );
+  } else {
+    execute(
+      'DELETE FROM mfa_trusted_devices WHERE client_id = ? AND client_user_id IS NULL',
+      [req.client.clientId]
+    );
+  }
 
   res.json({ success: true, message: 'MFA has been disabled.' });
 });
@@ -172,10 +208,10 @@ router.post('/disable', (req, res) => {
  * GET /api/portal/mfa/status
  */
 router.get('/status', (req, res) => {
-  const client = queryOne('SELECT mfa_enabled FROM clients WHERE id = ?', [req.client.clientId]);
-  if (!client) return res.status(404).json({ error: 'Client not found.' });
+  const entity = loadEntity(req);
+  if (!entity) return res.status(404).json({ error: 'Account not found.' });
 
-  res.json({ mfaEnabled: !!client.mfa_enabled });
+  res.json({ mfaEnabled: !!entity.mfa_enabled });
 });
 
 export default router;

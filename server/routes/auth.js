@@ -19,14 +19,16 @@ function hashTrustedDeviceToken(token) {
   return crypto.createHash('sha256').update(token).digest('hex');
 }
 
-function createTrustedDeviceToken(clientId) {
+// Trusted devices are per-user. clientUserId === null means the primary
+// account holder; an integer id means an alias user from `client_users`.
+function createTrustedDeviceToken(clientId, clientUserId = null) {
   const trustedDeviceToken = crypto.randomBytes(32).toString('hex');
   const tokenHash = hashTrustedDeviceToken(trustedDeviceToken);
   const expiresAt = Math.floor(Date.now() / 1000) + (TRUSTED_DEVICE_DAYS * 24 * 60 * 60);
 
   execute(
-    'INSERT OR REPLACE INTO mfa_trusted_devices (client_id, token_hash, expires_at, last_used_at) VALUES (?, ?, ?, datetime(\'now\'))',
-    [clientId, tokenHash, expiresAt]
+    'INSERT OR REPLACE INTO mfa_trusted_devices (client_id, client_user_id, token_hash, expires_at, last_used_at) VALUES (?, ?, ?, ?, datetime(\'now\'))',
+    [clientId, clientUserId, tokenHash, expiresAt]
   );
 
   execute('DELETE FROM mfa_trusted_devices WHERE expires_at <= strftime(\'%s\', \'now\')');
@@ -34,27 +36,47 @@ function createTrustedDeviceToken(clientId) {
   return trustedDeviceToken;
 }
 
-function isTrustedDevice(clientId, trustedDeviceToken) {
+function isTrustedDevice(clientId, clientUserId, trustedDeviceToken) {
   if (!trustedDeviceToken || typeof trustedDeviceToken !== 'string') return false;
   const tokenHash = hashTrustedDeviceToken(trustedDeviceToken);
-  const row = queryOne(
-    'SELECT id FROM mfa_trusted_devices WHERE client_id = ? AND token_hash = ? AND expires_at > strftime(\'%s\', \'now\')',
-    [clientId, tokenHash]
-  );
+  const row = clientUserId
+    ? queryOne(
+        'SELECT id FROM mfa_trusted_devices WHERE client_id = ? AND client_user_id = ? AND token_hash = ? AND expires_at > strftime(\'%s\', \'now\')',
+        [clientId, clientUserId, tokenHash]
+      )
+    : queryOne(
+        'SELECT id FROM mfa_trusted_devices WHERE client_id = ? AND client_user_id IS NULL AND token_hash = ? AND expires_at > strftime(\'%s\', \'now\')',
+        [clientId, tokenHash]
+      );
   if (!row) return false;
   execute('UPDATE mfa_trusted_devices SET last_used_at = datetime(\'now\') WHERE id = ?', [row.id]);
   return true;
 }
 
-function authSuccessResponse(client, rememberDevice = false) {
-  const token = signToken(client);
+// Build the success response. `parent` carries the primary client context
+// (id + name), `entity` is the row that actually logged in (primary client
+// or alias user) and owns the per-user MFA state.
+function authSuccessResponse(parent, entity, rememberDevice = false) {
+  const token = signToken({
+    id: parent.id,
+    email: entity.email,
+    userType: entity.type,
+    userId: entity.id,
+  });
+
   const response = {
     token,
-    client: { id: client.id, name: client.name, email: client.email, mfaEnabled: !!client.mfa_enabled },
+    client: {
+      id: parent.id,
+      name: parent.name,
+      email: entity.email,
+      mfaEnabled: !!entity.mfa_enabled,
+    },
   };
 
   if (rememberDevice) {
-    response.trustedDeviceToken = createTrustedDeviceToken(client.id);
+    const clientUserId = entity.type === 'alias' ? entity.id : null;
+    response.trustedDeviceToken = createTrustedDeviceToken(parent.id, clientUserId);
   }
 
   return response;
@@ -70,68 +92,82 @@ router.post('/login', loginRateLimit, (req, res) => {
 
   const normalizedEmail = email.toLowerCase().trim();
 
-  // Check primary clients table first
+  // Resolve the login: primary client OR alias user.
   let client = queryOne('SELECT * FROM clients WHERE email = ?', [normalizedEmail]);
-  let isAliasUser = false;
+  let aliasUser = null;
 
-  // If not found in clients, check client_users (alias users)
   if (!client) {
-    const aliasUser = queryOne('SELECT * FROM client_users WHERE email = ?', [normalizedEmail]);
+    aliasUser = queryOne('SELECT * FROM client_users WHERE email = ?', [normalizedEmail]);
     if (!aliasUser) {
       return res.status(401).json({ error: 'Invalid email or password.' });
     }
-    const valid = bcrypt.compareSync(password, aliasUser.password_hash);
-    if (!valid) {
+    if (!bcrypt.compareSync(password, aliasUser.password_hash)) {
       return res.status(401).json({ error: 'Invalid email or password.' });
     }
-    // Load the parent client account
     client = queryOne('SELECT * FROM clients WHERE id = ?', [aliasUser.client_id]);
     if (!client) {
       return res.status(401).json({ error: 'Invalid email or password.' });
     }
-    isAliasUser = true;
-    // Override email in the client object for JWT so it reflects the alias user's email
-    client = { ...client, _loginEmail: aliasUser.email };
   } else {
-    const valid = bcrypt.compareSync(password, client.password_hash);
-    if (!valid) {
+    if (!bcrypt.compareSync(password, client.password_hash)) {
       return res.status(401).json({ error: 'Invalid email or password.' });
     }
   }
 
-  // For alias users, skip must_reset_password on the parent, and skip MFA for now
-  // (MFA is account-level — shared across all users of the account)
-  const loginEmail = client._loginEmail || client.email;
+  // The entity that owns per-user state (MFA + trusted devices). Primary
+  // users sit on `clients`; alias users sit on `client_users`.
+  const entity = aliasUser
+    ? {
+        type: 'alias',
+        id: aliasUser.id,
+        email: aliasUser.email,
+        mfa_enabled: aliasUser.mfa_enabled,
+        mfa_secret: aliasUser.mfa_secret,
+        mfa_backup_codes: aliasUser.mfa_backup_codes,
+      }
+    : {
+        type: 'primary',
+        id: client.id,
+        email: client.email,
+        mfa_enabled: client.mfa_enabled,
+        mfa_secret: client.mfa_secret,
+        mfa_backup_codes: client.mfa_backup_codes,
+      };
 
-  // Build a virtual client object for token signing
-  const tokenClient = { id: client.id, name: client.name, email: loginEmail };
+  const parent = { id: client.id, name: client.name };
 
-  // Check if MFA is enabled
-  if (client.mfa_enabled) {
-    if (isTrustedDevice(client.id, trustedDeviceToken)) {
-      return res.json(authSuccessResponse(tokenClient, false));
+  // Per-user MFA gate.
+  if (entity.mfa_enabled) {
+    const clientUserId = entity.type === 'alias' ? entity.id : null;
+    if (isTrustedDevice(parent.id, clientUserId, trustedDeviceToken)) {
+      return res.json(authSuccessResponse(parent, entity, false));
     }
 
-    // Issue a short-lived MFA challenge token (5 minutes)
     const mfaToken = jwt.sign(
-      { clientId: client.id, email: loginEmail, purpose: 'mfa-challenge' },
+      {
+        clientId: parent.id,
+        userType: entity.type,
+        userId: entity.id,
+        email: entity.email,
+        purpose: 'mfa-challenge',
+      },
       JWT_SECRET,
       { expiresIn: '5m' }
     );
     return res.json({ requiresMfa: true, mfaToken });
   }
 
-  // Check if forced password reset is required (only for primary account holder)
-  if (!isAliasUser && client.must_reset_password) {
+  // Forced password reset (primary account holder only).
+  if (!aliasUser && client.must_reset_password) {
     const resetToken = jwt.sign(
-      { clientId: client.id, email: loginEmail, purpose: 'forced-reset' },
+      { clientId: client.id, email: client.email, purpose: 'forced-reset' },
       JWT_SECRET,
       { expiresIn: '15m' }
     );
     return res.json({ requiresPasswordReset: true, resetToken });
   }
 
-  return res.json(authSuccessResponse(tokenClient, false));
+  return res.json(authSuccessResponse(parent, entity, false));
 });
 
 // ── POST /api/portal/auth/mfa-verify ────────────────────────────────────────
@@ -153,40 +189,80 @@ router.post('/mfa-verify', loginRateLimit, (req, res) => {
     return res.status(400).json({ error: 'Invalid MFA token.' });
   }
 
-  const client = queryOne('SELECT * FROM clients WHERE id = ?', [payload.clientId]);
-  if (!client || !client.mfa_enabled) {
-    return res.status(401).json({ error: 'Invalid session.' });
+  // Backwards compat for any in-flight challenge tokens issued before the
+  // per-user refactor: treat missing userType as 'primary'.
+  const userType = payload.userType || 'primary';
+  const userId = payload.userId || payload.clientId;
+
+  const parent = queryOne('SELECT id, name FROM clients WHERE id = ?', [payload.clientId]);
+  if (!parent) return res.status(401).json({ error: 'Invalid session.' });
+
+  let entity;
+  if (userType === 'alias') {
+    const u = queryOne(
+      'SELECT id, client_id, email, mfa_enabled, mfa_secret, mfa_backup_codes FROM client_users WHERE id = ?',
+      [userId]
+    );
+    if (!u || u.client_id !== payload.clientId) {
+      return res.status(401).json({ error: 'Invalid session.' });
+    }
+    entity = {
+      type: 'alias',
+      id: u.id,
+      email: u.email,
+      mfa_enabled: u.mfa_enabled,
+      mfa_secret: u.mfa_secret,
+      mfa_backup_codes: u.mfa_backup_codes,
+    };
+  } else {
+    const c = queryOne(
+      'SELECT id, email, mfa_enabled, mfa_secret, mfa_backup_codes FROM clients WHERE id = ?',
+      [payload.clientId]
+    );
+    if (!c) return res.status(401).json({ error: 'Invalid session.' });
+    entity = {
+      type: 'primary',
+      id: c.id,
+      email: c.email,
+      mfa_enabled: c.mfa_enabled,
+      mfa_secret: c.mfa_secret,
+      mfa_backup_codes: c.mfa_backup_codes,
+    };
   }
+
+  if (!entity.mfa_enabled) return res.status(401).json({ error: 'Invalid session.' });
 
   // Try TOTP code
   const totp = new OTPAuth.TOTP({
     issuer: ISSUER,
-    label: client.email,
+    label: entity.email,
     algorithm: 'SHA1',
     digits: 6,
     period: 30,
-    secret: OTPAuth.Secret.fromBase32(client.mfa_secret),
+    secret: OTPAuth.Secret.fromBase32(entity.mfa_secret),
   });
 
   const delta = totp.validate({ token: code.trim(), window: 1 });
   if (delta !== null) {
-    return res.json(authSuccessResponse(client, !!rememberDevice));
+    return res.json(authSuccessResponse(parent, entity, !!rememberDevice));
   }
 
   // Try backup code
   const normalizedCode = code.trim().toUpperCase();
   let backupCodes = [];
-  try { backupCodes = JSON.parse(client.mfa_backup_codes || '[]'); } catch { /* ignore */ }
+  try { backupCodes = JSON.parse(entity.mfa_backup_codes || '[]'); } catch { /* ignore */ }
 
   const codeIndex = backupCodes.indexOf(normalizedCode);
   if (codeIndex !== -1) {
     backupCodes.splice(codeIndex, 1);
+    const table = entity.type === 'alias' ? 'client_users' : 'clients';
+    const setUpdated = table === 'clients' ? ", updated_at = datetime('now')" : '';
     execute(
-      'UPDATE clients SET mfa_backup_codes = ?, updated_at = datetime(\'now\') WHERE id = ?',
-      [JSON.stringify(backupCodes), client.id]
+      `UPDATE ${table} SET mfa_backup_codes = ?${setUpdated} WHERE id = ?`,
+      [JSON.stringify(backupCodes), entity.id]
     );
     return res.json({
-      ...authSuccessResponse(client, !!rememberDevice),
+      ...authSuccessResponse(parent, entity, !!rememberDevice),
       backupCodeUsed: true,
       backupCodesRemaining: backupCodes.length,
     });
@@ -339,11 +415,25 @@ router.post('/change-password', requireAuth, (req, res) => {
 
 // ── GET /api/portal/auth/verify ─────────────────────────────────────────────
 router.get('/verify', requireAuth, (req, res) => {
-  const client = queryOne('SELECT id, name, email, mfa_enabled FROM clients WHERE id = ?', [req.client.clientId]);
-  if (!client) return res.status(401).json({ error: 'Client not found.' });
+  const parent = queryOne('SELECT id, name FROM clients WHERE id = ?', [req.client.clientId]);
+  if (!parent) return res.status(401).json({ error: 'Client not found.' });
+
+  let displayEmail = req.client.email;
+  let mfaEnabled = false;
+  if (req.client.userType === 'alias') {
+    const u = queryOne('SELECT email, mfa_enabled FROM client_users WHERE id = ?', [req.client.userId]);
+    if (!u) return res.status(401).json({ error: 'Client not found.' });
+    displayEmail = u.email;
+    mfaEnabled = !!u.mfa_enabled;
+  } else {
+    const c = queryOne('SELECT email, mfa_enabled FROM clients WHERE id = ?', [req.client.clientId]);
+    if (!c) return res.status(401).json({ error: 'Client not found.' });
+    displayEmail = c.email;
+    mfaEnabled = !!c.mfa_enabled;
+  }
 
   return res.json({
-    client: { id: client.id, name: client.name, email: client.email, mfaEnabled: !!client.mfa_enabled },
+    client: { id: parent.id, name: parent.name, email: displayEmail, mfaEnabled },
   });
 });
 

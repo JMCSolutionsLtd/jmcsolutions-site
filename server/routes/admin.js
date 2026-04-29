@@ -68,8 +68,60 @@ router.post('/clients', (req, res) => {
 
 // ── GET /api/portal/admin/clients — list all clients ─────────────────────────
 router.get('/clients', (_req, res) => {
-  const clients = queryAll('SELECT id, name, email, created_at FROM clients ORDER BY created_at DESC');
+  const clients = queryAll(
+    'SELECT id, name, email, mfa_enabled, created_at FROM clients ORDER BY created_at DESC'
+  );
+  for (const c of clients) {
+    c.mfa_enabled = !!c.mfa_enabled;
+    c.users = queryAll(
+      'SELECT id, name, email, mfa_enabled, created_at FROM client_users WHERE client_id = ? ORDER BY created_at',
+      [c.id]
+    ).map((u) => ({ ...u, mfa_enabled: !!u.mfa_enabled }));
+  }
   return res.json({ clients });
+});
+
+// ── POST /api/portal/admin/clients/:id/reset-mfa — wipe MFA on a primary client ─
+router.post('/clients/:id/reset-mfa', (req, res) => {
+  const clientId = parseInt(req.params.id, 10);
+  if (isNaN(clientId)) {
+    return res.status(400).json({ error: 'Invalid client ID.' });
+  }
+  const client = queryOne('SELECT id, email FROM clients WHERE id = ?', [clientId]);
+  if (!client) return res.status(404).json({ error: 'Client not found.' });
+
+  execute(
+    "UPDATE clients SET mfa_enabled = 0, mfa_secret = NULL, mfa_backup_codes = NULL, updated_at = datetime('now') WHERE id = ?",
+    [clientId]
+  );
+  // Trusted devices for the primary user are stored with client_user_id IS NULL.
+  execute(
+    'DELETE FROM mfa_trusted_devices WHERE client_id = ? AND client_user_id IS NULL',
+    [clientId]
+  );
+
+  return res.json({ success: true, message: `MFA reset for primary client ${client.email}.` });
+});
+
+// ── POST /api/portal/admin/users/:id/reset-mfa — wipe MFA on an alias user ───
+router.post('/users/:id/reset-mfa', (req, res) => {
+  const userId = parseInt(req.params.id, 10);
+  if (isNaN(userId)) {
+    return res.status(400).json({ error: 'Invalid user ID.' });
+  }
+  const user = queryOne('SELECT id, client_id, email FROM client_users WHERE id = ?', [userId]);
+  if (!user) return res.status(404).json({ error: 'User not found.' });
+
+  execute(
+    'UPDATE client_users SET mfa_enabled = 0, mfa_secret = NULL, mfa_backup_codes = NULL WHERE id = ?',
+    [userId]
+  );
+  execute(
+    'DELETE FROM mfa_trusted_devices WHERE client_id = ? AND client_user_id = ?',
+    [user.client_id, userId]
+  );
+
+  return res.json({ success: true, message: `MFA reset for alias user ${user.email}.` });
 });
 
 // ── POST /api/portal/admin/impersonate — get a JWT for any client ────────────

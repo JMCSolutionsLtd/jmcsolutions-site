@@ -135,15 +135,19 @@ export async function initDb() {
 
   db.run(`
     CREATE TABLE IF NOT EXISTS mfa_trusted_devices (
-      id          INTEGER PRIMARY KEY AUTOINCREMENT,
-      client_id   INTEGER NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
-      token_hash  TEXT    NOT NULL,
-      expires_at  INTEGER NOT NULL,
-      created_at  TEXT    NOT NULL DEFAULT (datetime('now')),
-      last_used_at TEXT   NOT NULL DEFAULT (datetime('now')),
+      id             INTEGER PRIMARY KEY AUTOINCREMENT,
+      client_id      INTEGER NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+      client_user_id INTEGER DEFAULT NULL REFERENCES client_users(id) ON DELETE CASCADE,
+      token_hash     TEXT    NOT NULL,
+      expires_at     INTEGER NOT NULL,
+      created_at     TEXT    NOT NULL DEFAULT (datetime('now')),
+      last_used_at   TEXT    NOT NULL DEFAULT (datetime('now')),
       UNIQUE(client_id, token_hash)
     )
   `);
+
+  // Auto-migration: existing rows have client_user_id NULL (= primary user trusted device).
+  try { db.run('ALTER TABLE mfa_trusted_devices ADD COLUMN client_user_id INTEGER DEFAULT NULL'); } catch (_) {}
 
   // ── client_users: additional users linked to a client account ──────────────
   db.run(`
@@ -154,9 +158,17 @@ export async function initDb() {
       email           TEXT    NOT NULL UNIQUE,
       password_hash   TEXT    NOT NULL,
       must_reset_password INTEGER NOT NULL DEFAULT 0,
+      mfa_secret      TEXT    DEFAULT NULL,
+      mfa_enabled     INTEGER NOT NULL DEFAULT 0,
+      mfa_backup_codes TEXT   DEFAULT NULL,
       created_at      TEXT    NOT NULL DEFAULT (datetime('now'))
     )
   `);
+
+  // Auto-migration: per-user MFA columns on client_users.
+  try { db.run('ALTER TABLE client_users ADD COLUMN mfa_secret TEXT DEFAULT NULL'); } catch (_) {}
+  try { db.run('ALTER TABLE client_users ADD COLUMN mfa_enabled INTEGER NOT NULL DEFAULT 0'); } catch (_) {}
+  try { db.run('ALTER TABLE client_users ADD COLUMN mfa_backup_codes TEXT DEFAULT NULL'); } catch (_) {}
 
   // ── Auto-migration: add levels column to questions table ───────────────────
   try { db.run('ALTER TABLE questions ADD COLUMN levels TEXT DEFAULT NULL'); } catch (_) {}
