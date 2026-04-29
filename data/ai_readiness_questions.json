@@ -1,9 +1,11 @@
 {
   "_comment": "JMC Solutions AI Readiness Assessment - 50 questions across 5 sections. Each question includes readiness level descriptions for scores 1-5. Designed for SMEs beginning a Microsoft 365 Copilot rollout programme.",
   "questions": [
-
     {
-      "id": "bs-01", "category": "Business Strategy & Goals", "order": 1,
+      "id": "bs-01",
+      "category": "Business Strategy & Goals",
+      "order": 1,
+      "lite": true,
       "prompt": "How clearly has your organisation defined AI as part of its overall business strategy?",
       "levels": [
         "AI hasn't been formally considered as part of business planning. There's limited awareness of how it could benefit the organisation.",
@@ -14,7 +16,9 @@
       ]
     },
     {
-      "id": "bs-02", "category": "Business Strategy & Goals", "order": 2,
+      "id": "bs-02",
+      "category": "Business Strategy & Goals",
+      "order": 2,
       "prompt": "How well-defined is your budget and investment plan for AI adoption?",
       "levels": [
         "There's no formal budget or investment plan for AI. Costs are not well understood.",
@@ -25,7 +29,9 @@
       ]
     },
     {
-      "id": "bs-03", "category": "Business Strategy & Goals", "order": 3,
+      "id": "bs-03",
+      "category": "Business Strategy & Goals",
+      "order": 3,
       "prompt": "Does your organisation have a roadmap for AI adoption over the next 12-24 months?",
       "levels": [
         "There is no AI adoption roadmap. AI activity is ad hoc or hasn't started.",
@@ -36,7 +42,10 @@
       ]
     },
     {
-      "id": "bs-04", "category": "Business Strategy & Goals", "order": 4,
+      "id": "bs-04",
+      "category": "Business Strategy & Goals",
+      "order": 4,
+      "lite": true,
       "prompt": "How effectively has your organisation identified the specific use cases where AI could add the most value?",
       "levels": [
         "No AI use cases have been formally identified or documented.",
@@ -47,7 +56,9 @@
       ]
     },
     {
-      "id": "bs-05", "category": "Business Strategy & Goals", "order": 5,
+      "id": "bs-05",
+      "category": "Business Strategy & Goals",
+      "order": 5,
       "prompt": "Does your AI strategy distinguish between quick wins and longer-term initiatives?",
       "levels": [
         "There's no AI strategy, or no distinction is made between short-term and long-term goals.",
@@ -58,8 +69,11 @@
       ]
     },
     {
-      "id": "bs-06", "category": "Business Strategy & Goals", "order": 6,
+      "id": "bs-06",
+      "category": "Business Strategy & Goals",
+      "order": 6,
       "prompt": "How will you measure success from your AI and Copilot investment?",
+      "web_prompt": "How will you measure success from your AI investment?",
       "levels": [
         "Success metrics haven't been defined. There's no framework for tracking value delivered.",
         "There's awareness that success should be tracked, but no formal measures or KPIs are in place.",
@@ -69,7 +83,9 @@
       ]
     },
     {
-      "id": "bs-07", "category": "Business Strategy & Goals", "order": 7,
+      "id": "bs-07",
+      "category": "Business Strategy & Goals",
+      "order": 7,
       "prompt": "How well-communicated is the AI strategy across all levels of the organisation, and how engaged is leadership?",
       "levels": [
         "The AI strategy hasn't been communicated beyond senior leadership, if at all. Leadership engagement is minimal.",
@@ -80,7 +96,9 @@
       ]
     },
     {
-      "id": "bs-08", "category": "Business Strategy & Goals", "order": 8,
+      "id": "bs-08",
+      "category": "Business Strategy & Goals",
+      "order": 8,
       "prompt": "How well does your organisation understand the different types of AI and where they apply?",
       "levels": [
         "There's little understanding of the differences between AI, machine learning, automation, and generative AI.",
@@ -90,9 +108,11 @@
         "AI literacy is high across the organisation. Staff at all levels understand what different AI types do and where they add value."
       ]
     },
-
     {
-      "id": "oc-01", "category": "People & Culture", "order": 1,
+      "id": "oc-01",
+      "category": "People & Culture",
+      "order": 1,
+      "lite": true,
       "prompt": "How supportive is your organisational culture towards adopting AI?",
       "levels": [
         "There's significant resistance or indifference to AI. Most staff see it as irrelevant or a threat.",
@@ -103,7 +123,9 @@
       ]
     },
     {
-      "id": "oc-02", "category": "People & Culture", "order": 2,
+      "id": "oc-02",
+      "category": "People & Culture",
+      "order": 2,
       "prompt": "To what extent do employees understand why AI is being introduced and what it means for them?",
       "levels": [
         "Most employees have little or no understanding of why the organisation is adopting AI.",
@@ -114,7 +136,9 @@
       ]
     },
     {
-      "id": "oc-03", "category": "People & Culture", "order": 3,
+      "id": "oc-03",
+      "category": "People & Culture",
+      "order": 3,
       "prompt": "How effective is your change management approach for AI-related initiatives?",
       "levels": [
         "There's no change management approach for AI. New tools or processes are introduced ad hoc.",
@@ -125,7 +149,9 @@
       ]
     },
     {
-      "id": "oc-04", "category": "People & Culture", "order": 4,
+      "id": "oc-04",
+      "category": "People & Culture",
+      "order": 4,
       "prompt": "Do teams collaborate across departments on AI projects?",
       "levels": [
         "AI work is siloed within one team or department. There's no cross-functional collaboration.",
@@ -136,7 +162,9 @@
       ]
     },
     {
-      "id": "oc-05", "category": "People & Culture", "order": 5,
+      "id": "oc-05",
+      "category": "People & Culture",
+      "order": 5,
       "prompt": "How comfortable are staff with experimenting and learning from AI failures?",
       "levels": [
         "There's a strong fear of failure. Staff avoid experimenting with AI or raising issues.",
@@ -147,7 +175,10 @@
       ]
     },
     {
-      "id": "oc-06", "category": "People & Culture", "order": 6,
+      "id": "oc-06",
+      "category": "People & Culture",
+      "order": 6,
+      "lite": true,
       "prompt": "How readily available is AI training for employees at all levels?",
       "levels": [
         "No AI training is available. Employees are expected to learn on their own, if at all.",
@@ -158,7 +189,9 @@
       ]
     },
     {
-      "id": "oc-07", "category": "People & Culture", "order": 7,
+      "id": "oc-07",
+      "category": "People & Culture",
+      "order": 7,
       "prompt": "How clearly are AI-related roles and responsibilities defined?",
       "levels": [
         "There are no defined roles or responsibilities for AI. It's unclear who owns AI work.",
@@ -169,7 +202,9 @@
       ]
     },
     {
-      "id": "oc-08", "category": "People & Culture", "order": 8,
+      "id": "oc-08",
+      "category": "People & Culture",
+      "order": 8,
       "prompt": "Does your organisation have internal AI champions or advocates?",
       "levels": [
         "There are no identified AI champions or advocates within the organisation.",
@@ -180,7 +215,9 @@
       ]
     },
     {
-      "id": "as-01", "category": "People & Culture", "order": 9,
+      "id": "as-01",
+      "category": "People & Culture",
+      "order": 9,
       "prompt": "Has your organisation previously run any AI pilot projects, and how well were the learnings captured?",
       "levels": [
         "No AI pilots have been attempted. There's no prior experience to build on.",
@@ -191,8 +228,11 @@
       ]
     },
     {
-      "id": "as-02", "category": "People & Culture", "order": 10,
+      "id": "as-02",
+      "category": "People & Culture",
+      "order": 10,
       "prompt": "To what extent do you currently use AI assistants or Copilot in daily work?",
+      "web_prompt": "To what extent do you currently use AI assistants (e.g. Copilot, Claude, ChatGPT) in daily work?",
       "levels": [
         "AI assistants are not used at all in the organisation.",
         "A few individuals may use AI tools informally, but there's no organisational adoption.",
@@ -202,18 +242,30 @@
       ]
     },
     {
-      "id": "as-03", "category": "People & Culture", "order": 11,
+      "id": "as-03",
+      "category": "People & Culture",
+      "order": 11,
       "prompt": "How mature is your use of workflow automation?",
+      "web_prompt": "How mature is your use of workflow automation?",
       "levels": [
         "Little to no workflow automation is in place. Most processes are manual.",
         "Some basic automation exists (e.g. email rules, simple templates), but it's limited in scope.",
         "Structured workflow automation is in place for key processes, using tools like Power Automate or similar.",
         "Automation is widespread and well-managed, with a clear approach to identifying and automating repetitive tasks.",
         "Automation is a core capability. The organisation continuously identifies and implements automation opportunities, with strong governance."
+      ],
+      "web_levels": [
+        "Little to no workflow automation is in place. Most processes are manual.",
+        "Some basic automation exists (e.g. email rules, simple templates), but it's limited in scope.",
+        "Structured workflow automation is in place for key processes, using tools like Power Automate, Zapier, or similar.",
+        "Automation is widespread and well-managed, with a clear approach to identifying and automating repetitive tasks.",
+        "Automation is a core capability. The organisation continuously identifies and implements automation opportunities, with strong governance."
       ]
     },
     {
-      "id": "as-04", "category": "People & Culture", "order": 12,
+      "id": "as-04",
+      "category": "People & Culture",
+      "order": 12,
       "prompt": "How much practical experience does your team have with prompting and interacting with AI tools?",
       "levels": [
         "Little to no experience. Staff have barely used AI tools, if at all.",
@@ -224,7 +276,9 @@
       ]
     },
     {
-      "id": "as-05", "category": "People & Culture", "order": 13,
+      "id": "as-05",
+      "category": "People & Culture",
+      "order": 13,
       "prompt": "Do you have a formal process for evaluating and selecting AI tools and vendors?",
       "levels": [
         "No formal process exists. AI tools are chosen informally or not evaluated at all.",
@@ -235,7 +289,9 @@
       ]
     },
     {
-      "id": "as-06", "category": "People & Culture", "order": 14,
+      "id": "as-06",
+      "category": "People & Culture",
+      "order": 14,
       "prompt": "How well does your organisation retain AI knowledge and expertise when people leave or change roles?",
       "levels": [
         "AI knowledge is at risk. Key people could leave and take critical know-how with them.",
@@ -245,9 +301,11 @@
         "AI expertise is deeply embedded. Knowledge is continuously captured, shared, and built upon regardless of personnel changes."
       ]
     },
-
     {
-      "id": "df-01", "category": "Data & Content Foundations", "order": 1,
+      "id": "df-01",
+      "category": "Data & Content Foundations",
+      "order": 1,
+      "lite": true,
       "prompt": "How well-organised and easy to find is your business data and content?",
       "levels": [
         "Data and content are scattered across multiple locations with no clear structure. Finding information is time-consuming.",
@@ -258,7 +316,9 @@
       ]
     },
     {
-      "id": "df-02", "category": "Data & Content Foundations", "order": 2,
+      "id": "df-02",
+      "category": "Data & Content Foundations",
+      "order": 2,
       "prompt": "How confident are you in the accuracy, consistency, and overall quality of your data?",
       "levels": [
         "Data quality is poor or unknown. There are likely duplicates, outdated records, and inconsistencies. Quality is not monitored.",
@@ -269,7 +329,9 @@
       ]
     },
     {
-      "id": "df-03", "category": "Data & Content Foundations", "order": 3,
+      "id": "df-03",
+      "category": "Data & Content Foundations",
+      "order": 3,
       "prompt": "Does your organisation have clear data governance and ownership?",
       "levels": [
         "There's no formal data governance. Nobody is clearly responsible for data quality or management.",
@@ -280,7 +342,10 @@
       ]
     },
     {
-      "id": "df-04", "category": "Data & Content Foundations", "order": 4,
+      "id": "df-04",
+      "category": "Data & Content Foundations",
+      "order": 4,
+      "lite": true,
       "prompt": "How effectively do you manage who can access what data and content?",
       "levels": [
         "Data access is loosely managed. Most people can access most things, with little control.",
@@ -291,7 +356,9 @@
       ]
     },
     {
-      "id": "df-05", "category": "Data & Content Foundations", "order": 5,
+      "id": "df-05",
+      "category": "Data & Content Foundations",
+      "order": 5,
       "prompt": "How well-connected are your data sources across business systems?",
       "levels": [
         "Data is siloed. Systems don't talk to each other, and moving data between them is manual.",
@@ -302,7 +369,9 @@
       ]
     },
     {
-      "id": "df-06", "category": "Data & Content Foundations", "order": 6,
+      "id": "df-06",
+      "category": "Data & Content Foundations",
+      "order": 6,
       "prompt": "How available is your data for analytics and AI use?",
       "levels": [
         "Data is not readily available for analytics or AI. It would require significant effort to get it into a usable state.",
@@ -313,7 +382,9 @@
       ]
     },
     {
-      "id": "df-07", "category": "Data & Content Foundations", "order": 7,
+      "id": "df-07",
+      "category": "Data & Content Foundations",
+      "order": 7,
       "prompt": "How strong are your data security and protection measures?",
       "levels": [
         "Data protection is minimal. Sensitive data may not be properly secured or its location fully known.",
@@ -324,7 +395,9 @@
       ]
     },
     {
-      "id": "df-08", "category": "Data & Content Foundations", "order": 8,
+      "id": "df-08",
+      "category": "Data & Content Foundations",
+      "order": 8,
       "prompt": "How clean and well-structured is your SharePoint and OneDrive content?",
       "levels": [
         "SharePoint and OneDrive are cluttered with outdated, duplicated, or poorly structured content. There's no cleanup plan.",
@@ -335,7 +408,9 @@
       ]
     },
     {
-      "id": "df-09", "category": "Data & Content Foundations", "order": 9,
+      "id": "df-09",
+      "category": "Data & Content Foundations",
+      "order": 9,
       "prompt": "Are you aware that Copilot can surface any content a user has access to, and have you reviewed permissions with this in mind?",
       "levels": [
         "This hasn't been considered. We haven't reviewed what content users can access or how Copilot might surface it.",
@@ -345,9 +420,11 @@
         "Permissions are well-managed and regularly audited. We're confident that Copilot will only surface appropriate content for each user."
       ]
     },
-
     {
-      "id": "gs-01", "category": "Governance & Risk", "order": 1,
+      "id": "gs-01",
+      "category": "Governance & Risk",
+      "order": 1,
+      "lite": true,
       "prompt": "Does your organisation have a formal AI governance framework or policy?",
       "levels": [
         "There's no AI governance framework. AI usage is unmanaged and ungoverned.",
@@ -358,7 +435,9 @@
       ]
     },
     {
-      "id": "gs-02", "category": "Governance & Risk", "order": 2,
+      "id": "gs-02",
+      "category": "Governance & Risk",
+      "order": 2,
       "prompt": "How effectively do you manage external data sharing and third-party access?",
       "levels": [
         "External sharing is uncontrolled. Data may be shared without oversight or security checks.",
@@ -369,7 +448,9 @@
       ]
     },
     {
-      "id": "gs-03", "category": "Governance & Risk", "order": 3,
+      "id": "gs-03",
+      "category": "Governance & Risk",
+      "order": 3,
       "prompt": "How well does your organisation comply with data protection regulations such as GDPR?",
       "levels": [
         "Compliance is not actively managed. The organisation may not fully understand its obligations.",
@@ -380,7 +461,9 @@
       ]
     },
     {
-      "id": "gs-04", "category": "Governance & Risk", "order": 4,
+      "id": "gs-04",
+      "category": "Governance & Risk",
+      "order": 4,
       "prompt": "Do you have an ethical AI usage policy covering fairness, transparency, and accountability?",
       "levels": [
         "No ethical AI policy exists. Use of AI is not guided by ethical principles.",
@@ -391,7 +474,10 @@
       ]
     },
     {
-      "id": "gs-05", "category": "Governance & Risk", "order": 5,
+      "id": "gs-05",
+      "category": "Governance & Risk",
+      "order": 5,
+      "lite": true,
       "prompt": "To what extent are AI outputs reviewed and validated by humans before action is taken?",
       "levels": [
         "AI outputs are used without human review. There's no oversight or validation process.",
@@ -402,7 +488,9 @@
       ]
     },
     {
-      "id": "gs-06", "category": "Governance & Risk", "order": 6,
+      "id": "gs-06",
+      "category": "Governance & Risk",
+      "order": 6,
       "prompt": "How well-documented are your AI risk assessment procedures?",
       "levels": [
         "No AI risk assessment procedures exist. Risks from AI are not formally considered.",
@@ -413,7 +501,9 @@
       ]
     },
     {
-      "id": "gs-07", "category": "Governance & Risk", "order": 7,
+      "id": "gs-07",
+      "category": "Governance & Risk",
+      "order": 7,
       "prompt": "How mature is your incident response plan for AI-related issues?",
       "levels": [
         "There's no plan for dealing with AI-related incidents. Issues would be handled reactively.",
@@ -424,7 +514,9 @@
       ]
     },
     {
-      "id": "gs-08", "category": "Governance & Risk", "order": 8,
+      "id": "gs-08",
+      "category": "Governance & Risk",
+      "order": 8,
       "prompt": "How clearly do you communicate to users how AI is used in your organisation, what it can do, and what its limitations are?",
       "levels": [
         "Users are not informed about AI use or its limitations. There's no communication in place.",
@@ -434,20 +526,34 @@
         "Users are fully informed and actively engaged. Communication is ongoing, transparent, and treated as a core part of responsible AI use."
       ]
     },
-
     {
-      "id": "ti-01", "category": "Technology & Microsoft 365 Readiness", "order": 1,
+      "id": "ti-01",
+      "category": "Technology & Microsoft 365 Readiness",
+      "web_category": "Technology Readiness",
+      "order": 1,
       "prompt": "How up-to-date are your Microsoft 365 licences, and do they include AI-enabled features like Copilot?",
+      "web_prompt": "Do your software licences and subscriptions include AI features (e.g. Copilot, ChatGPT Enterprise, Claude for Work)?",
       "levels": [
         "Licences don't currently include AI features. There's no plan to upgrade.",
         "There's awareness of what AI-enabled licences are available, but current plans don't include them.",
         "The organisation has begun adopting AI-enabled licences (e.g. Copilot) for key teams and use cases.",
         "AI-enabled licences are deployed across the relevant parts of the organisation, with a plan to expand.",
         "Licensing is fully aligned with AI needs. The organisation regularly reviews and optimises its licence portfolio to support evolving AI initiatives."
+      ],
+      "web_levels": [
+        "No AI-enabled subscriptions are in place. There's no plan to evaluate them.",
+        "There's awareness of what AI-enabled subscriptions are available, but current spend doesn't include them.",
+        "The organisation has begun adopting AI-enabled subscriptions for key teams and use cases.",
+        "AI-enabled subscriptions are deployed across the relevant parts of the organisation, with a plan to expand.",
+        "Subscriptions are fully aligned with AI needs. The organisation regularly reviews and optimises its licence portfolio to support evolving AI initiatives."
       ]
     },
     {
-      "id": "ti-02", "category": "Technology & Microsoft 365 Readiness", "order": 2,
+      "id": "ti-02",
+      "category": "Technology & Microsoft 365 Readiness",
+      "web_category": "Technology Readiness",
+      "order": 2,
+      "lite": true,
       "prompt": "Does your cloud infrastructure support AI workloads effectively?",
       "levels": [
         "There's no cloud infrastructure in place, or it's not set up to support AI workloads.",
@@ -458,7 +564,10 @@
       ]
     },
     {
-      "id": "ti-03", "category": "Technology & Microsoft 365 Readiness", "order": 3,
+      "id": "ti-03",
+      "category": "Technology & Microsoft 365 Readiness",
+      "web_category": "Technology Readiness",
+      "order": 3,
       "prompt": "How reliable is your network connectivity for cloud-based AI services?",
       "levels": [
         "Network connectivity is unreliable or insufficient for cloud-based AI services.",
@@ -469,8 +578,12 @@
       ]
     },
     {
-      "id": "ti-04", "category": "Technology & Microsoft 365 Readiness", "order": 4,
+      "id": "ti-04",
+      "category": "Technology & Microsoft 365 Readiness",
+      "web_category": "Technology Readiness",
+      "order": 4,
       "prompt": "How well-integrated is your identity and access management (e.g. Entra ID / Azure AD)?",
+      "web_prompt": "How well-integrated is your identity and access management across your business systems?",
       "levels": [
         "Identity management is basic or fragmented. Users may have inconsistent access across systems.",
         "Some identity management is in place, but it's not consistently applied across all platforms and AI tools.",
@@ -480,7 +593,11 @@
       ]
     },
     {
-      "id": "ti-05", "category": "Technology & Microsoft 365 Readiness", "order": 5,
+      "id": "ti-05",
+      "category": "Technology & Microsoft 365 Readiness",
+      "web_category": "Technology Readiness",
+      "order": 5,
+      "lite": true,
       "prompt": "To what extent do you use integrations and APIs to connect your business systems?",
       "levels": [
         "Systems are largely disconnected. There are few or no integrations between business tools.",
@@ -491,7 +608,10 @@
       ]
     },
     {
-      "id": "ti-06", "category": "Technology & Microsoft 365 Readiness", "order": 6,
+      "id": "ti-06",
+      "category": "Technology & Microsoft 365 Readiness",
+      "web_category": "Technology Readiness",
+      "order": 6,
       "prompt": "Do you have monitoring and alerting in place for AI services and automations?",
       "levels": [
         "No monitoring exists for AI tools or automations. Issues are only discovered when users report them.",
@@ -502,33 +622,65 @@
       ]
     },
     {
-      "id": "ti-07", "category": "Technology & Microsoft 365 Readiness", "order": 7,
+      "id": "ti-07",
+      "category": "Technology & Microsoft 365 Readiness",
+      "web_category": "Technology Readiness",
+      "order": 7,
       "prompt": "How prepared is your Microsoft Teams environment to support Copilot features like meeting recaps and chat summaries?",
+      "web_prompt": "How prepared is your meeting and collaboration platform (e.g. Teams, Zoom, Google Meet) to support AI features like meeting recaps and chat summaries?",
       "levels": [
         "Teams is not widely used, or meetings are not recorded. There's no foundation for Copilot meeting features.",
         "Teams is used for meetings but recordings, transcriptions, and structured channels are inconsistent.",
         "Teams is reasonably well-adopted. Meetings are often recorded and key channels are structured, providing a foundation for Copilot.",
         "Teams is well-adopted with consistent recording, transcription, and channel governance. The environment is ready for Copilot features.",
         "Teams is deeply embedded in daily work with strong governance, structured channels, and consistent recording. Copilot features will deliver value immediately."
+      ],
+      "web_levels": [
+        "Meeting tools are not widely used, or meetings are not recorded. There's no foundation for AI meeting features.",
+        "Meeting tools are used but recordings, transcriptions, and structured channels are inconsistent.",
+        "Meeting tools are reasonably well-adopted. Meetings are often recorded and key channels are structured, providing a foundation for AI features.",
+        "Meeting tools are well-adopted with consistent recording, transcription, and channel governance. The environment is ready for AI features.",
+        "Meeting tools are deeply embedded in daily work with strong governance, structured channels, and consistent recording. AI features will deliver value immediately."
       ]
     },
     {
-      "id": "ti-08", "category": "Technology & Microsoft 365 Readiness", "order": 8,
+      "id": "ti-08",
+      "category": "Technology & Microsoft 365 Readiness",
+      "web_category": "Technology Readiness",
+      "order": 8,
       "prompt": "How well-adopted are Microsoft 365 apps (Word, Excel, PowerPoint, Outlook) across your organisation?",
+      "web_prompt": "How well-adopted are your core productivity apps (documents, spreadsheets, presentations, email) across your organisation?",
       "levels": [
         "Microsoft 365 apps are not widely used. Staff primarily use other tools or work offline.",
         "Some teams use Microsoft 365 apps, but adoption is inconsistent and many staff underuse them.",
         "Microsoft 365 apps are the standard for most work. Most staff use them regularly, though some features go unused.",
         "Microsoft 365 apps are well-adopted across the organisation, with staff comfortable using core features.",
         "Microsoft 365 is deeply embedded. Staff are proficient across the suite and actively use advanced features."
+      ],
+      "web_levels": [
+        "Core productivity apps are not widely used. Staff primarily use other tools or work offline.",
+        "Some teams use the apps, but adoption is inconsistent and many staff underuse them.",
+        "Productivity apps are the standard for most work. Most staff use them regularly, though some features go unused.",
+        "Productivity apps are well-adopted across the organisation, with staff comfortable using core features.",
+        "The productivity stack is deeply embedded. Staff are proficient across the suite and actively use advanced features."
       ]
     },
-
     {
-      "id": "rp-01", "category": "Technology & Microsoft 365 Readiness", "order": 9,
+      "id": "rp-01",
+      "category": "Technology & Microsoft 365 Readiness",
+      "web_category": "Technology Readiness",
+      "order": 9,
       "prompt": "Have you identified which teams or roles will be the first to use Copilot?",
+      "web_prompt": "Have you identified which teams or roles will be the first to adopt AI tools?",
       "levels": [
         "No thought has been given to who should get Copilot first.",
+        "There's a general sense of who might benefit, but no formal prioritisation or plan.",
+        "Priority teams or roles have been identified based on likely impact and readiness.",
+        "A clear phased rollout plan exists, with first-wave teams selected, prepared, and supported.",
+        "Rollout phases are well-defined, with success criteria for each wave and a plan to expand based on results."
+      ],
+      "web_levels": [
+        "No thought has been given to who should adopt AI tools first.",
         "There's a general sense of who might benefit, but no formal prioritisation or plan.",
         "Priority teams or roles have been identified based on likely impact and readiness.",
         "A clear phased rollout plan exists, with first-wave teams selected, prepared, and supported.",
@@ -536,8 +688,12 @@
       ]
     },
     {
-      "id": "rp-02", "category": "Technology & Microsoft 365 Readiness", "order": 10,
+      "id": "rp-02",
+      "category": "Technology & Microsoft 365 Readiness",
+      "web_category": "Technology Readiness",
+      "order": 10,
       "prompt": "Do you have a plan for how you will train and support users during and after the Copilot rollout?",
+      "web_prompt": "Do you have a plan for how you will train and support users during and after the AI rollout?",
       "levels": [
         "No training or support plan exists. Users would be expected to figure it out on their own.",
         "Some awareness that training will be needed, but no plan has been developed.",
@@ -547,8 +703,12 @@
       ]
     },
     {
-      "id": "rp-03", "category": "Technology & Microsoft 365 Readiness", "order": 11,
+      "id": "rp-03",
+      "category": "Technology & Microsoft 365 Readiness",
+      "web_category": "Technology Readiness",
+      "order": 11,
       "prompt": "How will you track whether Copilot is actually being used and adding value after launch?",
+      "web_prompt": "How will you track whether your AI tools are actually being used and adding value after launch?",
       "levels": [
         "No plan to track adoption or value. We'd rely on anecdotal feedback.",
         "Some intention to check in with users, but no formal tracking or metrics.",
@@ -557,6 +717,5 @@
         "Adoption tracking is mature, combining usage analytics, productivity metrics, user satisfaction, and business outcome measures."
       ]
     }
-
   ]
 }
