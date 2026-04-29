@@ -45,6 +45,7 @@ import badgeAiBusiness from './assets/ai_business_professional_badge.png';
 import badgeAiTransformation from './assets/ai_transformation_leader_badge.png';
 import claudeLogo from './assets/claude-ai-icon.png';
 import copilotLogo from './assets/Copilot-Logo.png';
+import AIAssessment from './components/assessment/AIAssessment';
 
 // ── Scroll-triggered visibility hook (repeats on every scroll in/out) ──
 const useInView = (options = {}) => {
@@ -1106,6 +1107,7 @@ Keep responses under 50 words if possible.`;
           <div className="hidden md:flex items-center gap-8">
             {[
               { name: 'Services & Approach', id: 'approach' },
+              { name: 'Assessment', id: 'assessment' },
               { name: 'About Us', id: 'about' }
             ].map((item) => (
               <button
@@ -1147,6 +1149,7 @@ Keep responses under 50 words if possible.`;
           <div className="absolute top-full left-0 w-full bg-white border-b border-slate-100 p-6 md:hidden flex flex-col gap-4 shadow-xl">
             {[
               { name: 'Services & Approach', id: 'approach' },
+              { name: 'Assessment', id: 'assessment' },
               { name: 'About Us', id: 'about' },
               { name: 'Contact', id: 'contact' }
             ].map((item) => (
@@ -1839,6 +1842,26 @@ Keep responses under 50 words if possible.`;
                     );
                   })}
               </div>
+            </div>
+          </section>
+
+          {/* AI Readiness Assessment */}
+          <section id="assessment" className="py-20 bg-gradient-to-b from-white to-slate-50 relative">
+            <div className="max-w-7xl mx-auto px-6">
+              <Reveal className="text-center max-w-3xl mx-auto mb-10">
+                <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">
+                  AI Readiness Assessment
+                </h2>
+                <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
+                  How AI-Ready Is Your Business?
+                </h3>
+                <p className="text-lg text-slate-600">
+                  Get a free, immediate snapshot of where you sit across 5 readiness dimensions. Take the 5-minute lite check or go deeper with the full 15-minute assessment.
+                </p>
+              </Reveal>
+              <Reveal>
+                <AIAssessment />
+              </Reveal>
             </div>
           </section>
 
