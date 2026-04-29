@@ -25,6 +25,7 @@ import adminRoutes from './routes/admin.js';
 import checklistRoutes from './routes/checklist.js';
 import documentRoutes from './routes/documents.js';
 import mfaRoutes from './routes/mfa.js';
+import publicAssessmentRoutes from './routes/publicAssessments.js';
 import { requireAuth } from './middleware/auth.js';
 
 // Initialise async db before starting the server
@@ -66,6 +67,7 @@ app.get('/api/portal/health', (_req, res) => res.json({ status: 'ok' }));
 app.use('/api/portal/auth', authRoutes);
 app.use('/api/portal/admin', adminRoutes);
 app.use('/api/portal/mfa', mfaRoutes);
+app.use('/api/portal/public/assessments', publicAssessmentRoutes);
 app.use('/api/portal/assessments', requireAuth, assessmentRoutes);
 app.use('/api/portal/checklist', requireAuth, checklistRoutes);
 app.use('/api/portal/documents', requireAuth, documentRoutes);
