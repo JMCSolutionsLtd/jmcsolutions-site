@@ -9,6 +9,10 @@
  *   PORTAL_ADMIN_KEY   — Admin API key for client creation
  *   PORTAL_DB_PATH     — SQLite database file path (default: server/portal.db)
  *   PORTAL_PORT        — Server port (default: 3001)
+ *   PORTAL_FROM_EMAIL  — Default From: address for outbound email (default: contact@jmcsolutions.ai)
+ *   ASSESSMENT_INTERNAL_TO — Recipient address for internal lead notifications (default: contact@jmcsolutions.ai)
+ *   RESEND_AUDIENCE_ID — Resend Audience ID for the assessment mailing list (optional; pushes skipped if unset)
+ *   RESEND_API_KEY     — Resend API key (optional; emails logged to console if unset)
  */
 import express from 'express';
 import cors from 'cors';
@@ -25,6 +29,7 @@ import adminRoutes from './routes/admin.js';
 import checklistRoutes from './routes/checklist.js';
 import documentRoutes from './routes/documents.js';
 import mfaRoutes from './routes/mfa.js';
+import publicAssessmentRoutes from './routes/publicAssessments.js';
 import { requireAuth } from './middleware/auth.js';
 
 // Initialise async db before starting the server
@@ -66,6 +71,7 @@ app.get('/api/portal/health', (_req, res) => res.json({ status: 'ok' }));
 app.use('/api/portal/auth', authRoutes);
 app.use('/api/portal/admin', adminRoutes);
 app.use('/api/portal/mfa', mfaRoutes);
+app.use('/api/portal/public/assessments', publicAssessmentRoutes);
 app.use('/api/portal/assessments', requireAuth, assessmentRoutes);
 app.use('/api/portal/checklist', requireAuth, checklistRoutes);
 app.use('/api/portal/documents', requireAuth, documentRoutes);
