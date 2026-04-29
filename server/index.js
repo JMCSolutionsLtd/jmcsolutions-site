@@ -9,6 +9,10 @@
  *   PORTAL_ADMIN_KEY   — Admin API key for client creation
  *   PORTAL_DB_PATH     — SQLite database file path (default: server/portal.db)
  *   PORTAL_PORT        — Server port (default: 3001)
+ *   PORTAL_FROM_EMAIL  — Default From: address for outbound email (default: contact@jmcsolutions.ai)
+ *   ASSESSMENT_INTERNAL_TO — Recipient address for internal lead notifications (default: contact@jmcsolutions.ai)
+ *   RESEND_AUDIENCE_ID — Resend Audience ID for the assessment mailing list (optional; pushes skipped if unset)
+ *   RESEND_API_KEY     — Resend API key (optional; emails logged to console if unset)
  */
 import express from 'express';
 import cors from 'cors';
