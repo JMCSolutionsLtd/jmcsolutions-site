@@ -145,6 +145,25 @@ export async function initDb() {
     )
   `);
 
+  // ── assessment_leads: captured leads from the public website assessment ───
+  db.run(`
+    CREATE TABLE IF NOT EXISTS assessment_leads (
+      id            INTEGER PRIMARY KEY AUTOINCREMENT,
+      email         TEXT    NOT NULL,
+      first_name    TEXT    NOT NULL,
+      company       TEXT    NOT NULL,
+      mode          TEXT    NOT NULL,
+      responses     TEXT    NOT NULL,
+      scores        TEXT    NOT NULL,
+      user_agent    TEXT    DEFAULT NULL,
+      ip_hash       TEXT    DEFAULT NULL,
+      resend_contact_id TEXT DEFAULT NULL,
+      created_at    TEXT    NOT NULL DEFAULT (datetime('now'))
+    )
+  `);
+  db.run('CREATE INDEX IF NOT EXISTS idx_assessment_leads_email ON assessment_leads(email)');
+  db.run('CREATE INDEX IF NOT EXISTS idx_assessment_leads_created_at ON assessment_leads(created_at)');
+
   // ── client_users: additional users linked to a client account ──────────────
   db.run(`
     CREATE TABLE IF NOT EXISTS client_users (
