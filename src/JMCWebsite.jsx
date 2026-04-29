@@ -45,7 +45,7 @@ import badgeAiBusiness from './assets/ai_business_professional_badge.png';
 import badgeAiTransformation from './assets/ai_transformation_leader_badge.png';
 import claudeLogo from './assets/claude-ai-icon.png';
 import copilotLogo from './assets/Copilot-Logo.png';
-import AIAssessment from './components/assessment/AIAssessment';
+import AssessmentPage from './components/assessment/AssessmentPage';
 
 // ── Scroll-triggered visibility hook (repeats on every scroll in/out) ──
 const useInView = (options = {}) => {
@@ -1107,7 +1107,6 @@ Keep responses under 50 words if possible.`;
           <div className="hidden md:flex items-center gap-8">
             {[
               { name: 'Services & Approach', id: 'approach' },
-              { name: 'Assessment', id: 'assessment' },
               { name: 'About Us', id: 'about' }
             ].map((item) => (
               <button
@@ -1118,6 +1117,12 @@ Keep responses under 50 words if possible.`;
                 {item.name}
               </button>
             ))}
+            <button
+              onClick={() => { setActivePage('assessment'); window.scrollTo(0, 0); }}
+              className="text-sm font-medium text-slate-600 hover:text-blue-900 transition-colors"
+            >
+              Assessment
+            </button>
             <button
               onClick={() => { setActivePage('faq'); window.scrollTo(0, 0); }}
               className="text-sm font-medium text-slate-600 hover:text-blue-900 transition-colors"
@@ -1149,7 +1154,6 @@ Keep responses under 50 words if possible.`;
           <div className="absolute top-full left-0 w-full bg-white border-b border-slate-100 p-6 md:hidden flex flex-col gap-4 shadow-xl">
             {[
               { name: 'Services & Approach', id: 'approach' },
-              { name: 'Assessment', id: 'assessment' },
               { name: 'About Us', id: 'about' },
               { name: 'Contact', id: 'contact' }
             ].map((item) => (
@@ -1161,6 +1165,9 @@ Keep responses under 50 words if possible.`;
                 {item.name}
               </button>
             ))}
+            <button onClick={() => { setActivePage('assessment'); setIsMobileMenuOpen(false); window.scrollTo(0, 0); }} className="text-left text-lg font-medium text-slate-800 py-2">
+              Assessment
+            </button>
             <button onClick={() => { setActivePage('faq'); setIsMobileMenuOpen(false); window.scrollTo(0, 0); }} className="text-left text-lg font-medium text-slate-800 py-2">
               FAQ
             </button>
@@ -1188,6 +1195,7 @@ Keep responses under 50 words if possible.`;
           {activePage === 'privacy' && <PrivacyPolicy onBack={() => setActivePage('home')} />}
           {activePage === 'cookies' && <CookiePolicy onBack={() => setActivePage('home')} />}
           {activePage === 'faq' && <FAQPage onBack={() => setActivePage('home')} onGetInTouch={() => scrollToSection('contact')} />}
+          {activePage === 'assessment' && <AssessmentPage onBack={() => setActivePage('home')} />}
 
           <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
             <div className="max-w-7xl mx-auto px-6">
@@ -1845,22 +1853,45 @@ Keep responses under 50 words if possible.`;
             </div>
           </section>
 
-          {/* AI Readiness Assessment */}
-          <section id="assessment" className="py-20 bg-gradient-to-b from-white to-slate-50 relative">
-            <div className="max-w-7xl mx-auto px-6">
-              <Reveal className="text-center max-w-3xl mx-auto mb-10">
-                <h2 className="text-sm font-bold text-blue-900 uppercase tracking-wider mb-2">
-                  AI Readiness Assessment
-                </h2>
-                <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
-                  How AI-Ready Is Your Business?
-                </h3>
-                <p className="text-lg text-slate-600">
-                  Get a free, immediate snapshot of where you sit across 5 readiness dimensions. Take the 5-minute lite check or go deeper with the full 15-minute assessment.
-                </p>
-              </Reveal>
+          {/* AI Readiness Assessment CTA */}
+          <section id="assessment" className="py-16 bg-white relative">
+            <div className="max-w-6xl mx-auto px-6">
               <Reveal>
-                <AIAssessment />
+                <div className="relative rounded-2xl overflow-hidden bg-blue-900 text-white shadow-2xl">
+                  <div className="absolute inset-0 -z-0">
+                    <img
+                      src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop"
+                      alt=""
+                      aria-hidden="true"
+                      className="w-full h-full object-cover opacity-20"
+                    />
+                    <div className="absolute inset-0 bg-blue-900/85 mix-blend-multiply" />
+                    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
+                  </div>
+
+                  <div className="relative z-10 px-8 sm:px-14 py-14 sm:py-20 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+                    <div className="md:max-w-xl">
+                      <div className="text-xs font-bold text-blue-300 uppercase tracking-wider mb-3">
+                        AI Readiness Assessment · Free
+                      </div>
+                      <h3 className="text-3xl sm:text-4xl font-bold text-white mb-4 leading-tight tracking-tight">
+                        Find out where your business sits on the AI maturity curve.
+                      </h3>
+                      <p className="text-base sm:text-lg text-blue-100 leading-relaxed">
+                        10 questions · 5 minutes · instant scored results across 5 readiness dimensions.
+                      </p>
+                    </div>
+                    <div className="shrink-0">
+                      <button
+                        onClick={() => { setActivePage('assessment'); window.scrollTo(0, 0); }}
+                        className="w-full sm:w-auto px-8 py-5 rounded-lg bg-white text-blue-900 font-bold text-base hover:bg-blue-50 transition-all inline-flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+                      >
+                        Take the assessment
+                        <ArrowRight size={18} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </Reveal>
             </div>
           </section>
