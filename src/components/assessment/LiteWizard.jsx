@@ -44,7 +44,7 @@ export default function LiteWizard({ liteQuestions, responses, onChange, onCompl
   const allAnswered = ordered.every((q) => responses[q.id] != null);
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 sm:p-8 max-w-3xl mx-auto">
+    <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 sm:p-8 max-w-3xl mx-auto mt-12">
       <div className="mb-6">
         <div className="flex justify-between items-center mb-2">
           <span className="text-xs font-bold text-blue-900 uppercase tracking-wider">

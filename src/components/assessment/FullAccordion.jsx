@@ -26,7 +26,7 @@ export default function FullAccordion({ questions, responses, onChange, onComple
   const allAnswered = totalAnswered === total;
 
   return (
-    <div className="max-w-4xl mx-auto pb-24">
+    <div className="max-w-4xl mx-auto pt-12 pb-24">
       <div className="flex items-center justify-between mb-4">
         <button
           onClick={onBack}
